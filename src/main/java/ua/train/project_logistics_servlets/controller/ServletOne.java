@@ -1,26 +1,32 @@
 package ua.train.project_logistics_servlets.controller;
 
 import ua.train.project_logistics_servlets.controller.command.Command;
-import ua.train.project_logistics_servlets.controller.command.Exception;
-import ua.train.project_logistics_servlets.controller.command.LogOut;
-import ua.train.project_logistics_servlets.controller.command.Login;
+import ua.train.project_logistics_servlets.controller.command.ExceptionCommand;
+import ua.train.project_logistics_servlets.controller.command.LogOutCommand;
+import ua.train.project_logistics_servlets.controller.command.LoginCommand;
 import ua.train.project_logistics_servlets.controller.command.Registration;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 public class ServletOne extends HttpServlet {
     private Map<String, Command> commands = new HashMap<>();
 
-    public void init(){
-        commands.put("exception" , new Exception());
-        commands.put("login", new Login());
-        commands.put("logout", new LogOut());
+    public void init(ServletConfig servletConfig){
+
+        servletConfig.getServletContext()
+                .setAttribute("loggedUsers", new HashSet<String>());
+
+        commands.put("exception" , new ExceptionCommand());
+        commands.put("login", new LoginCommand());
+        commands.put("logout", new LogOutCommand());
         commands.put("registration", new Registration());
     }
 
@@ -40,14 +46,20 @@ public class ServletOne extends HttpServlet {
 
         String path = request.getRequestURI();
         System.out.println(path);
+
         path = path.replaceAll(".*/app/" , "");
         System.out.println(path);
+
         Command command = commands.getOrDefault(path, (r)->"/index.jsp)");
+        System.out.println(command.getClass().getName());
+
         String page = command.execute(request);
-        if(page.contains("redirect:")){
-            response.sendRedirect(page.replace("redirect:", "/api"));
-        }else {
-            request.getRequestDispatcher(page).forward(request, response);
-        }
+        request.getRequestDispatcher(page).forward(request,response);
+
+//        if(page.contains("redirect:")){
+//            response.sendRedirect(page.replace("redirect:", "/api"));
+//        }else {
+//            request.getRequestDispatcher(page).forward(request, response);
+//        }
     }
 }

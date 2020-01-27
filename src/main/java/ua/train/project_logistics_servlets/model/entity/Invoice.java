@@ -3,12 +3,16 @@ package ua.train.project_logistics_servlets.model.entity;
 public class Invoice {
     private Long invoiceNumber;
     private boolean isPaid;
-    private DeliveryOder order;
 
-    public Invoice(Long invoiceNumber, boolean isPaid, DeliveryOder order) {
+    private Order order;
+
+    public Invoice(Long invoiceNumber, boolean isPaid, Order order) {
         this.invoiceNumber = invoiceNumber;
         this.isPaid = isPaid;
         this.order = order;
+    }
+
+    public Invoice() {
     }
 
     public Long getInvoiceNumber() {
@@ -27,11 +31,11 @@ public class Invoice {
         isPaid = paid;
     }
 
-    public DeliveryOder getOrder() {
+    public Order getOrder() {
         return order;
     }
 
-    public void setOrder(DeliveryOder order) {
+    public void setOrder(Order order) {
         this.order = order;
     }
 }

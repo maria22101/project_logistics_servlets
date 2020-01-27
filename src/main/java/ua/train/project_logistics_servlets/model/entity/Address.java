@@ -6,11 +6,14 @@ public class Address {
     String house;
     String apartment;
 
-    public Address(Long id, String street, String house, String apartment) {
+    private Route route;
+
+    public Address(Long id, String street, String house, String apartment, Route route) {
         this.id = id;
         this.street = street;
         this.house = house;
         this.apartment = apartment;
+        this.route = route;
     }
 
     public Long getId() {
@@ -43,5 +46,16 @@ public class Address {
 
     public void setApartment(String apartment) {
         this.apartment = apartment;
+    }
+
+    public Route getRoute() {
+        return route;
+    }
+
+    public Address() {
+    }
+
+    public void setRoute(Route route) {
+        this.route = route;
     }
 }

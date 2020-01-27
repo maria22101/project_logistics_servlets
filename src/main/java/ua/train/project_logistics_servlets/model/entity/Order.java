@@ -1,34 +1,32 @@
 package ua.train.project_logistics_servlets.model.entity;
 
+import ua.train.project_logistics_servlets.model.entity.enums.CargoType;
+import ua.train.project_logistics_servlets.model.entity.enums.OrderStatus;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class DeliveryOder {
+public class Order {
     private Long orderNumber;
     private LocalDate deliveryDate;
-    private Route route;
     private BigDecimal weight;
     private CargoType cargoType;
-    private User user;
     private OrderStatus orderStatus;
     private BigDecimal sum;
 
-    public enum CargoType {
-        REGULAR, FRAGILE
-    }
+    private User user;
+    private Route route;
+    private Invoice invoice;
 
-    public enum OrderStatus {
-        OPEN, INVOICED, READY_FOR_DISPATCH
-    }
-
-    public DeliveryOder(Long orderNumber,
-                        LocalDate deliveryDate,
-                        Route route,
-                        BigDecimal weight,
-                        CargoType cargoType,
-                        User user,
-                        OrderStatus orderStatus,
-                        BigDecimal sum) {
+    public Order(Long orderNumber,
+                 LocalDate deliveryDate,
+                 Route route,
+                 BigDecimal weight,
+                 CargoType cargoType,
+                 User user,
+                 OrderStatus orderStatus,
+                 BigDecimal sum,
+                 Invoice invoice) {
         this.orderNumber = orderNumber;
         this.deliveryDate = deliveryDate;
         this.route = route;
@@ -37,6 +35,10 @@ public class DeliveryOder {
         this.user = user;
         this.orderStatus = orderStatus;
         this.sum = sum;
+        this.invoice = invoice;
+    }
+
+    public Order() {
     }
 
     public Long getOrderNumber() {
@@ -101,5 +103,13 @@ public class DeliveryOder {
 
     public void setSum(BigDecimal sum) {
         this.sum = sum;
+    }
+
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
     }
 }

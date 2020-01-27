@@ -1,5 +1,10 @@
 package ua.train.project_logistics_servlets.model.entity;
 
+import ua.train.project_logistics_servlets.model.entity.enums.Role;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     private Long id;
     private String username;
@@ -7,16 +12,18 @@ public class User {
     private String email;
     private Role role;
 
-    public enum Role {
-        USER, ADMIN, UNKNOWN
-    }
+    private List<Order> orders = new ArrayList<>();
 
-    public User(Long id, String username, String password, String email, Role role) {
+    public User(Long id, String username, String password, String email, Role role, List<Order> orders) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
+        this.orders = orders;
+    }
+
+    public User() {
     }
 
     public Long getId() {
@@ -57,5 +64,13 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }
