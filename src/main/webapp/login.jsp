@@ -10,18 +10,18 @@
 </head>
 <body>
 
-    <h1>Вход в систему</h1><br/>
+    <h1>Enter system</h1><br/>
 
-    <form method="get" action="${pageContext.request.contextPath}/app/login">
+    <form method="get" action="${pageContext.request.contextPath}/delivery/login">
 
         <input type="text" name="name"><br/>
         <input type="password" name="pass"><br/><br/>
-        <input class="button" type="submit" value="Войти">
+        <input class="button" type="submit" value="Enter">
 
     </form>
 
     <br><br>
-    <a href="${pageContext.request.contextPath}/app/logout">На головну</a>
+    <a href="${pageContext.request.contextPath}/index.jsp">To main page</a>
 
 </body>
 </html>

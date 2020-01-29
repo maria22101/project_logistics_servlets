@@ -12,13 +12,13 @@
 </head>
 
 <body>
-<h2>Hello World!</h2>
+<h2>Welcome to delivery service!</h2>
 
-<a href="${pageContext.request.contextPath}/app/login">Login</a><br><br>
+<a href="${pageContext.request.contextPath}/delivery/login">Login</a><br><br>
 
-<a href="${pageContext.request.contextPath}/app/registration">Registration form</a><br><br>
+<a href="${pageContext.request.contextPath}/delivery/registration">Registration form</a><br><br>
 
-<a href="${pageContext.request.contextPath}/app/exception">Exception</a>
+<a href="${pageContext.request.contextPath}/delivery/exception">Exception</a>
 
 </body>
 </html>

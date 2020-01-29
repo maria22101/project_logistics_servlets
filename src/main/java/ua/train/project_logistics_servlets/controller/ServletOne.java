@@ -1,10 +1,6 @@
 package ua.train.project_logistics_servlets.controller;
 
-import ua.train.project_logistics_servlets.controller.command.Command;
-import ua.train.project_logistics_servlets.controller.command.ExceptionCommand;
-import ua.train.project_logistics_servlets.controller.command.LogOutCommand;
-import ua.train.project_logistics_servlets.controller.command.LoginCommand;
-import ua.train.project_logistics_servlets.controller.command.Registration;
+import ua.train.project_logistics_servlets.controller.command.*;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -24,10 +20,12 @@ public class ServletOne extends HttpServlet {
         servletConfig.getServletContext()
                 .setAttribute("loggedUsers", new HashSet<String>());
 
-        commands.put("exception" , new ExceptionCommand());
-        commands.put("login", new LoginCommand());
         commands.put("logout", new LogOutCommand());
-        commands.put("registration", new Registration());
+        commands.put("login", new LoginCommand());
+        commands.put("exception", new ExceptionCommand());
+        commands.put("user/userMain.jsp", new UserMainCommand());
+        commands.put("admin/adminMain.jsp", new AdminMainCommand());
+        commands.put("denied", new DeniedCommand());
     }
 
     public void doGet(HttpServletRequest request,
@@ -47,19 +45,18 @@ public class ServletOne extends HttpServlet {
         String path = request.getRequestURI();
         System.out.println(path);
 
-        path = path.replaceAll(".*/app/" , "");
+        path = path.replaceAll(".*/delivery/" , "");
         System.out.println(path);
 
         Command command = commands.getOrDefault(path, (r)->"/index.jsp)");
         System.out.println(command.getClass().getName());
 
         String page = command.execute(request);
-        request.getRequestDispatcher(page).forward(request,response);
 
-//        if(page.contains("redirect:")){
-//            response.sendRedirect(page.replace("redirect:", "/api"));
-//        }else {
-//            request.getRequestDispatcher(page).forward(request, response);
-//        }
+       if(page.contains("redirect:")){
+            response.sendRedirect(page.replace("redirect:", "/delivery"));
+        }else {
+            request.getRequestDispatcher(page).forward(request, response);
+        }
     }
 }
