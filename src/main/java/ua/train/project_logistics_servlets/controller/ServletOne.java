@@ -24,7 +24,9 @@ public class ServletOne extends HttpServlet {
         commands.put("login", new LoginCommand());
         commands.put("exception", new ExceptionCommand());
         commands.put("user/userMain.jsp", new UserMainCommand());
+        commands.put("user/userOrders", new UserOrdersCommand());
         commands.put("admin/adminMain.jsp", new AdminMainCommand());
+        commands.put("admin/adminUsers", new AdminUsersCommand());
         commands.put("denied", new DeniedCommand());
     }
 

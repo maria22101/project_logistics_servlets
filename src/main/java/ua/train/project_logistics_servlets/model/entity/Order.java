@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Order {
-    private Long orderNumber;
+    private int orderNumber;
     private LocalDate deliveryDate;
     private BigDecimal weight;
     private CargoType cargoType;
@@ -18,7 +18,7 @@ public class Order {
     private Route route;
     private Invoice invoice;
 
-    public Order(Long orderNumber,
+    public Order(int orderNumber,
                  LocalDate deliveryDate,
                  Route route,
                  BigDecimal weight,
@@ -41,11 +41,11 @@ public class Order {
     public Order() {
     }
 
-    public Long getOrderNumber() {
+    public int getOrderNumber() {
         return orderNumber;
     }
 
-    public void setOrderNumber(Long orderNumber) {
+    public void setOrderNumber(int orderNumber) {
         this.orderNumber = orderNumber;
     }
 

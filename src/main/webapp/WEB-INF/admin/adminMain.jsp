@@ -9,7 +9,7 @@
 
 <h1>Hello ADMIN!</h1>
 
-
+<a href="${pageContext.request.contextPath}/delivery/admin/adminUsers">To users list</a><br><br>
 
 <a href="${pageContext.request.contextPath}/delivery/logout">Logout</a>
 </body>

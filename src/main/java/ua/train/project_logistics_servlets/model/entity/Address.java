@@ -1,14 +1,14 @@
 package ua.train.project_logistics_servlets.model.entity;
 
 public class Address {
-    Long id;
-    String street;
-    String house;
-    String apartment;
+    private int id;
+    private String street;
+    private String house;
+    private String apartment;
 
     private Route route;
 
-    public Address(Long id, String street, String house, String apartment, Route route) {
+    public Address(int id, String street, String house, String apartment, Route route) {
         this.id = id;
         this.street = street;
         this.house = house;
@@ -16,11 +16,11 @@ public class Address {
         this.route = route;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

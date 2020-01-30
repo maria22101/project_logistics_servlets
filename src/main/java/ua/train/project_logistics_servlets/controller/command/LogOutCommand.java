@@ -4,6 +4,7 @@ import ua.train.project_logistics_servlets.model.entity.User;
 import ua.train.project_logistics_servlets.model.entity.enums.Role;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 public class LogOutCommand implements Command{
 
@@ -11,7 +12,8 @@ public class LogOutCommand implements Command{
     public String execute(HttpServletRequest request) {
 
         // ToDo delete current user (context & session)
-//        CommandUtility.setUserRole(request, Role.UNKNOWN, "Guest");
+        CommandUtility.discardUserFromSessionAndContext(request);
+
         return "redirect:/index.jsp";
     }
 }

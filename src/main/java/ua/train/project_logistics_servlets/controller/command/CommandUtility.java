@@ -17,6 +17,13 @@ public class CommandUtility {
         context.setAttribute("username", username);
     }
 
+    static void discardUserFromSessionAndContext(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        ServletContext context = request.getServletContext();
+        session.setAttribute("role", Role.UNKNOWN);
+        context.setAttribute("username", "guest");
+    }
+
     static HashSet<String> getLoggedUsers(HttpServletRequest request) {
         return (HashSet<String>) request
                 .getServletContext()

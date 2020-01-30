@@ -37,8 +37,8 @@ public class AuthFilter implements Filter {
 
         // process error ?
 
-        if (path.contains("login") || role != null) {
-            System.out.println("you are already here, do enter");
+        if (path.contains("login") || role == null) {
+            System.out.println("you are to enter your credentials");
             filterChain.doFilter(req, res);
             return;
 

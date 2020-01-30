@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
-    private Long id;
+    private int id;
     private String username;
     private String password;
     private String email;
@@ -14,7 +14,7 @@ public class User {
 
     private List<Order> orders = new ArrayList<>();
 
-    public User(Long id, String username, String password, String email, Role role, List<Order> orders) {
+    public User(int id, String username, String password, String email, Role role, List<Order> orders) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -32,11 +32,11 @@ public class User {
     public User() {
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

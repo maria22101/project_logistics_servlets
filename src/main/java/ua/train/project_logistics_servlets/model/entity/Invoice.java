@@ -1,12 +1,12 @@
 package ua.train.project_logistics_servlets.model.entity;
 
 public class Invoice {
-    private Long invoiceNumber;
+    private int invoiceNumber;
     private boolean isPaid;
 
     private Order order;
 
-    public Invoice(Long invoiceNumber, boolean isPaid, Order order) {
+    public Invoice(int invoiceNumber, boolean isPaid, Order order) {
         this.invoiceNumber = invoiceNumber;
         this.isPaid = isPaid;
         this.order = order;
@@ -15,11 +15,11 @@ public class Invoice {
     public Invoice() {
     }
 
-    public Long getInvoiceNumber() {
+    public int getInvoiceNumber() {
         return invoiceNumber;
     }
 
-    public void setInvoiceNumber(Long invoiceNumber) {
+    public void setInvoiceNumber(int invoiceNumber) {
         this.invoiceNumber = invoiceNumber;
     }
 

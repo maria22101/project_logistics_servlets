@@ -9,9 +9,7 @@
 
 <h1>Hello USER!</h1>
 
-<a href="${pageContext.request.contextPath}/delivery/login">Please log in</a><br><br>
-
-<a href="${pageContext.request.contextPath}/user/userOrders.jsp">To orders list</a><br><br>
+<a href="${pageContext.request.contextPath}/delivery/user/userOrders">To orders list</a><br><br>
 
 <a href="${pageContext.request.contextPath}/delivery/logout">Logout</a>
 </body>
