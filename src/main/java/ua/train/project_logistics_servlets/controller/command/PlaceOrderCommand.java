@@ -2,9 +2,9 @@ package ua.train.project_logistics_servlets.controller.command;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class Registration implements Command {
+public class PlaceOrderCommand implements Command{
     @Override
     public String execute(HttpServletRequest request) {
-        return "/registration.jsp";
+        return "/WEB-INF/user/placeOrder.jsp";
     }
 }

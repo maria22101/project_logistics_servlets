@@ -16,9 +16,19 @@
 </head>
 <body>
 
-    <h1><fmt:message key="usercabinet.title"/>${name}</h1>
+    <h2><fmt:message key="usercabinet.title"/>${name}</h2>
 
-    <a href="${pageContext.request.contextPath}/app/user/userOrders">To orders list</a><br><br>
+    <a href="${pageContext.request.contextPath}/app/user/userOrders">
+        <fmt:message key="cabinet.orderlist.link"/>
+    </a><br><br>
+
+    <a href="${pageContext.request.contextPath}/app/user/userInvoicedOrders">
+        <fmt:message key="usercabinet.invoiced.orderlist.link"/>
+    </a><br><br>
+
+    <a href="${pageContext.request.contextPath}/app/user/placeOrder">
+        <fmt:message key="usercabinet.order.placing.button"/>
+    </a><br><br>
 
     <form action="${pageContext.request.contextPath}/app/logout" method="post">
         <input class="button" type="submit" value="<fmt:message key="logout.button"/>"/>

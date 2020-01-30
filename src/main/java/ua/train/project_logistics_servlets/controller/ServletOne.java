@@ -20,12 +20,17 @@ public class ServletOne extends HttpServlet {
         servletConfig.getServletContext()
                 .setAttribute("loggedUsers", new HashSet<String>());
 
-        commands.put("logout", new LogOutCommand());
         commands.put("login", new LoginCommand());
+        commands.put("logout", new LogOutCommand());
+        commands.put("registration", new RegistrationCommand());
         commands.put("exception", new ExceptionCommand());
         commands.put("user/userMain", new UserMainCommand());
         commands.put("user/userOrders", new UserOrdersCommand());
+        commands.put("user/userInvoicedOrders", new UserInvoicedOrdersCommand());
+        commands.put("user/placeOrder", new PlaceOrderCommand());
         commands.put("admin/adminMain", new AdminMainCommand());
+        commands.put("admin/adminOrders", new AdminOrdersCommand());
+        commands.put("admin/adminOpenOrders", new AdminOpenOrdersCommand());
         commands.put("admin/adminUsers", new AdminUsersCommand());
         commands.put("denied", new DeniedCommand());
     }

@@ -12,20 +12,20 @@
 
 <html>
 <head>
-    <title>user orders list</title>
+    <title>order placing</title>
 </head>
 <body>
 
-    <h2><fmt:message key="cabinet.orderlist.title"/></h2>
+<h2><fmt:message key="usercabinet.order.creation.title"/></h2>
 
-    <form action="${pageContext.request.contextPath}/app/logout" method="post">
-        <input class="button" type="submit" value="<fmt:message key="logout.button"/>"/>
-    </form>
+<form action="${pageContext.request.contextPath}/app/logout" method="post">
+    <input class="button" type="submit" value="<fmt:message key="logout.button"/>"/>
+</form>
 
-    <div class="locale">
-        <a href="?lang=en"><fmt:message key="lang.eng"/></a><br>
-        <a href="?lang=ua"><fmt:message key="lang.ua"/></a>
-    </div>
+<div class="locale">
+    <a href="?lang=en"><fmt:message key="lang.eng"/></a><br>
+    <a href="?lang=ua"><fmt:message key="lang.ua"/></a>
+</div>
 
 </body>
 </html>
