@@ -15,8 +15,7 @@ public class ContextListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        ServletContext context = sce.getServletContext();
-        logger.info("Initializing context, attributes: " + context.getAttributeNames());
+        logger.info("Initializing context");
     }
 
     @Override

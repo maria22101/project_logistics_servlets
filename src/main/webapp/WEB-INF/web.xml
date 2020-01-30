@@ -23,7 +23,7 @@
   </servlet>
   <servlet-mapping>
       <servlet-name>ServletOne</servlet-name>
-      <url-pattern>/delivery/*</url-pattern>
+      <url-pattern>/app/*</url-pattern>
   </servlet-mapping>
 
   <welcome-file-list>
@@ -44,7 +44,7 @@
   </filter>
   <filter-mapping>
         <filter-name>EncodingFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/delivery/*</url-pattern>
   </filter-mapping>
 
   <filter>
@@ -62,7 +62,7 @@
   </filter>
   <filter-mapping>
     <filter-name>LocaleFilter</filter-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/delivery/*</url-pattern>
   </filter-mapping>
 
     <listener>

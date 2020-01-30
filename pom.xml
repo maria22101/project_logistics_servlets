@@ -104,7 +104,7 @@
           <configuration>
             <uriEncoding>UTF-8</uriEncoding>
             <port>8080</port>
-            <path>/delivery</path>
+            <path>/</path>
           </configuration>
         </plugin>
 

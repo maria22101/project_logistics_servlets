@@ -41,7 +41,8 @@ public class AuthFilter implements Filter {
 
         // process error ?
 
-        if (path.contains("login") && role == null) {
+        if ((path.contains("login") && role == null) ||
+                path.contains(("logout"))) {
             logger.info("Please proceed with login to enter the service");
             filterChain.doFilter(request, response);
             return;

@@ -23,11 +23,11 @@
         <fmt:message key="main.title"/>
     </h2>
 
-    <a href="${pageContext.request.contextPath}/delivery/login">
+    <a href="${pageContext.request.contextPath}/app/login">
         <fmt:message key="main.login.link"/>
     </a><br><br>
 
-    <a href="${pageContext.request.contextPath}/delivery/registration">
+    <a href="${pageContext.request.contextPath}/app/registration">
         <fmt:message key="main.registration.link"/>
     </a><br><br>
 

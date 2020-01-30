@@ -27,15 +27,19 @@ public class LoginCommand implements Command {
                 simpleUserService.getRoleByLoginAndPassword(name, pass).equals(Role.USER)) {
 
             CommandUtility.setUserInSessionAndInContext(request, Role.USER, name);
-            logger.info("User " + name + " logged successfully");
-            return "redirect:/user/userMain.jsp";
+            logger.info("User " + name + " logged successfully. Servlet_Context: "
+                    + request.getServletContext().getAttribute("loggedUsers") + ", Session_Role "
+                    + request.getSession().getAttribute("role"));
+            return "redirect:user/userMain";
 
         } else if (simpleUserService.userExists(name, pass) &&
                 simpleUserService.getRoleByLoginAndPassword(name, pass).equals(Role.ADMIN)) {
 
             CommandUtility.setUserInSessionAndInContext(request, Role.ADMIN, name);
-            logger.info("Admin " + name + " logged successfully");
-            return "redirect:/admin/adminMain.jsp";
+            logger.info("Admin " + name + " logged successfully. Servlet_Context: "
+                    + request.getServletContext().getAttribute("loggedUsers") + ", Session_Role "
+                    + request.getSession().getAttribute("role"));
+            return "redirect:admin/adminMain";
 
         } else {
 

@@ -23,9 +23,9 @@ public class ServletOne extends HttpServlet {
         commands.put("logout", new LogOutCommand());
         commands.put("login", new LoginCommand());
         commands.put("exception", new ExceptionCommand());
-        commands.put("user/userMain.jsp", new UserMainCommand());
+        commands.put("user/userMain", new UserMainCommand());
         commands.put("user/userOrders", new UserOrdersCommand());
-        commands.put("admin/adminMain.jsp", new AdminMainCommand());
+        commands.put("admin/adminMain", new AdminMainCommand());
         commands.put("admin/adminUsers", new AdminUsersCommand());
         commands.put("denied", new DeniedCommand());
     }
@@ -47,7 +47,7 @@ public class ServletOne extends HttpServlet {
         String path = request.getRequestURI();
         System.out.println(path);
 
-        path = path.replaceAll(".*/delivery/" , "");
+        path = path.replaceAll(".*/app/", "");
         System.out.println(path);
 
         Command command = commands.getOrDefault(path, (r)->"/index.jsp)");
@@ -56,7 +56,7 @@ public class ServletOne extends HttpServlet {
         String page = command.execute(request);
 
        if(page.contains("redirect:")){
-            response.sendRedirect(page.replace("redirect:", "/delivery"));
+            response.sendRedirect(page.replace("redirect:", ""));
         }else {
             request.getRequestDispatcher(page).forward(request, response);
         }

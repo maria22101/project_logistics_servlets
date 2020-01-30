@@ -9,8 +9,8 @@
 
 <h1>Hello ADMIN!</h1>
 
-<a href="${pageContext.request.contextPath}/delivery/admin/adminUsers">To users list</a><br><br>
+<a href="${pageContext.request.contextPath}/app/admin/adminUsers">To users list</a><br><br>
 
-<a href="${pageContext.request.contextPath}/delivery/logout">Logout</a>
+<a href="${pageContext.request.contextPath}/app/logout">Logout</a>
 </body>
 </html>

@@ -12,7 +12,7 @@
 
     <h1>Enter system</h1><br/>
 
-    <form method="get" action="${pageContext.request.contextPath}/delivery/login">
+    <form method="get" action="${pageContext.request.contextPath}/app/login">
 
         <input type="text" name="name"><br/>
         <input type="password" name="pass"><br/><br/>

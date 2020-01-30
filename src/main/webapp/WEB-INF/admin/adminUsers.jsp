@@ -8,6 +8,6 @@
 
 <h2>Users list:</h2>
 
-<a href="${pageContext.request.contextPath}/delivery/logout">Logout</a>
+<a href="${pageContext.request.contextPath}/app/logout">Logout</a>
 </body>
 </html>
