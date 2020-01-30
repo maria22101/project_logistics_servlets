@@ -19,12 +19,12 @@ public class LocaleFilter implements Filter {
         final HttpServletRequest req = (HttpServletRequest) request;
         final HttpServletResponse res = (HttpServletResponse) response;
 
-        String localeName = request.getParameter("lang");
+//        req.getSession().setAttribute("lang", "ua");
+
+        String localeName = req.getParameter("lang");
         if (localeName != null) {
             req.getSession().setAttribute("lang", localeName);
         }
-
-
 
         filterChain.doFilter(req, res);
     }

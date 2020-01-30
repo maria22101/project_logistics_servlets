@@ -1,5 +1,8 @@
 package ua.train.project_logistics_servlets.controller.filters;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import ua.train.project_logistics_servlets.controller.command.LoginCommand;
 import ua.train.project_logistics_servlets.model.entity.enums.Role;
 import ua.train.project_logistics_servlets.model.service.SimpleUserService;
 
@@ -12,6 +15,7 @@ import java.io.IOException;
 import static java.util.Objects.nonNull;
 
 public class AuthFilter implements Filter {
+    private static final Logger logger = LogManager.getLogger(AuthFilter.class);
     SimpleUserService userService = new SimpleUserService();
 
     @Override
@@ -37,29 +41,25 @@ public class AuthFilter implements Filter {
 
         // process error ?
 
-        if (path.contains("login") || role == null) {
-            System.out.println("you are to enter your credentials");
-            filterChain.doFilter(req, res);
+        if (path.contains("login") && role == null) {
+            logger.info("Please proceed with login to enter the service");
+            filterChain.doFilter(request, response);
             return;
 
         } else if (path.contains("user") && role.equals(Role.USER)) {
-            System.out.println("you are user entering user's url, do enter");
-            filterChain.doFilter(req, res);
+            logger.info("You have User role -> you are allowed to proceed");
+            filterChain.doFilter(request, response);
             return;
 
         } else if (path.contains("admin") && role.equals(Role.ADMIN)) {
-            System.out.println("you are admin entering admin's url, do enter");
-            filterChain.doFilter(req, res);
+            logger.info("You have Admin role -> you are allowed to proceed");
+            filterChain.doFilter(request, response);
             return;
 
         } else {
+            logger.info("Resource forbidden for your role");
             res.sendRedirect("/denied");
         }
-
-        System.out.println(session);
-        System.out.println(session.getAttribute("role"));
-        System.out.println(context.getAttribute("loggedUsers"));
-
 
         filterChain.doFilter(request, response);
     }

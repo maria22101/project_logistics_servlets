@@ -14,7 +14,13 @@ public class CommandUtility {
         HttpSession session = request.getSession();
         ServletContext context = request.getServletContext();
         session.setAttribute("role", role);
-        context.setAttribute("username", username);
+        setUserNameInContext(request, username);
+    }
+
+    static void setUserNameInContext(HttpServletRequest request, String username) {
+        HashSet<String> loggedUsers = getLoggedUsers(request);
+        loggedUsers.add(username);
+        request.getServletContext().setAttribute("loggedUsers", loggedUsers);
     }
 
     static void discardUserFromSessionAndContext(HttpServletRequest request) {
@@ -35,10 +41,9 @@ public class CommandUtility {
                 stream().anyMatch(username::equals);
     }
 
-    static void setUserNameInContext(HttpServletRequest request, String username) {
+    static void discardUserNameFromContext(HttpServletRequest request, String username) {
         HashSet<String> loggedUsers = getLoggedUsers(request);
-        loggedUsers.add(username);
+        loggedUsers.remove(username);
         request.getServletContext().setAttribute("loggedUsers", loggedUsers);
     }
-
 }
