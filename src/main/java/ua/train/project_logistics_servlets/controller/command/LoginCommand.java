@@ -43,7 +43,7 @@ public class LoginCommand implements Command {
 
         } else {
 
-            CommandUtility.setUserInSessionAndInContext(request, Role.UNKNOWN, name);
+//            CommandUtility.setUserInSessionAndInContext(request, Role.UNKNOWN, name);
             logger.info("Guest " + name + " is not recognized");
             return "/login.jsp";
         }

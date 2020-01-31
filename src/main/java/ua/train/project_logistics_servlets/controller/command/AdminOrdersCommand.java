@@ -1,8 +1,13 @@
 package ua.train.project_logistics_servlets.controller.command;
 
-import javax.servlet.http.HttpServletRequest;
+import ua.train.project_logistics_servlets.model.entity.Route;
+import ua.train.project_logistics_servlets.model.service.RouteService;
 
-public class AdminOrdersCommand implements Command{
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
+public class AdminOrdersCommand implements Command {
+
     @Override
     public String execute(HttpServletRequest request) {
         return "/WEB-INF/admin/adminOrders.jsp";

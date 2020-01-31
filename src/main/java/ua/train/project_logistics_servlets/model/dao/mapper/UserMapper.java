@@ -20,11 +20,9 @@ public class UserMapper implements ObjectMapper<User> {
         return user;
     }
 
-    //TODO - investigate/ refactor/ adjust approach, as User Id is Long
     @Override
     public User makeUnique(Map<Integer, User> cache, User user) {
-//        cache.putIfAbsent(user.getId(), user);
-//        return cache.get(student.getId());
-        return null;
+        cache.putIfAbsent(user.getId(), user);
+        return cache.get(user.getId());
     }
 }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Route {
-    private int id;
+    private Long id;
     private String source;
     private String destination;
     private BigDecimal basicRate;
@@ -14,7 +14,7 @@ public class Route {
 
     private List<Address> addresses = new ArrayList<>();
 
-    public Route(int id, String source, String destination, BigDecimal basicRate,
+    public Route(Long id, String source, String destination, BigDecimal basicRate,
                  List<Order> orders, List<Address> addresses) {
         this.id = id;
         this.source = source;
@@ -27,11 +27,11 @@ public class Route {
     public Route() {
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -26,7 +26,7 @@ public class LocaleFilter implements Filter {
             req.getSession().setAttribute("lang", localeName);
         }
 
-        filterChain.doFilter(req, res);
+        filterChain.doFilter(request, response);
     }
 
     @Override

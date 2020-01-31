@@ -42,25 +42,27 @@ public class AuthFilter implements Filter {
         // process error ?
 
         if ((path.contains("login") && role == null) ||
-                path.contains(("logout"))) {
+                path.contains(("logout")) ||
+                path.contains("registration")) {
             logger.info("Please proceed with login to enter the service");
             filterChain.doFilter(request, response);
             return;
+        }
 
-        } else if (path.contains("user") && role.equals(Role.USER)) {
+        if (path.contains("user") && role.equals(Role.USER)) {
             logger.info("You have User role -> you are allowed to proceed");
             filterChain.doFilter(request, response);
             return;
+        }
 
-        } else if (path.contains("admin") && role.equals(Role.ADMIN)) {
+        if (path.contains("admin") && role.equals(Role.ADMIN)) {
             logger.info("You have Admin role -> you are allowed to proceed");
             filterChain.doFilter(request, response);
             return;
-
-        } else {
-            logger.info("Resource forbidden for your role");
-            res.sendRedirect("/denied");
         }
+
+            logger.info("Resource forbidden for your role");
+            res.sendError(HttpServletResponse.SC_UNAUTHORIZED);
 
         filterChain.doFilter(request, response);
     }

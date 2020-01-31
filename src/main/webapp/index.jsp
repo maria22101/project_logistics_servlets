@@ -25,7 +25,7 @@
 
     <a href="${pageContext.request.contextPath}/app/login">
         <fmt:message key="main.login.link"/>
-    </a><br><br>пше
+    </a><br><br>
 
     <a href="${pageContext.request.contextPath}/app/registration">
         <fmt:message key="main.registration.link"/>

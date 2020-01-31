@@ -10,11 +10,11 @@ import java.util.List;
 
 public class UserService {
 
-//    DaoFactory daoFactory = DaoFactory.getInstance();
-//
-//    public List<User> getAllUsers() {
-//        try(UserDao dao = daoFactory.createUserDao()) {
-//            return dao.findAll();
-//        }
-//    }
+    DaoFactory daoFactory = DaoFactory.getInstance();
+
+    public List<User> getAllUsers() {
+        try(UserDao dao = daoFactory.createUserDao()) {
+            return dao.findAll();
+        }
+    }
 }

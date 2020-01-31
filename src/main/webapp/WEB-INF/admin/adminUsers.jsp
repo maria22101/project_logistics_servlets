@@ -18,14 +18,40 @@
 
 <h2><fmt:message key="admincabinet.userlist.title"/></h2>
 
-<form action="${pageContext.request.contextPath}/app/logout" method="post">
-    <input class="button" type="submit" value="<fmt:message key="logout.button"/>"/>
-</form>
+<h2><fmt:message key="main.services"/></h2>
 
-<div class="locale">
-    <a href="?lang=en"><fmt:message key="lang.eng"/></a><br>
-    <a href="?lang=ua"><fmt:message key="lang.ua"/></a>
-</div>
+    <table border="0.5">
+        <thead>
+        <tr>
+            <th><fmt:message key="main.from"/></th>
+            <th><fmt:message key="main.to"/></th>
+            <th><fmt:message key="main.cost"/></th>
+        </tr>
+        </thead>
+
+        <tbody>
+            <c:forEach var="route" items="${routes}">
+            <tr>
+                <td>${route.source}</td>
+                <td>${route.destination}</td>
+                <td>${route.basicRate}</td>
+            </tr>
+            </c:forEach>
+        </tbody>
+    </table>
+
+<%--    <%=request.getAttribute("routes")%>--%>
+<%--    <c:out value="${routes}"/>--%>
+
+    <br/>
+    <form action="${pageContext.request.contextPath}/app/logout" method="post">
+        <input class="button" type="submit" value="<fmt:message key="logout.button"/>"/>
+    </form>
+
+    <div class="locale">
+        <a href="?lang=en"><fmt:message key="lang.eng"/></a><br>
+        <a href="?lang=ua"><fmt:message key="lang.ua"/></a>
+    </div>
 
 </body>
 </html>

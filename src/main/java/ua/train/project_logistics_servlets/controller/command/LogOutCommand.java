@@ -14,11 +14,10 @@ public class LogOutCommand implements Command{
     @Override
     public String execute(HttpServletRequest request) {
 
-        // ToDo - check deleting current user (context & session)
         CommandUtility.discardUserFromSessionAndContext(request);
 
         logger.info("User logged out. Servlet_Context: "
-                + request.getServletContext().getAttribute("loggedUsers") + "Session_Role "
+                + request.getServletContext().getAttribute("loggedUsers") + ", Session_Role "
                 + request.getSession().getAttribute("role"));
 
         return "redirect:/";

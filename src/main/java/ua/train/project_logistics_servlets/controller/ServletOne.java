@@ -1,6 +1,7 @@
 package ua.train.project_logistics_servlets.controller;
 
 import ua.train.project_logistics_servlets.controller.command.*;
+import ua.train.project_logistics_servlets.model.service.RouteService;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -14,6 +15,7 @@ import java.util.Map;
 
 public class ServletOne extends HttpServlet {
     private Map<String, Command> commands = new HashMap<>();
+    private RouteService routeService = new RouteService();
 
     public void init(ServletConfig servletConfig){
 
@@ -31,7 +33,7 @@ public class ServletOne extends HttpServlet {
         commands.put("admin/adminMain", new AdminMainCommand());
         commands.put("admin/adminOrders", new AdminOrdersCommand());
         commands.put("admin/adminOpenOrders", new AdminOpenOrdersCommand());
-        commands.put("admin/adminUsers", new AdminUsersCommand());
+        commands.put("admin/adminUsers", new AdminUsersCommand(routeService));
         commands.put("denied", new DeniedCommand());
     }
 

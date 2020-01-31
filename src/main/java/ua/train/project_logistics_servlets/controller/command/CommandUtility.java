@@ -26,7 +26,7 @@ public class CommandUtility {
 
     static void discardUserFromSessionAndContext(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        session.setAttribute("role", Role.UNKNOWN);
+        session.removeAttribute("role");
         discardUserNameFromContext(request, session.getAttribute("name").toString());
     }
 
