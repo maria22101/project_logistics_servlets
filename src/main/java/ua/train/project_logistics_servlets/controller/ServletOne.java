@@ -26,14 +26,15 @@ public class ServletOne extends HttpServlet {
         commands.put("logout", new LogOutCommand());
         commands.put("registration", new RegistrationCommand());
         commands.put("exception", new ExceptionCommand());
-        commands.put("user/userMain", new UserMainCommand());
-        commands.put("user/userOrders", new UserOrdersCommand());
-        commands.put("user/userInvoicedOrders", new UserInvoicedOrdersCommand());
-        commands.put("user/placeOrder", new PlaceOrderCommand());
-        commands.put("admin/adminMain", new AdminMainCommand());
-        commands.put("admin/adminOrders", new AdminOrdersCommand());
-        commands.put("admin/adminOpenOrders", new AdminOpenOrdersCommand());
-        commands.put("admin/adminUsers", new AdminUsersCommand(routeService));
+        commands.put("user/user_main", new UserMainCommand());
+        commands.put("user/orders", new UserOrdersCommand());
+        commands.put("user/invoiced_orders", new UserInvoicedOrdersCommand());
+        commands.put("user/place_order", new PlaceOrderCommand());
+        commands.put("admin/admin_main", new AdminMainCommand());
+        commands.put("admin/orders", new AdminOrdersCommand());
+        commands.put("admin/open_orders", new AdminOpenOrdersCommand());
+        commands.put("admin/users", new AdminUsersCommand(routeService));
+        commands.put("admin/routes", new AdminRoutesCommand());
         commands.put("denied", new DeniedCommand());
     }
 

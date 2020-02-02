@@ -18,15 +18,15 @@
 
     <h2><fmt:message key="usercabinet.title"/>${name}</h2>
 
-    <a href="${pageContext.request.contextPath}/app/user/userOrders">
+    <a href="${pageContext.request.contextPath}/app/user/orders">
         <fmt:message key="cabinet.orderlist.link"/>
     </a><br><br>
 
-    <a href="${pageContext.request.contextPath}/app/user/userInvoicedOrders">
+    <a href="${pageContext.request.contextPath}/app/user/invoiced_orders">
         <fmt:message key="usercabinet.invoiced.orderlist.link"/>
     </a><br><br>
 
-    <a href="${pageContext.request.contextPath}/app/user/placeOrder">
+    <a href="${pageContext.request.contextPath}/app/user/place_order">
         <fmt:message key="usercabinet.order.placing.button"/>
     </a><br><br>
 

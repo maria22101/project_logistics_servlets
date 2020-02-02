@@ -30,7 +30,7 @@ public class LoginCommand implements Command {
             logger.info("User " + name + " logged successfully. Servlet_Context: "
                     + request.getServletContext().getAttribute("loggedUsers") + ", Session_Role "
                     + request.getSession().getAttribute("role"));
-            return "redirect:user/userMain";
+            return "redirect:user/user_main";
 
         } else if (simpleUserService.userExists(name, pass) &&
                 simpleUserService.getRoleByLoginAndPassword(name, pass).equals(Role.ADMIN)) {
@@ -39,7 +39,7 @@ public class LoginCommand implements Command {
             logger.info("Admin " + name + " logged successfully. Servlet_Context: "
                     + request.getServletContext().getAttribute("loggedUsers") + ", Session_Role "
                     + request.getSession().getAttribute("role"));
-            return "redirect:admin/adminMain";
+            return "redirect:admin/admin_main";
 
         } else {
 
