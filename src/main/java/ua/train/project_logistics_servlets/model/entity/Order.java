@@ -11,30 +11,36 @@ public class Order {
     private LocalDate deliveryDate;
     private BigDecimal weight;
     private CargoType cargoType;
-    private OrderStatus orderStatus;
     private BigDecimal sum;
+    private OrderStatus orderStatus;
 
     private User user;
+    private Address dispatchAddress;
+    private Address deliveryAddress;
     private Route route;
     private Invoice invoice;
 
     public Order(int orderNumber,
                  LocalDate deliveryDate,
-                 Route route,
                  BigDecimal weight,
                  CargoType cargoType,
-                 User user,
-                 OrderStatus orderStatus,
                  BigDecimal sum,
+                 OrderStatus orderStatus,
+                 User user,
+                 Address dispatchAddress,
+                 Address deliveryAddress,
+                 Route route,
                  Invoice invoice) {
         this.orderNumber = orderNumber;
         this.deliveryDate = deliveryDate;
-        this.route = route;
         this.weight = weight;
         this.cargoType = cargoType;
-        this.user = user;
-        this.orderStatus = orderStatus;
         this.sum = sum;
+        this.orderStatus = orderStatus;
+        this.user = user;
+        this.dispatchAddress = dispatchAddress;
+        this.deliveryAddress = deliveryAddress;
+        this.route = route;
         this.invoice = invoice;
     }
 
@@ -57,14 +63,6 @@ public class Order {
         this.deliveryDate = deliveryDate;
     }
 
-    public Route getRoute() {
-        return route;
-    }
-
-    public void setRoute(Route route) {
-        this.route = route;
-    }
-
     public BigDecimal getWeight() {
         return weight;
     }
@@ -81,12 +79,12 @@ public class Order {
         this.cargoType = cargoType;
     }
 
-    public User getUser() {
-        return user;
+    public BigDecimal getSum() {
+        return sum;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setSum(BigDecimal sum) {
+        this.sum = sum;
     }
 
     public OrderStatus getOrderStatus() {
@@ -97,12 +95,36 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
-    public BigDecimal getSum() {
-        return sum;
+    public User getUser() {
+        return user;
     }
 
-    public void setSum(BigDecimal sum) {
-        this.sum = sum;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Address getDispatchAddress() {
+        return dispatchAddress;
+    }
+
+    public void setDispatchAddress(Address dispatchAddress) {
+        this.dispatchAddress = dispatchAddress;
+    }
+
+    public Address getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(Address deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
+    }
+
+    public Route getRoute() {
+        return route;
+    }
+
+    public void setRoute(Route route) {
+        this.route = route;
     }
 
     public Invoice getInvoice() {

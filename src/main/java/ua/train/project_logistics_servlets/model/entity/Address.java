@@ -1,19 +1,28 @@
 package ua.train.project_logistics_servlets.model.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Address {
     private int id;
+    private String city;
     private String street;
     private String house;
     private String apartment;
 
-    private Route route;
+    private List<Order> dispatchingOrders = new ArrayList<>();
 
-    public Address(int id, String street, String house, String apartment, Route route) {
+    private List<Order> deliveringOrders = new ArrayList<>();
+
+    public Address(int id, String city, String street, String house, String apartment) {
         this.id = id;
+        this.city = city;
         this.street = street;
         this.house = house;
         this.apartment = apartment;
-        this.route = route;
+    }
+
+    public Address() {
     }
 
     public int getId() {
@@ -22,6 +31,14 @@ public class Address {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getStreet() {
@@ -48,14 +65,19 @@ public class Address {
         this.apartment = apartment;
     }
 
-    public Route getRoute() {
-        return route;
+    public List<Order> getDispatchingOrders() {
+        return dispatchingOrders;
     }
 
-    public Address() {
+    public void setDispatchingOrders(List<Order> dispatchingOrders) {
+        this.dispatchingOrders = dispatchingOrders;
     }
 
-    public void setRoute(Route route) {
-        this.route = route;
+    public List<Order> getDeliveringOrders() {
+        return deliveringOrders;
+    }
+
+    public void setDeliveringOrders(List<Order> deliveringOrders) {
+        this.deliveringOrders = deliveringOrders;
     }
 }
