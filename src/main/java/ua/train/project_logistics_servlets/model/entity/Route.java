@@ -5,50 +5,70 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Route {
-    private Long id;
-    private String source;
-    private String destination;
+    private int id;
+    private String pointOne;
+    private String pointOneUA;
+    private String pointTwo;
+    private String pointTwoUA;
     private BigDecimal basicRate;
 
     private List<Order> orders = new ArrayList<>();
 
-    private List<Address> addresses = new ArrayList<>();
-
-    public Route(Long id, String source, String destination, BigDecimal basicRate,
-                 List<Order> orders, List<Address> addresses) {
+    public Route(int id,
+                 String pointOne,
+                 String pointOneUA,
+                 String pointTwo,
+                 String pointTwoUA,
+                 BigDecimal basicRate) {
         this.id = id;
-        this.source = source;
-        this.destination = destination;
+        this.pointOne = pointOne;
+        this.pointOneUA = pointOneUA;
+        this.pointTwo = pointTwo;
+        this.pointTwoUA = pointTwoUA;
         this.basicRate = basicRate;
-        this.orders = orders;
-        this.addresses = addresses;
     }
 
     public Route() {
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getSource() {
-        return source;
+    public String getPointOne() {
+        return pointOne;
     }
 
-    public void setSource(String source) {
-        this.source = source;
+    public void setPointOne(String pointOne) {
+        this.pointOne = pointOne;
     }
 
-    public String getDestination() {
-        return destination;
+    public String getPointOneUA() {
+        return pointOneUA;
     }
 
-    public void setDestination(String destination) {
-        this.destination = destination;
+    public void setPointOneUA(String pointOneUA) {
+        this.pointOneUA = pointOneUA;
+    }
+
+    public String getPointTwo() {
+        return pointTwo;
+    }
+
+    public void setPointTwo(String pointTwo) {
+        this.pointTwo = pointTwo;
+    }
+
+    public String getPointTwoUA() {
+        return pointTwoUA;
+    }
+
+    public void setPointTwoUA(String pointTwoUA) {
+        this.pointTwoUA = pointTwoUA;
     }
 
     public BigDecimal getBasicRate() {
@@ -65,13 +85,5 @@ public class Route {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
-    }
-
-    public List<Address> getAddresses() {
-        return addresses;
-    }
-
-    public void setAddresses(List<Address> addresses) {
-        this.addresses = addresses;
     }
 }

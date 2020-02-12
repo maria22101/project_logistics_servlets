@@ -7,25 +7,25 @@ import java.util.List;
 
 public class User {
     private int id;
-    private String username;
+    private String name;
+    private String surname;
     private String password;
     private String email;
     private Role role;
 
     private List<Order> orders = new ArrayList<>();
 
-    public User(int id, String username, String password, String email, Role role, List<Order> orders) {
+    public User(int id,
+                String name,
+                String surname,
+                String password,
+                String email,
+                Role role) {
         this.id = id;
-        this.username = username;
+        this.name = name;
+        this.surname = surname;
         this.password = password;
         this.email = email;
-        this.role = role;
-        this.orders = orders;
-    }
-
-    public User(String username, String password, Role role) {
-        this.username = username;
-        this.password = password;
         this.role = role;
     }
 
@@ -40,12 +40,20 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getPassword() {
