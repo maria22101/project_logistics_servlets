@@ -1,4 +1,4 @@
-package ua.train.project_logistics_servlets.web.filters;
+package ua.train.project_logistics_servlets.web.filter;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
