@@ -13,7 +13,7 @@ public class ConnectionPoolHolder {
             synchronized (ConnectionPoolHolder.class) {
                 if (dataSource == null) {
                     BasicDataSource ds = new BasicDataSource();
-                    ds.setUrl("jdbc:mysql://localhost:3306/delivery1");
+                    ds.setUrl("jdbc:mysql://localhost:3306/delivery4");
                     ds.setUsername("root");
                     ds.setPassword("tigra263");
                     ds.setMinIdle(5);

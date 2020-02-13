@@ -21,14 +21,14 @@
 
     <h2><fmt:message key="login.page.title"/></h2><br/>
 
-    <form method="get" action="${pageContext.request.contextPath}/app/login">
+    <form method="post" action="${pageContext.request.contextPath}/app/login">
 
-        <div><label> <fmt:message key="user_name.indication"/>
-            <input type="text" name="name"><br/><br/>
+        <div><label> <fmt:message key="email.indication"/>
+            <input type="text" name="email"><br/><br/>
         </label></div>
 
         <div><label> <fmt:message key="password.indication"/>
-            <input type="password" name="pass"><br/><br/>
+            <input type="password" name="password"><br/><br/>
         </label></div>
 
         <input class="button" type="submit" value="<fmt:message key="login.button"/>">

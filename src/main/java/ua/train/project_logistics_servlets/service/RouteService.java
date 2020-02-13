@@ -15,10 +15,4 @@ public class RouteService {
             return dao.findAll();
         }
     }
-
-//    public static void main(String[] args) {
-//        RouteService routeService = new RouteService();
-//        List<Route> routes = routeService.getAllRoutes();
-//        System.out.println(routes);
-//    }
 }

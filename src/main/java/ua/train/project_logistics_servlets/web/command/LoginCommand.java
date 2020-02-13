@@ -3,48 +3,54 @@ package ua.train.project_logistics_servlets.web.command;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.train.project_logistics_servlets.enums.Role;
-import ua.train.project_logistics_servlets.service.SimpleUserService;
+import ua.train.project_logistics_servlets.exception.UserNotFoundException;
+import ua.train.project_logistics_servlets.service.LoginService;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class LoginCommand implements Command {
-    private static final Logger logger = LogManager.getLogger(LoginCommand.class);
-    private SimpleUserService simpleUserService = new SimpleUserService();
+    private static final Logger LOGGER = LogManager.getLogger(LoginCommand.class);
+    private LoginService loginService = new LoginService();
 
     @Override
     public String execute(HttpServletRequest request) {
 
-        String name = request.getParameter("name");
-        String pass = request.getParameter("pass");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
 
-        if (name == null || name.equals("") || pass == null || pass.equals("")) {
+        if (email == null || email.equals("") || password == null || password.equals("")) {
             return "/login.jsp";
         }
 
-        if (simpleUserService.userExists(name, pass) &&
-                simpleUserService.getRoleByLoginAndPassword(name, pass).equals(Role.USER)) {
+        try {
 
-            CommandUtility.setUserInSessionAndInContext(request, Role.USER, name);
-            logger.info("User " + name + " logged successfully. Servlet_Context: "
-                    + request.getServletContext().getAttribute("loggedUsers") + ", Session_Role "
-                    + request.getSession().getAttribute("role"));
-            return "redirect:user/user_main";
 
-        } else if (simpleUserService.userExists(name, pass) &&
-                simpleUserService.getRoleByLoginAndPassword(name, pass).equals(Role.ADMIN)) {
+            if (loginService.isUserAuthorized(email, password) &&
+                    loginService.getRoleByEmail(email).equals(Role.USER)) {
 
-            CommandUtility.setUserInSessionAndInContext(request, Role.ADMIN, name);
-            logger.info("Admin " + name + " logged successfully. Servlet_Context: "
-                    + request.getServletContext().getAttribute("loggedUsers") + ", Session_Role "
-                    + request.getSession().getAttribute("role"));
-            return "redirect:admin/admin_main";
+                CommandUtility.setUserInSessionAndInContext(request, Role.USER, email);
+                LOGGER.info("User " + email + " logged successfully. Servlet_Context: "
+                        + request.getServletContext().getAttribute("loggedUsers") + ", Session_Role "
+                        + request.getSession().getAttribute("role"));
+                return "redirect:user/user_main";
 
-        } else {
+            } else if (loginService.isUserAuthorized(email, password) &&
+                    loginService.getRoleByEmail(email).equals(Role.ADMIN)) {
 
-//            CommandUtility.setUserInSessionAndInContext(request, Role.UNKNOWN, name);
-            logger.info("Guest " + name + " is not recognized");
-            return "/login.jsp";
+                CommandUtility.setUserInSessionAndInContext(request, Role.ADMIN, email);
+                LOGGER.info("Admin " + email + " logged successfully. Servlet_Context: "
+                        + request.getServletContext().getAttribute("loggedUsers") + ", Session_Role "
+                        + request.getSession().getAttribute("role"));
+                return "redirect:admin/admin_main";
+
+            } else {
+
+//            CommandUtility.setUserInSessionAndInContext(request, Role.UNKNOWN, email);
+                LOGGER.info("Guest " + email + " is not recognized");
+                return "/login.jsp";
+            }
+        } catch (UserNotFoundException e) {
+            return "/error.jsp";
         }
     }
-
 }

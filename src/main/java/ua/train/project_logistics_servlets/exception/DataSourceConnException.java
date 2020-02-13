@@ -1,4 +1,4 @@
-package ua.train.project_logistics_servlets.persistence.dao.impl;
+package ua.train.project_logistics_servlets.exception;
 
 public class DataSourceConnException extends Exception {
     public DataSourceConnException(Throwable cause) {

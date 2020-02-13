@@ -1,6 +1,10 @@
 package ua.train.project_logistics_servlets.persistence.dao.impl;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.train.project_logistics_servlets.persistence.dao.InvoiceDao;
+import ua.train.project_logistics_servlets.persistence.dao.mapper.InvoiceMapper;
+import ua.train.project_logistics_servlets.persistence.dao.mapper.RouteMapper;
 import ua.train.project_logistics_servlets.persistence.domain.Invoice;
 
 import java.sql.Connection;
@@ -9,6 +13,8 @@ import java.util.List;
 
 public class JDBCInvoiceDao implements InvoiceDao {
     private Connection connection;
+    private InvoiceMapper invoiceMapper = new InvoiceMapper();
+    private static final Logger LOGGER = LogManager.getLogger(JDBCInvoiceDao.class);
 
     public JDBCInvoiceDao(Connection connection) {
         this.connection = connection;

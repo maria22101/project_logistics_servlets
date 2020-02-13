@@ -18,22 +18,22 @@
 
 <h2><fmt:message key="admincabinet.userlist.title"/></h2>
 
-<h2><fmt:message key="main.services"/></h2>
+<%--<h2><fmt:message key="main.services"/></h2>--%>
 
     <table border="0.5">
         <thead>
         <tr>
-            <th><fmt:message key="main.from"/></th>
-            <th><fmt:message key="main.to"/></th>
-            <th><fmt:message key="main.cost"/></th>
+            <th><fmt:message key="main.route.point.one"/></th>
+            <th><fmt:message key="main.route.point.two"/></th>
+            <th><fmt:message key="main.basic.rate"/></th>
         </tr>
         </thead>
 
         <tbody>
             <c:forEach var="route" items="${routes}">
             <tr>
-                <td>${route.source}</td>
-                <td>${route.destination}</td>
+                <td>${route.pointOne}</td>
+                <td>${route.pointTwo}</td>
                 <td>${route.basicRate}</td>
             </tr>
             </c:forEach>
