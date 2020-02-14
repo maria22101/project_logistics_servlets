@@ -7,5 +7,5 @@
     <fmt:message key="admin.and.user.cabinet.back.to.cabinet"/>
 </a><br>
 
-<a href="${pageContext.request.contextPath}/index.jsp"><fmt:message key="main.return.link"/></a><br>
+<a href="${pageContext.request.contextPath}/welcome"><fmt:message key="main.return.link"/></a><br/>
 

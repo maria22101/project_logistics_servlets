@@ -3,4 +3,4 @@
 
 <a href="?lang=ua"><fmt:message key="lang.ua"/></a><br>
 
-<a href="${pageContext.request.contextPath}/index.jsp"><fmt:message key="main.return.link"/></a><br/>
+<a href="${pageContext.request.contextPath}/welcome"><fmt:message key="main.return.link"/></a><br/>
