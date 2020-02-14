@@ -1,4 +1,4 @@
-package ua.train.project_logistics_servlets.web.filters;
+package ua.train.project_logistics_servlets.web.filter;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

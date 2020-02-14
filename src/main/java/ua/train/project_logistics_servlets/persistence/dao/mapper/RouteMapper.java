@@ -10,17 +10,12 @@ public class RouteMapper implements ObjectMapper<Route> {
     @Override
     public Route extractFromResultSet(ResultSet rs) throws SQLException {
         Route route = new Route();
-        route.setId(rs.getLong("route_id"));
-        route.setSource(rs.getString("source"));
-        route.setBasicRate(rs.getBigDecimal("basicRate") );
+        route.setId(rs.getInt("id"));
+        route.setPointOne(rs.getString("point_one"));
+        route.setPointOneUA(rs.getString("point_one_ua"));
+        route.setPointTwo(rs.getString("point_two"));
+        route.setPointTwoUA(rs.getString("point_two_ua"));
+        route.setBasicRate(rs.getBigDecimal("basic_rate"));
         return route;
-    }
-
-    //TODO - correct
-    @Override
-    public Route makeUnique(Map<Integer, Route> cache, Route route) {
-//        cache.putIfAbsent(route.getId(), route);
-//        return cache.get(route.getId());
-        return new Route();
     }
 }

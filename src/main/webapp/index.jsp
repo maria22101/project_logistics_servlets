@@ -1,44 +1,88 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ include file="/WEB-INF/parts/commons.jsp" %>
 
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="s" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page isELIgnored="false" %>
-
-<fmt:requestEncoding value="UTF-8"/>
-<fmt:setLocale value="${lang}"/>
-<fmt:setBundle basename="messages"/>
-
-<style><%@ include file="/design.css" %></style>
-
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>ProjectLogistics</title>
-</head>
-
+<html>
 <body>
 
-    <h2>
-        <fmt:message key="main.title"/>
-    </h2>
+    <%@ include file="/WEB-INF/parts/mainHeader.jsp" %>
 
-    <a href="${pageContext.request.contextPath}/app/login">
-        <fmt:message key="main.login.link"/>
-    </a><br><br>
+    <div style="width: 100%; float: left;">
 
-    <a href="${pageContext.request.contextPath}/app/registration">
-        <fmt:message key="main.registration.link"/>
-    </a><br><br>
+        <div style="float: left;">
+            <div>
 
-<%--    <a href="${pageContext.request.contextPath}/delivery/exception">--%>
-<%--        Exception--%>
-<%--    </a><br><br>--%>
+                <h2 style="color: #3a60bf"><fmt:message key="main.services.routes.table.title"/></h2>
 
-    <div class="locale">
-        <a href="?lang=en"><fmt:message key="lang.eng"/></a><br>
-        <a href="?lang=ua"><fmt:message key="lang.ua"/></a>
+                <table border="0.5">
+                    <thead>
+                        <tr>
+                            <th><fmt:message key="main.route.point.one"/></th>
+                            <th><fmt:message key="main.route.point.two"/></th>
+                            <th><fmt:message key="main.basic.rate"/></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="route" items="${routes}">
+                            <tr>
+                                <td>${route.pointOne}</td>
+                                <td>${route.pointTwo}</td>
+                                <td>${route.basicRate}</td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div style="float: left;">
+            <div style="padding-left: 15px;">
+
+                <h2 style="color: seagreen"><fmt:message key="main.services.weight.coeff.table.title"/></h2>
+
+                <table border="0.5">
+
+                    <thead>
+                    <tr>
+                        <th style="background-color: mediumseagreen"><fmt:message key="main.weight.differenciation"/></th>
+                        <th style="background-color: mediumseagreen"><fmt:message key="main.weight.lower.bound"/></th>
+                        <th style="background-color: mediumseagreen"><fmt:message key="main.weight.upper.bound"/></th>
+                        <th style="background-color: mediumseagreen"><fmt:message key="main.weight.coeff"/></th>
+                    </tr>
+                    </thead>
+
+                    <c:set var="map" value="${applicationScope['properties']}"/>
+
+                    <tbody>
+                    <tr>
+                        <td><fmt:message key="main.weight.light"/></td>
+                        <td>${map['weight.light.lower.bound.value']}</td>
+                        <td>${map['weight.light.upper.bound.value']}</td>
+                        <td>${map['weight.coeff.light']}</td>
+                    </tr>
+                    <tr>
+                        <td><fmt:message key="main.weight.medium"/></td>
+                        <td>${map['weight.medium.lower.bound.value']}</td>
+                        <td>${map['weight.medium.upper.bound.value']}</td>
+                        <td>${map['weight.coeff.medium']}</td>
+                    </tr>
+                    <tr>
+                        <td><fmt:message key="main.weight.heavy"/></td>
+                        <td>${map['weight.heavy.lower.bound.value']}</td>
+                        <td>${map['weight.heavy.upper.bound.value']}</td>
+                        <td>${map['weight.coeff.heavy']}</td>
+                    </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
     </div>
+
+        <div style="clear: both;"></div>
+
+        <br/><br/>
+
+        <strong style="color: #3a60bf"><fmt:message key="main.services.weight.coeff.explanation"/></strong>
 
 </body>
 </html>

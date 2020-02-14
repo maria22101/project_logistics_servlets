@@ -3,18 +3,19 @@ package ua.train.project_logistics_servlets.persistence.dao.impl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.train.project_logistics_servlets.persistence.dao.RouteDao;
+import ua.train.project_logistics_servlets.persistence.dao.mapper.RouteMapper;
 import ua.train.project_logistics_servlets.persistence.domain.Route;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class JDBCRouteDao implements RouteDao {
-    private static final Logger logger = LogManager.getLogger(JDBCRouteDao.class);
     private Connection connection;
+    private RouteMapper routeMapper = new RouteMapper();
+    private static final Logger logger = LogManager.getLogger(JDBCRouteDao.class);
+
+    private static final String GET_ALL_ROUTES = "SELECT * FROM routes";
 
     public JDBCRouteDao(Connection connection) {
         this.connection = connection;
@@ -30,27 +31,17 @@ public class JDBCRouteDao implements RouteDao {
         return null;
     }
 
-    private Route extractFromResultSet(ResultSet rs)
-            throws SQLException {
-        Route route = new Route();
-        route.setId(rs.getLong("id") );
-        route.setBasicRate(rs.getBigDecimal("basic_rate"));
-        route.setDestination( rs.getString("destination"));
-        route.setSource( rs.getString("source") );
-        return route;
-    }
-
     @Override
     public List<Route> findAll() {
-        List<Route> resultList = new ArrayList<>();
-        try (Statement st = connection.createStatement()) {
-            ResultSet rs = st.executeQuery("SELECT * FROM delivery_route");
+        List<Route> routesList = new ArrayList<>();
+        try (PreparedStatement prepStatement = connection.prepareStatement(GET_ALL_ROUTES)) {
+            ResultSet rs = prepStatement.executeQuery();
 
             logger.info("Statement created, Result set received. Exctracting from Result set:");
 
-            while ( rs.next() ){
-                Route result = extractFromResultSet(rs);
-                resultList.add(result);
+            while (rs.next()){
+                Route result = routeMapper.extractFromResultSet(rs);
+                routesList.add(result);
             }
             logger.info("ResultSet for delivery_route processed");
 
@@ -58,7 +49,7 @@ public class JDBCRouteDao implements RouteDao {
             logger.warn("Data extraction from result set failed");
             new RuntimeException(e);
         }
-        return resultList;
+        return routesList;
     }
 
     @Override

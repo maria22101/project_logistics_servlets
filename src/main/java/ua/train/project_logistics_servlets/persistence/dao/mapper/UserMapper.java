@@ -11,18 +11,13 @@ public class UserMapper implements ObjectMapper<User> {
     @Override
     public User extractFromResultSet(ResultSet rs) throws SQLException {
         User user = new User();
-        user.setId(rs.getInt("user_id"));
-        user.setUsername(rs.getString("username"));
+        user.setId(rs.getInt("id"));
+        user.setName(rs.getString("name"));
+        user.setSurname(rs.getString("surname"));
         user.setPassword(rs.getString("password"));
         user.setEmail(rs.getString("email"));
         user.setRole(Role.valueOf(rs.getString("role")));
 
         return user;
-    }
-
-    @Override
-    public User makeUnique(Map<Integer, User> cache, User user) {
-        cache.putIfAbsent(user.getId(), user);
-        return cache.get(user.getId());
     }
 }
