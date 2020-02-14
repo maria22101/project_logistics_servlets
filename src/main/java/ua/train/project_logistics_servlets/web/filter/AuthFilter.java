@@ -23,6 +23,8 @@ public class AuthFilter implements Filter {
                          ServletResponse response,
                          FilterChain filterChain) throws IOException, ServletException {
 
+        LOGGER.info("Inside AuthFilter");
+
         final HttpServletRequest req = (HttpServletRequest) request;
         final HttpServletResponse res = (HttpServletResponse) response;
 

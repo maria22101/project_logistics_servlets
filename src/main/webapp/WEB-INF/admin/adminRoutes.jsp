@@ -7,7 +7,7 @@
 
     <h2><fmt:message key="admincabinet.open.routes.title"/></h2>
 
-    <table border="0.5">
+    <table>
         <thead>
         <tr>
             <th><fmt:message key="main.route.point.one"/></th>

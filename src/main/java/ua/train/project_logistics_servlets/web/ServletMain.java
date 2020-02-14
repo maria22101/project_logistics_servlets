@@ -1,7 +1,14 @@
 package ua.train.project_logistics_servlets.web;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.train.project_logistics_servlets.web.command.*;
 import ua.train.project_logistics_servlets.service.RouteService;
+import ua.train.project_logistics_servlets.web.command.admin.*;
+import ua.train.project_logistics_servlets.web.command.user.PlaceOrderCommand;
+import ua.train.project_logistics_servlets.web.command.user.UserInvoicedOrdersCommand;
+import ua.train.project_logistics_servlets.web.command.user.UserMainCommand;
+import ua.train.project_logistics_servlets.web.command.user.UserOrdersCommand;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -16,6 +23,7 @@ import java.util.Map;
 public class ServletMain extends HttpServlet {
     private Map<String, Command> commands = new HashMap<>();
     private RouteService routeService = new RouteService();
+    private static final Logger LOGGER = LogManager.getLogger(ServletMain.class);
 
     public void init(ServletConfig servletConfig){
 
@@ -33,7 +41,7 @@ public class ServletMain extends HttpServlet {
         commands.put("admin/admin_main", new AdminMainCommand());
         commands.put("admin/orders", new AdminOrdersCommand());
         commands.put("admin/open_orders", new AdminOpenOrdersCommand());
-        commands.put("admin/users", new AdminUsersCommand(routeService));
+        commands.put("admin/users", new AdminUsersCommand());
         commands.put("admin/routes", new AdminRoutesCommand());
         commands.put("denied", new DeniedCommand());
     }
@@ -53,13 +61,13 @@ public class ServletMain extends HttpServlet {
             throws ServletException, IOException {
 
         String path = request.getRequestURI();
-        System.out.println(path);
+        LOGGER.info("Inside MainServlet. Path: " + path);
 
         path = path.replaceAll(".*/app/", "");
         System.out.println(path);
 
-        Command command = commands.getOrDefault(path, (r)->"/index.jsp)");
-        System.out.println(command.getClass().getName());
+        Command command = commands.getOrDefault(path, (r)->"/index.jsp");
+        LOGGER.info("Command captured : " + command.getClass().getName());
 
         String page = command.execute(request);
 

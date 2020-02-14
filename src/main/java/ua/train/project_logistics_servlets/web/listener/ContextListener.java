@@ -6,20 +6,37 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import java.util.HashSet;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 public class ContextListener implements ServletContextListener {
-    private static final Logger logger = LogManager.getLogger(ContextListener.class);
+    private static final Logger LOGGER = LogManager.getLogger(ContextListener.class);
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        logger.info("Initializing context");
+        LOGGER.info("Inside ContextListener, contextInitialized()...");
+
+        Properties properties = new Properties();
+        try {
+            InputStream inStream = Thread.currentThread()
+                    .getContextClassLoader()
+                    .getResourceAsStream("business_input.properties");
+            properties.load(inStream);
+            inStream.close();
+        } catch (IOException ex) {
+            LOGGER.info("properties file loading failed");
+            ex.printStackTrace();
+        }
+        sce.getServletContext().setAttribute("properties", properties);
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        ServletContext context = sce.getServletContext();
-        HashSet<String> loggedUsers = (HashSet<String>) context.getAttribute("loggedUsers");
-        logger.info("Context destroyed. LoggedUsers: " + loggedUsers);
+//        ServletContext context = sce.getServletContext();
+//        HashSet<String> loggedUsers = (HashSet<String>) context.getAttribute("loggedUsers");
+//        LOGGER.info("Context destroyed. LoggedUsers: " + loggedUsers);
     }
 }
