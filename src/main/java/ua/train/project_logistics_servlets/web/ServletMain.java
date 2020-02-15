@@ -20,30 +20,33 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+import static ua.train.project_logistics_servlets.constant.WebConstants.*;
+
 public class ServletMain extends HttpServlet {
     private Map<String, Command> commands = new HashMap<>();
-    private RouteService routeService = new RouteService();
     private static final Logger LOGGER = LogManager.getLogger(ServletMain.class);
 
     public void init(ServletConfig servletConfig){
 
         servletConfig.getServletContext()
-                .setAttribute("loggedUsers", new HashSet<String>());
+                .setAttribute(LOGGED_USERS_ATTRIBUTE, new HashSet<String>());
 
-        commands.put("login", new LoginCommand());
-        commands.put("logout", new LogOutCommand());
-        commands.put("registration", new RegistrationCommand());
-        commands.put("exception", new ExceptionCommand());
-        commands.put("user/user_main", new UserMainCommand());
-        commands.put("user/orders", new UserOrdersCommand());
-        commands.put("user/invoiced_orders", new UserInvoicedOrdersCommand());
-        commands.put("user/place_order", new PlaceOrderCommand());
-        commands.put("admin/admin_main", new AdminMainCommand());
-        commands.put("admin/orders", new AdminOrdersCommand());
-        commands.put("admin/open_orders", new AdminOpenOrdersCommand());
-        commands.put("admin/users", new AdminUsersCommand());
-        commands.put("admin/routes", new AdminRoutesCommand());
-        commands.put("denied", new DeniedCommand());
+        commands.put(CONTEXT_PATH, new MainPageCommand());
+        commands.put(LOGIN_PATH, new LoginCommand());
+        commands.put(LOGOUT_PATH, new LogOutCommand());
+        commands.put(REGISTRATION_PATH, new RegistrationCommand());
+        commands.put(EXCEPTION_PATH, new ExceptionCommand());
+        commands.put(USER_CABINET_PATH, new UserMainCommand());
+        commands.put(USER_ORDERS_PATH, new UserOrdersCommand());
+        commands.put(USER_INVOICED_ORDERS_PATH, new UserInvoicedOrdersCommand());
+        commands.put(USER_PLACE_ORDER_PATH, new PlaceOrderCommand());
+        commands.put(ADMIN_CABINET_PATH, new AdminMainCommand());
+        commands.put(ADMIN_ORDERS_PATH, new AdminOrdersCommand());
+        commands.put(ADMIN_OPEN_ORDERS_PATH, new AdminOpenOrdersCommand());
+        commands.put(ADMIN_USERS_PATH, new AdminUsersCommand());
+        commands.put(ADMIN_ROUTES_PATH, new AdminRoutesCommand());
+        commands.put(DENIED_PATH, new DeniedCommand());
+        commands.put(AUTH_ERROR_PATH, new AuthErrorCommand());
     }
 
     public void doGet(HttpServletRequest request,
@@ -61,18 +64,12 @@ public class ServletMain extends HttpServlet {
             throws ServletException, IOException {
 
         String path = request.getRequestURI();
-        LOGGER.info("Inside MainServlet. Path: " + path);
-
-        path = path.replaceAll(".*/app/", "");
-        System.out.println(path);
-
-        Command command = commands.getOrDefault(path, (r)->"/index.jsp");
-        LOGGER.info("Command captured : " + command.getClass().getName());
-
+        path = path.replaceAll(SERVLET_MAIN_PATH, "");
+        Command command = commands.getOrDefault(path, (r) -> CONTEXT_PATH);
         String page = command.execute(request);
 
-       if(page.contains("redirect:")){
-            response.sendRedirect(page.replace("redirect:", ""));
+       if(page.contains(REDIRECT)){
+            response.sendRedirect(page.replace(REDIRECT, ""));
         }else {
             request.getRequestDispatcher(page).forward(request, response);
         }

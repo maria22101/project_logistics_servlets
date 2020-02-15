@@ -26,18 +26,23 @@
       <url-pattern>/app/*</url-pattern>
   </servlet-mapping>
 
-    <servlet>
-        <servlet-name>ServletWelcome</servlet-name>
-        <servlet-class>ua.train.project_logistics_servlets.web.ServletWelcome</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ServletWelcome</servlet-name>
-        <url-pattern>/welcome</url-pattern>
-    </servlet-mapping>
+<!--    <servlet>-->
+<!--        <servlet-name>ServletWelcome</servlet-name>-->
+<!--        <servlet-class>ua.train.project_logistics_servlets.web.ServletWelcome</servlet-class>-->
+<!--    </servlet>-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>ServletWelcome</servlet-name>-->
+<!--        <url-pattern>/welcome</url-pattern>-->
+<!--    </servlet-mapping>-->
+
+<!--  <welcome-file-list>-->
+<!--    <welcome-file>welcome</welcome-file>-->
+<!--    <welcome-file>index.jsp</welcome-file>-->
+<!--  </welcome-file-list>-->
 
   <welcome-file-list>
-    <welcome-file>welcome</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
+     <welcome-file>app</welcome-file>
+     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
 
   <filter>
@@ -81,15 +86,20 @@
         </listener-class>
     </listener>
 
-<!--    <listener>-->
-<!--        <listener-class>-->
-<!--            ua.train.project_logistics_servlets.web.listener.SessionListener-->
-<!--        </listener-class>-->
-<!--    </listener>-->
+    <listener>
+        <listener-class>
+            ua.train.project_logistics_servlets.web.listener.SessionListener
+        </listener-class>
+    </listener>
 
   <error-page>
     <exception-type>java.lang.Exception</exception-type>
     <location>/WEB-INF/error.jsp</location>
   </error-page>
+
+    <error-page>
+        <exception-type>java.lang.SecurityException</exception-type>
+        <location>/WEB-INF/denied.jsp</location>
+    </error-page>
 
 </web-app>
