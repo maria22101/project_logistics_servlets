@@ -17,12 +17,17 @@ public class LoginService {
 
     DaoFactory daoFactory = DaoFactory.getInstance();
 
-    public boolean isUserAuthorized(String email, String password) {
-        boolean isAuthorized = false;
+    public boolean isUserAuthorized (String email, String password)
+            throws UserNotFoundException{
+
+        boolean isAuthorized;
+
         if (findUserByEmail(email).isPresent()) {
             isAuthorized = BCrypt.checkpw(
                     password,
                     findUserByEmail(email).get().getPassword());
+        }else {
+            throw new UserNotFoundException();
         }
 
         return isAuthorized;

@@ -4,10 +4,12 @@ import ua.train.project_logistics_servlets.web.command.Command;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static ua.train.project_logistics_servlets.constant.WebConstants.ADMIN_ROUTES_PAGE;
+
 public class AdminRoutesCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        return "/WEB-INF/admin/adminRoutes.jsp";
+        return ADMIN_ROUTES_PAGE;
     }
 }

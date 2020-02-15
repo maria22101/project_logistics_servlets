@@ -7,31 +7,23 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
+import static ua.train.project_logistics_servlets.constant.WebConstants.*;
+
 public class SessionListener implements HttpSessionListener {
-    private static final Logger logger = LogManager.getLogger(SessionListener.class);
+    private static final Logger LOGGER = LogManager.getLogger(SessionListener.class);
 
     @Override
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
         HttpSession session = httpSessionEvent.getSession();
-        logger.info("New session created, session id=: " + session.getId());
+        LOGGER.info("New session created, session id=: " + session.getId());
     }
 
     @Override
     public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
-
-//        HashSet<String> loggedUsers = (HashSet<String>) httpSessionEvent
-//                .getSession().getServletContext()
-//                .getAttribute("loggedUsers");
-//
-//        String userName = (String) httpSessionEvent.getSession()
-//                .getAttribute("userName"); // ???
-//
-//        loggedUsers.remove(userName);
-//
-//        httpSessionEvent.getSession().setAttribute("loggedUsers", loggedUsers);
-
         HttpSession session = httpSessionEvent.getSession();
-        logger.info("Session with seession id=: " + session.getId() + " destroyed");
 
+        LOGGER.info("Session with id=: " + session.getId() + " destroyed");
+        LOGGER.info("Session with id=: " + session.getId() + " role attribute: " + session.getAttribute(ROLE_ATTRIBUTE));
+        LOGGER.info("Session with id=: " + session.getId() + " email attribute: " + session.getAttribute(EMAIL_ATTRIBUTE));
     }
 }

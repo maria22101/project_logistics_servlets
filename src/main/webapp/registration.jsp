@@ -7,19 +7,19 @@
 
         <form method="post" action="${pageContext.request.contextPath}/app/registration" >
             <label>
-                <fmt:message key="name.indication"/> <input type="text" name="user.name"/>
+                <fmt:message key="name.indication"/> <input type="text" name="name"/>
             </label><br/><br/>
 
             <label>
-                <fmt:message key="surname.indication"/> <input type="text" name="user.surname"/>
+                <fmt:message key="surname.indication"/> <input type="text" name="surname"/>
             </label><br/><br/>
 
             <label>
-                <fmt:message key="email.indication"/> <input type="text" name="user.email"/>
+                <fmt:message key="email.indication"/> <input type="text" name="email"/>
             </label><br/><br/>
 
             <label>
-                <fmt:message key="password.indication"/> <input type="password" name="user.password"/>
+                <fmt:message key="password.indication"/> <input type="password" name="password"/>
             </label><br/><br/>
 
             <input class="button" type="submit" value=<fmt:message key="registration.button"/>>
