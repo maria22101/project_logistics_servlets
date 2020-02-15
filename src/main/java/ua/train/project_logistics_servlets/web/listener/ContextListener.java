@@ -2,7 +2,6 @@ package ua.train.project_logistics_servlets.web.listener;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ua.train.project_logistics_servlets.enums.Role;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -12,7 +11,7 @@ import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Properties;
 
-import static ua.train.project_logistics_servlets.constant.WebConstants.*;
+import static ua.train.project_logistics_servlets.constant.WebConstant.*;
 
 public class ContextListener implements ServletContextListener {
     private static final Logger LOGGER = LogManager.getLogger(ContextListener.class);

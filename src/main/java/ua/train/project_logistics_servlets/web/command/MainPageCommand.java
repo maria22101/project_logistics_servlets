@@ -8,7 +8,7 @@ import ua.train.project_logistics_servlets.service.RouteService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-import static ua.train.project_logistics_servlets.constant.WebConstants.MAIN_PAGE;
+import static ua.train.project_logistics_servlets.constant.WebConstant.MAIN_PAGE;
 
 public class MainPageCommand implements Command{
     private RouteService routeService = new RouteService();

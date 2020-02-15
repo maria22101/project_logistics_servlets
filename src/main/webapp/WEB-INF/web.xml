@@ -94,12 +94,12 @@
 
   <error-page>
     <exception-type>java.lang.Exception</exception-type>
-    <location>/WEB-INF/error.jsp</location>
+    <location>/WEB-INF/errors/error.jsp</location>
   </error-page>
 
     <error-page>
         <exception-type>java.lang.SecurityException</exception-type>
-        <location>/WEB-INF/denied.jsp</location>
+        <location>/WEB-INF/errors/denied.jsp</location>
     </error-page>
 
 </web-app>

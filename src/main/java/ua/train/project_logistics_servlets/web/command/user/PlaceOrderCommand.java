@@ -4,7 +4,7 @@ import ua.train.project_logistics_servlets.web.command.Command;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static ua.train.project_logistics_servlets.constant.WebConstants.USER_PLACE_ORDER_PAGE;
+import static ua.train.project_logistics_servlets.constant.WebConstant.USER_PLACE_ORDER_PAGE;
 
 public class PlaceOrderCommand implements Command {
     @Override

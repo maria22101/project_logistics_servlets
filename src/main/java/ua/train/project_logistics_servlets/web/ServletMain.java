@@ -3,7 +3,6 @@ package ua.train.project_logistics_servlets.web;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.train.project_logistics_servlets.web.command.*;
-import ua.train.project_logistics_servlets.service.RouteService;
 import ua.train.project_logistics_servlets.web.command.admin.*;
 import ua.train.project_logistics_servlets.web.command.user.PlaceOrderCommand;
 import ua.train.project_logistics_servlets.web.command.user.UserInvoicedOrdersCommand;
@@ -20,7 +19,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-import static ua.train.project_logistics_servlets.constant.WebConstants.*;
+import static ua.train.project_logistics_servlets.constant.WebConstant.*;
 
 public class ServletMain extends HttpServlet {
     private Map<String, Command> commands = new HashMap<>();
@@ -66,6 +65,7 @@ public class ServletMain extends HttpServlet {
         String path = request.getRequestURI();
         path = path.replaceAll(SERVLET_MAIN_PATH, "");
         Command command = commands.getOrDefault(path, (r) -> CONTEXT_PATH);
+
         String page = command.execute(request);
 
        if(page.contains(REDIRECT)){

@@ -6,7 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashSet;
 
-import static ua.train.project_logistics_servlets.constant.WebConstants.*;
+import static ua.train.project_logistics_servlets.constant.EntityFieldConstant.*;
+import static ua.train.project_logistics_servlets.constant.WebConstant.*;
 
 public class CommandUtility {
 
