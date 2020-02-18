@@ -9,7 +9,7 @@ import java.util.Optional;
 import static ua.train.project_logistics_servlets.constant.WebConstant.*;
 import static ua.train.project_logistics_servlets.constant.WebConstant.REGISTRATION_PAGE;
 
-public class RegistrationValidationService {
+public class RegFormValidationService {
     private RegistrationValidationUtility utility = new RegistrationValidationUtility();
 
     public Optional<String> pageAfterValidation(HttpServletRequest request) {

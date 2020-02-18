@@ -86,4 +86,16 @@ public class Route {
     public void setOrders(List<Order> orders) {
         this.orders = orders;
     }
+
+    @Override
+    public String toString() {
+        return "Route{" +
+                "id=" + id +
+                ", pointOne='" + pointOne + '\'' +
+                ", pointOneUA='" + pointOneUA + '\'' +
+                ", pointTwo='" + pointTwo + '\'' +
+                ", pointTwoUA='" + pointTwoUA + '\'' +
+                ", basicRate=" + basicRate +
+                '}';
+    }
 }

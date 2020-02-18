@@ -1,4 +1,4 @@
-package ua.train.project_logistics_servlets.service;
+package ua.train.project_logistics_servlets.service.registration;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import static ua.train.project_logistics_servlets.constant.EntityFieldConstant.*;
 
-public class UserCreationService {
-    private static final Logger LOGGER = LogManager.getLogger(UserCreationService.class);
+public class UserConstructionService {
+    private static final Logger LOGGER = LogManager.getLogger(UserConstructionService.class);
 
     public User constructUserFromRequest(HttpServletRequest request) {
         String name = request.getParameter(NAME);

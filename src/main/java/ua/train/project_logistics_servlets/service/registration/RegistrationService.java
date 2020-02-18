@@ -1,4 +1,4 @@
-package ua.train.project_logistics_servlets.service;
+package ua.train.project_logistics_servlets.service.registration;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

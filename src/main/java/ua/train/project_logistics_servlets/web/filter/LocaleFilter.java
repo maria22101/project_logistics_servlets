@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static ua.train.project_logistics_servlets.constant.WebConstant.*;
+
 public class LocaleFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -19,11 +21,9 @@ public class LocaleFilter implements Filter {
         final HttpServletRequest req = (HttpServletRequest) request;
         final HttpServletResponse res = (HttpServletResponse) response;
 
-//        req.getSession().setAttribute("lang", "ua");
-
-        String localeName = req.getParameter("lang");
+        String localeName = req.getParameter(LANGUAGE_ATTRIBUTE);
         if (localeName != null) {
-            req.getSession().setAttribute("lang", localeName);
+            req.getSession().setAttribute(LANGUAGE_ATTRIBUTE, localeName);
         }
 
         filterChain.doFilter(request, response);

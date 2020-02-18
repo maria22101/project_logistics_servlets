@@ -6,38 +6,34 @@ import ua.train.project_logistics_servlets.exception.DataBaseFetchException;
 import ua.train.project_logistics_servlets.exception.DataBaseSaveException;
 import ua.train.project_logistics_servlets.exception.UserExistsException;
 import ua.train.project_logistics_servlets.persistence.domain.User;
-import ua.train.project_logistics_servlets.service.RegistrationService;
-import ua.train.project_logistics_servlets.service.UserCreationService;
+import ua.train.project_logistics_servlets.service.registration.RegistrationService;
+import ua.train.project_logistics_servlets.service.registration.RegFormValidationService;
+import ua.train.project_logistics_servlets.service.registration.UserConstructionService;
+//import ua.train.project_logistics_servlets.service.validation.RegFormValidator;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static ua.train.project_logistics_servlets.constant.EntityFieldConstant.*;
+import java.util.Optional;
+
 import static ua.train.project_logistics_servlets.constant.WebConstant.*;
 
 public class RegistrationCommand implements Command {
     private RegistrationService registrationService = new RegistrationService();
-    UserCreationService userCreationService = new UserCreationService();
+    private UserConstructionService userConstructionService = new UserConstructionService();
+    private RegFormValidationService regFormValidationService = new RegFormValidationService();
 
     private static final Logger LOGGER = LogManager.getLogger(RegistrationCommand.class);
 
     @Override
     public String execute(HttpServletRequest request) {
 
-        String name = request.getParameter(NAME);
-        String surname = request.getParameter(SURNAME);
-        String email = request.getParameter(EMAIL);
-        String password = request.getParameter(PASSWORD);
+        Optional<String> validationIncompletePage = regFormValidationService.pageAfterValidation(request);
 
-        LOGGER.info("Parameter name: " + name);
-        LOGGER.info("Parameter surname: " + surname);
-        LOGGER.info("Parameter email: " + email);
-        LOGGER.info("Parameter password: " + password);
-
-        if (name == null || name.equals("") || surname == null || surname.equals("")) {
-            return REGISTRATION_PAGE;
+        if(validationIncompletePage.isPresent()) {
+            return validationIncompletePage.get();
         }
 
-        User user = userCreationService.constructUserFromRequest(request);
+        User user = userConstructionService.constructUserFromRequest(request);
 
         try {
             registrationService.addUser(user);
@@ -45,7 +41,7 @@ public class RegistrationCommand implements Command {
             return USER_EXISTS_ERROR_PAGE;
         } catch (DataBaseSaveException e) {
             return DB_SAVE_ERROR_PAGE;
-        }catch (DataBaseFetchException e) {
+        } catch (DataBaseFetchException e) {
             return DB_FETCH_ERROR_PAGE;
         }
 

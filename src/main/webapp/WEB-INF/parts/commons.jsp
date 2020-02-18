@@ -6,7 +6,7 @@
 <%@ page isELIgnored="false" %>
 
 <fmt:requestEncoding value="UTF-8"/>
-<fmt:setLocale value="${lang}"/>
+<fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="messages"/>
 
 <style><%@ include file="/css/design.css" %></style>

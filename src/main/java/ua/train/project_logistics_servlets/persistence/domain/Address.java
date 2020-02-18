@@ -22,6 +22,13 @@ public class Address {
         this.apartment = apartment;
     }
 
+    public Address(String city, String street, String house, String apartment) {
+        this.city = city;
+        this.street = street;
+        this.house = house;
+        this.apartment = apartment;
+    }
+
     public Address() {
     }
 
@@ -79,5 +86,16 @@ public class Address {
 
     public void setDeliveringOrders(List<Order> deliveringOrders) {
         this.deliveringOrders = deliveringOrders;
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "id=" + id +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", house='" + house + '\'' +
+                ", apartment='" + apartment + '\'' +
+                '}';
     }
 }

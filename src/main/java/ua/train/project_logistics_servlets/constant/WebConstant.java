@@ -50,6 +50,28 @@ public interface WebConstant {
     String EMAIL_ATTRIBUTE = "email";
     String ROLE_ATTRIBUTE = "role";
     String LOGGED_USERS_ATTRIBUTE = "loggedUsers";
+    String INVALID_NAME_INPUT_ATTRIBUTE = "invalidNameInput";
+    String INVALID_SURNAME_INPUT_ATTRIBUTE = "invalidSurnameInput";
+    String INVALID_EMAIL_INPUT_ATTRIBUTE = "invalidEmailInput";
+    String INVALID_PASSWORD_INPUT_ATTRIBUTE = "invalidPasswordInput";
+    String LANGUAGE_ATTRIBUTE = "lang";
+
+    String INVALID_DISPATCH_CITY_INPUT_ATTRIBUTE = "invalidDispatchCityInput";
+    String INVALID_DISPATCH_STREET_INPUT_ATTRIBUTE = "invalidDispatchStreetInput";
+    String INVALID_DISPATCH_HOUSE_INPUT_ATTRIBUTE = "invalidDispatchHouseInput";
+    String INVALID_DISPATCH_APARTMENT_INPUT_ATTRIBUTE = "invalidDispatchApartmentInput";
+
+    String INVALID_DELIVERY_CITY_INPUT_ATTRIBUTE = "invalidDeliveryCityInput";
+    String INVALID_DELIVERY_STREET_INPUT_ATTRIBUTE = "invalidDeliveryStreetInput";
+    String INVALID_DELIVERY_HOUSE_INPUT_ATTRIBUTE = "invalidDeliveryHouseInput";
+    String INVALID_DELIVERY_APARTMENT_ATTRIBUTE = "invalidDeliveryApartmentInput";
+
+    String INVALID_DELIVERY_DATE_INPUT_ATTRIBUTE = "invalidDeliveryDateInput";
+    String INVALID_WEIGHT_INPUT_ATTRIBUTE = "invalidWeightInput";
+    String INVALID_CARGO_TYPE_INPUT_ATTRIBUTE = "invalidCargoTypeInput";
+
+    String UA_LANGUAGE = "ua";
+    String EN_LANGUAGE = "en";
 
     String REDIRECT = "redirect:";
 }

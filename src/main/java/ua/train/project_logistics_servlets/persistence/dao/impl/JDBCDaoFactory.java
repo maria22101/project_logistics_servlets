@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class JDBCDaoFactory extends DaoFactory {
-    private static final Logger logger = LogManager.getLogger(JDBCDaoFactory.class);
+    private static final Logger LOGGER = LogManager.getLogger(JDBCDaoFactory.class);
 
     private DataSource dataSource = ConnectionPoolHolder.getDataSource();
 
@@ -40,22 +40,9 @@ public class JDBCDaoFactory extends DaoFactory {
 
     private Connection getConnection() {
         try {
-            logger.info("Trying to Connect to database via ConnectionPool");
             return dataSource.getConnection();
         } catch (SQLException e) {
-            logger.warn("Failed Connection to database via ConnectionPool");
             throw new RuntimeException(e);
         }
-
-//        try {
-//            Driver driver = new com.mysql.jdbc.Driver();
-//            return DriverManager.getConnection(
-//                    "jdbc:mysql://localhost:3306/delivery1",
-//                    "root" ,
-//                    "tigra263" );
-//        } catch (SQLException e) {
-//            logger.info("Unable to set up connection");
-//            throw new RuntimeException(e);
-//        }
     }
 }
