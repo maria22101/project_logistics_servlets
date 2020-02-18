@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static ua.train.project_logistics_servlets.constant.WebConstants.*;
+import static ua.train.project_logistics_servlets.constant.WebConstant.*;
 
 public class LogOutCommand implements Command{
     private static final Logger LOGGER = LogManager.getLogger(LogOutCommand.class);

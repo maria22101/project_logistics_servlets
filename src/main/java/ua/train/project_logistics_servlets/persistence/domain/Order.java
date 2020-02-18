@@ -134,4 +134,21 @@ public class Order {
     public void setInvoice(Invoice invoice) {
         this.invoice = invoice;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderNumber=" + orderNumber +
+                ", deliveryDate=" + deliveryDate +
+                ", weight=" + weight +
+                ", cargoType=" + cargoType +
+                ", sum=" + sum +
+                ", orderStatus=" + orderStatus +
+                ", user=" + user +
+                ", dispatchAddress=" + dispatchAddress +
+                ", deliveryAddress=" + deliveryAddress +
+                ", route=" + route +
+                ", invoice=" + invoice +
+                '}';
+    }
 }

@@ -3,17 +3,15 @@ package ua.train.project_logistics_servlets.web.filter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.train.project_logistics_servlets.enums.Role;
-import ua.train.project_logistics_servlets.web.command.CommandUtility;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.HashSet;
 
 import static java.util.Objects.nonNull;
-import static ua.train.project_logistics_servlets.constant.WebConstants.*;
+import static ua.train.project_logistics_servlets.constant.WebConstant.*;
 
 public class AuthFilter implements Filter {
     private static final Logger LOGGER = LogManager.getLogger(AuthFilter.class);

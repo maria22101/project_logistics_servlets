@@ -23,4 +23,5 @@ th{
 
 .error {
     color: orangered;
+    font-weight: bold;
 }

@@ -13,7 +13,7 @@ import ua.train.project_logistics_servlets.persistence.domain.User;
 import java.util.Optional;
 
 public class LoginService {
-    private static final Logger LOGGER = LogManager.getLogger(JDBCUserDao.class);
+    private static final Logger LOGGER = LogManager.getLogger(LoginService.class);
 
     DaoFactory daoFactory = DaoFactory.getInstance();
 

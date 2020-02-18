@@ -4,7 +4,7 @@ import ua.train.project_logistics_servlets.web.command.Command;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static ua.train.project_logistics_servlets.constant.WebConstants.USER_CABINET_PAGE;
+import static ua.train.project_logistics_servlets.constant.WebConstant.USER_CABINET_PAGE;
 
 public class UserMainCommand implements Command {
     @Override
