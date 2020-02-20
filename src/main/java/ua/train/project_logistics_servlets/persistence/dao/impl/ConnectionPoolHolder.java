@@ -3,13 +3,19 @@ package ua.train.project_logistics_servlets.persistence.dao.impl;
 import org.apache.commons.dbcp.BasicDataSource;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public class ConnectionPoolHolder {
     private static volatile DataSource dataSource;
 
+    public static Connection getConnection() throws SQLException {
+        return getDataSource().getConnection();
+    }
+
     public static DataSource getDataSource(){
 
-        if (dataSource == null){
+        if (dataSource == null) {
             synchronized (ConnectionPoolHolder.class) {
                 if (dataSource == null) {
                     BasicDataSource ds = new BasicDataSource();

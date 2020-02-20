@@ -9,25 +9,18 @@ import java.util.List;
 
 
 public class UserService {
+    private UserDao userDao = DaoFactory.getInstance().createUserDao();
 
-    DaoFactory daoFactory = DaoFactory.getInstance();
-
-    public List<User> getAllUsers() {
-        try(UserDao dao = daoFactory.createUserDao()) {
-            return dao.findAll();
-        }
-    }
-
-    public User getUserFromDb (String email)
+    public List<User> getAllUsers()
             throws DataBaseFetchException {
 
-        User user;
+        return userDao.findAll();
+    }
 
-        try(UserDao dao = daoFactory.createUserDao()) {
-            user = dao.findUserByEmail(email)
-                    .orElseThrow(DataBaseFetchException::new);
-        }
+    public User getUserFromDb(String email)
+            throws DataBaseFetchException {
 
-        return user;
+        return userDao.findUserByEmail(email)
+                .orElseThrow(DataBaseFetchException::new);
     }
 }

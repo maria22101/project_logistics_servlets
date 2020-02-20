@@ -11,4 +11,6 @@ public interface AddressDao extends GenericDao<Address> {
                                   String house,
                                   String apartment)
             throws DataBaseFetchException;
+
+    Optional<Address> getAddress(Address address) throws DataBaseFetchException;
 }

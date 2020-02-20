@@ -12,11 +12,10 @@ public abstract class DaoFactory {
     public abstract AddressDao createAddressDao();
 
     public static DaoFactory getInstance(){
-        if( daoFactory == null ){
+        if(daoFactory == null){
             synchronized (DaoFactory.class){
                 if(daoFactory==null){
-                    DaoFactory temp = new JDBCDaoFactory();
-                    daoFactory = temp;
+                    daoFactory = new JDBCDaoFactory();
                 }
             }
         }

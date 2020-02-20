@@ -12,21 +12,20 @@ import ua.train.project_logistics_servlets.persistence.domain.Route;
 import ua.train.project_logistics_servlets.persistence.domain.User;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class JDBCUserDao implements UserDao {
-    private Connection connection;
     private UserMapper userMapper = new UserMapper();
     private static final Logger LOGGER = LogManager.getLogger(JDBCUserDao.class);
 
     private static final String GET_USER_BY_EMAIL = "SELECT * FROM users WHERE email=?";
+
     private static final String ADD_NEW_USER = "INSERT INTO users " +
             "(email, name, password, role, surname)" + " VALUES(?, ?, ?, ?, ?)";
 
-    public JDBCUserDao(Connection connection) {
-        this.connection = connection;
-    }
+    private static final String GET_ALL_USERS = "SELECT * FROM users";
 
     @Override
     public void create(User entity) {
@@ -34,13 +33,29 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
-    public User findById(int id) {
-        return null;
+    public Optional<User> findById(int id) throws DataBaseFetchException {
+        return Optional.empty();
     }
 
     @Override
-    public List<User> findAll() {
-        return null;
+    public List<User> findAll()
+            throws DataBaseFetchException {
+
+        List<User> usersList = new ArrayList<>();
+        try (Connection connection = ConnectionPoolHolder.getConnection();
+             Statement statement = connection.createStatement()) {
+
+            ResultSet rs = statement.executeQuery(GET_ALL_USERS);
+
+            while (rs.next()) {
+                User result = userMapper.extractFromResultSet(rs);
+                usersList.add(result);
+            }
+
+        } catch (SQLException e) {
+            throw new DataBaseFetchException();
+        }
+        return usersList;
     }
 
     @Override
@@ -57,7 +72,8 @@ public class JDBCUserDao implements UserDao {
     public void addUser(User user)
             throws DataBaseSaveException {
 
-        try (PreparedStatement prepStatement = connection.prepareStatement(ADD_NEW_USER)) {
+        try (Connection connection = ConnectionPoolHolder.getConnection();
+                PreparedStatement prepStatement = connection.prepareStatement(ADD_NEW_USER)) {
 
             prepStatement.setString(1, user.getEmail());
             prepStatement.setString(2, user.getName());
@@ -76,8 +92,8 @@ public class JDBCUserDao implements UserDao {
             throws DataBaseFetchException {
 
         Optional<User> user = Optional.empty();
-
-        try (PreparedStatement prepStatement = connection.prepareStatement(GET_USER_BY_EMAIL)) {
+        try (Connection connection = ConnectionPoolHolder.getConnection();
+                PreparedStatement prepStatement = connection.prepareStatement(GET_USER_BY_EMAIL)) {
 
             prepStatement.setString(1, email);
             ResultSet rs = prepStatement.executeQuery();
@@ -89,14 +105,5 @@ public class JDBCUserDao implements UserDao {
             throw new DataBaseFetchException();
         }
         return user;
-    }
-
-    @Override
-    public void close() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

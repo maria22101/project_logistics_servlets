@@ -9,40 +9,29 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class JDBCDaoFactory extends DaoFactory {
-    private static final Logger LOGGER = LogManager.getLogger(JDBCDaoFactory.class);
-
-    private DataSource dataSource = ConnectionPoolHolder.getDataSource();
 
     @Override
     public UserDao createUserDao() {
-        return new JDBCUserDao(getConnection());
+        return new JDBCUserDao();
     }
 
     @Override
     public RouteDao createRouteDao() {
-        return new JDBCRouteDao(getConnection());
+        return new JDBCRouteDao();
     }
 
     @Override
     public OrderDao createOrderDao() {
-        return new JDBCOrderDao(getConnection());
+        return new JDBCOrderDao();
     }
 
     @Override
     public InvoiceDao createInvoiceDao() {
-        return new JDBCInvoiceDao(getConnection());
+        return new JDBCInvoiceDao();
     }
 
     @Override
     public AddressDao createAddressDao() {
-        return new JDBCAddressDao(getConnection());
-    }
-
-    private Connection getConnection() {
-        try {
-            return dataSource.getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        return new JDBCAddressDao();
     }
 }

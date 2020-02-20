@@ -14,22 +14,41 @@
 
                 <table border="0.5">
                     <thead>
-                        <tr>
-                            <th><fmt:message key="main.route.point.one"/></th>
-                            <th><fmt:message key="main.route.point.two"/></th>
-                            <th><fmt:message key="main.basic.rate"/></th>
-                        </tr>
+                    <tr>
+                        <th><fmt:message key="main.route.point.one"/></th>
+                        <th><fmt:message key="main.route.point.two"/></th>
+                        <th><fmt:message key="main.basic.rate"/></th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="route" items="${routes}">
-                            <tr>
-                                <td>${route.pointOne}</td>
-                                <td>${route.pointTwo}</td>
-                                <td>${route.basicRate}</td>
-                            </tr>
-                        </c:forEach>
+
+                    <c:choose>
+
+                        <c:when test="${sessionScope.lang == ua}">
+                            <c:forEach var="route" items="${routes}">
+                                <tr>
+                                    <td>${route.pointOne}</td>
+                                    <td>${route.pointTwo}</td>
+                                    <td>${route.basicRate}</td>
+                                </tr>
+                            </c:forEach>
+                        </c:when>
+
+                        <c:otherwise>
+                            <c:forEach var="route" items="${routes}">
+                                <tr>
+                                    <td>${route.pointOneUA}</td>
+                                    <td>${route.pointTwoUA}</td>
+                                    <td>${route.basicRate}</td>
+                                </tr>
+                            </c:forEach>
+                        </c:otherwise>
+
+                    </c:choose>
+
                     </tbody>
                 </table>
+
             </div>
         </div>
 

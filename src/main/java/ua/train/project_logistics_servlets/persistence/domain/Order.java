@@ -6,6 +6,7 @@ import ua.train.project_logistics_servlets.enums.OrderStatus;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+// TODO - is Invoice needed here?
 public class Order {
     private int orderNumber;
     private LocalDate deliveryDate;

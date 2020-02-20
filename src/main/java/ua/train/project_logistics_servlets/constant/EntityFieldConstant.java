@@ -48,4 +48,8 @@ public interface EntityFieldConstant {
     String ADDRESS_STREET = "street";
     String ADDRESS_HOUSE = "house";
     String ADDRESS_APARTMENT = "apartment";
+
+    //Invoice
+    String INVOICE_NUMBER = "invoiceNumber";
+    String INVOICE_IS_PAID = "isPaid";
 }
