@@ -4,10 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.train.project_logistics_servlets.web.command.*;
 import ua.train.project_logistics_servlets.web.command.admin.*;
-import ua.train.project_logistics_servlets.web.command.user.PlaceOrderCommand;
-import ua.train.project_logistics_servlets.web.command.user.UserInvoicedOrdersCommand;
-import ua.train.project_logistics_servlets.web.command.user.UserMainCommand;
-import ua.train.project_logistics_servlets.web.command.user.UserOrdersCommand;
+import ua.train.project_logistics_servlets.web.command.user.*;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -38,6 +35,7 @@ public class ServletMain extends HttpServlet {
         commands.put(USER_CABINET_PATH, new UserMainCommand());
         commands.put(USER_ORDERS_PATH, new UserOrdersCommand());
         commands.put(USER_INVOICED_ORDERS_PATH, new UserInvoicedOrdersCommand());
+        commands.put(USER_INVOICED_ORDERS_PAYING_PATH, new UserPayingCommand());
         commands.put(USER_PLACE_ORDER_PATH, new PlaceOrderCommand());
         commands.put(ADMIN_CABINET_PATH, new AdminMainCommand());
         commands.put(ADMIN_ORDERS_PATH, new AdminOrdersCommand());

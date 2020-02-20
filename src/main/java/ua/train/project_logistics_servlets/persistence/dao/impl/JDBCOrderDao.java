@@ -51,9 +51,11 @@ public class JDBCOrderDao implements OrderDao {
                     "JOIN addresses AS b " +
                     "ON orders.delivery_address_id=b.id";
 
-    private static final String GET_ALL_ORDERS_WITH_MAIN_USER_INFO_AND_INVOICE = "SELECT * FROM orders " +
-            "JOIN users ON orders.user_id=users.id" +
-            "LEFT JOIN invoices ON invoices.order_number=orders.order_number";
+    private static final String GET_INVOICED_ORDERS_BY_EMAIL =
+            "SELECT * FROM orders " +
+                    "JOIN users " +
+                    "ON orders.user_id=users.id " +
+                    "WHERE orders.order_status='INVOICED' AND users.email=?";
 
     private static final String GET_ORDER_BY_ORDER_NUMBER = "SELECT * FROM orders WHERE order_number=?";
 
@@ -101,7 +103,6 @@ public class JDBCOrderDao implements OrderDao {
         return order;
     }
 
-    //TODO: correct query!
     @Override
     public List<Order> findAll()
             throws DataBaseFetchException {
@@ -162,6 +163,34 @@ public class JDBCOrderDao implements OrderDao {
             UserMapper userMapper = new UserMapper();
 
             ResultSet rs = statement.executeQuery(GET_OPEN_ORDERS_WITH_MAIN_USER_AND_ADDRESS_INFO);
+            while (rs.next()) {
+                Order result = orderMapper.extractFromResultSet(rs);
+                result.setUser(userMapper.extractFromResultSet(rs));
+                result.setDispatchAddress(addressMapper.extractFromResultSet(rs));
+                result.setDeliveryAddress(addressMapper.extractFromResultSet(rs));
+                ordersList.add(result);
+            }
+
+        } catch (SQLException e) {
+            throw new DataBaseFetchException();
+        }
+        return ordersList;
+    }
+
+    @Override
+    public List<Order> getIvoicedOrdersByUserEmail(String email)
+            throws DataBaseFetchException {
+
+        List<Order> ordersList = new ArrayList<>();
+        try (Connection connection = ConnectionPoolHolder.getConnection();
+             PreparedStatement prepStatement = connection.prepareStatement(GET_INVOICED_ORDERS_BY_EMAIL)) {
+
+            AddressMapper addressMapper = new AddressMapper();
+            UserMapper userMapper = new UserMapper();
+
+            prepStatement.setString(1, email);
+            ResultSet rs = prepStatement.executeQuery();
+
             while (rs.next()) {
                 Order result = orderMapper.extractFromResultSet(rs);
                 result.setUser(userMapper.extractFromResultSet(rs));

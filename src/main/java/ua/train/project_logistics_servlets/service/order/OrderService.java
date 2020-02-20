@@ -27,21 +27,9 @@ public class OrderService {
             return orderDao.getOpenOrders();
     }
 
-    public Order getOrderByOrderNumber(int orderNumber)
-            throws DataBaseFetchException, OrderNotFoundException {
-//
-//        try(OrderDao dao = daoFactory.createOrderDao()) {
-//            Order order = dao.findById(orderNumber);
-//            if (order==null) throw new OrderNotFoundException();
-//
-//            return order;
-//        }
-        return null;
-    }
+    public List<Order> getIvoicedOrdersByUserEmail(String email)
+            throws DataBaseFetchException {
 
-//    public List<Order> getAllOrdersUa() {
-//        try(OrderDao dao = daoFactory.createOrderDao()) {
-//            return dao.findAll();
-//        }
-//    }
+            return orderDao.getIvoicedOrdersByUserEmail(email);
+    }
 }

@@ -14,6 +14,7 @@ public interface WebConstant {
     String USER_CABINET_PATH = "user/user_main";
     String USER_ORDERS_PATH = "user/orders";
     String USER_INVOICED_ORDERS_PATH = "user/invoiced_orders";
+    String USER_INVOICED_ORDERS_PAYING_PATH = "user/invoiced_orders/paying";
     String USER_PLACE_ORDER_PATH = "user/place_order";
 
     String ADMIN_CABINET_PATH = "admin/admin_main";

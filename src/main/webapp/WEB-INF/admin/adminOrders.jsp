@@ -44,38 +44,5 @@
         </tbody>
     </table>
 
-<%--    <table border="0.5">--%>
-<%--        <thead>--%>
-<%--        <tr>--%>
-<%--&lt;%&ndash;            <th><fmt:message key="order.number"/></th>&ndash;%&gt;--%>
-<%--&lt;%&ndash;            <th><fmt:message key="name.indication"/></th>&ndash;%&gt;--%>
-<%--&lt;%&ndash;            <th><fmt:message key="surname.indication"/></th>&ndash;%&gt;--%>
-<%--&lt;%&ndash;            <th><fmt:message key="email.indication"/></th>&ndash;%&gt;--%>
-<%--&lt;%&ndash;            <th><fmt:message key="order.weight"/></th>&ndash;%&gt;--%>
-<%--&lt;%&ndash;            <th><fmt:message key="order.cargo"/></th>&ndash;%&gt;--%>
-<%--&lt;%&ndash;            <th><fmt:message key="order.sum"/></th>&ndash;%&gt;--%>
-<%--            <th><fmt:message key="order.invoice.number"/></th>--%>
-<%--&lt;%&ndash;            <th><fmt:message key="order.status"/></th>&ndash;%&gt;--%>
-
-<%--        </tr>--%>
-<%--        </thead>--%>
-<%--        <tbody>--%>
-<%--        <c:forEach var="invoice" items="${invoices}">--%>
-<%--            <tr>--%>
-<%--&lt;%&ndash;                <td>${invoice.order.orderNumber}</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                <td>${invoice.order.user.name}</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                <td>${invoice.order.user.surname}</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                <td>${invoice.order.user.email}</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                <td>${invoice.order.weight}</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                <td>${invoice.order.cargoType}</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                <td>${invoice.order.sum}</td>&ndash;%&gt;--%>
-<%--                <td>${invoice.invoiceNumber}</td>--%>
-<%--&lt;%&ndash;                <td>${invoice.order.orderStatus}</td>&ndash;%&gt;--%>
-
-<%--            </tr>--%>
-<%--        </c:forEach>--%>
-<%--        </tbody>--%>
-<%--    </table>--%>
-
 </body>
 </html>

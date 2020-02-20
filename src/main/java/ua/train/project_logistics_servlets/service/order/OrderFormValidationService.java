@@ -1,7 +1,5 @@
 package ua.train.project_logistics_servlets.service.order;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import ua.train.project_logistics_servlets.service.utility.OrderValidationUtility;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,12 +10,9 @@ import static ua.train.project_logistics_servlets.constant.WebConstant.*;
 public class OrderFormValidationService {
     OrderValidationUtility utility = new OrderValidationUtility();
 
-    private static final Logger LOGGER = LogManager.getLogger(OrderFormValidationService.class);
-
     public Optional<String> getPageIfValidationFailed(HttpServletRequest request) {
 
         boolean isOrderFormEmpty = utility.isOrderFormEmpty(request);
-        LOGGER.info("isOrderFormEmpty={}", isOrderFormEmpty);
 
         if (isOrderFormEmpty) {
             return Optional.of(USER_PLACE_ORDER_PAGE);
@@ -35,7 +30,6 @@ public class OrderFormValidationService {
         request.setAttribute(INVALID_WEIGHT_INPUT_ATTRIBUTE, false);
 
         boolean isOrderFormValid = utility.isOrderFormValid(request);
-        LOGGER.info("isOrderFormValid={}", isOrderFormValid);
 
         if (isOrderFormValid) {
             return Optional.empty();

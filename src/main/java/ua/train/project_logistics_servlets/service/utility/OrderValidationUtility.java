@@ -20,8 +20,6 @@ public class OrderValidationUtility {
 
     private static final String DATE_FORMAT = "dd.MM.yyyy";
 
-    private static final Logger LOGGER = LogManager.getLogger(OrderValidationUtility.class);
-
     public boolean isOrderFormEmpty(HttpServletRequest request) {
         String dispatchCity = request.getParameter(ORDER_DISPATCH_CITY);
         String dispatchStreet = request.getParameter(ORDER_DISPATCH_STREET);
@@ -143,15 +141,12 @@ public class OrderValidationUtility {
         } else {
             BigDecimal inputWeight = new BigDecimal(weightStr)
                     .setScale(2, RoundingMode.HALF_UP);
-            LOGGER.info("inputWeight={}", inputWeight);
 
             BigDecimal loweBoundWeight = new BigDecimal(WEIGHT_LIGHT_LOWER_BOUND)
                     .setScale(2, RoundingMode.HALF_UP);
-            LOGGER.info("loweBoundWeight={}", loweBoundWeight);
 
             BigDecimal upperBoundWeight = new BigDecimal(WEIGHT_HEAVY_UPPER_BOUND)
                     .setScale(2, RoundingMode.HALF_UP);
-            LOGGER.info("upperBoundWeight={}", upperBoundWeight);
 
             return inputWeight.compareTo(loweBoundWeight) >= 0 &&
                     inputWeight.compareTo(upperBoundWeight) <= 0;

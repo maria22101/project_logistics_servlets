@@ -23,6 +23,9 @@ public class JDBCInvoiceDao implements InvoiceDao {
     private static final String CREATE_INVOICE =
             "INSERT INTO invoices (is_paid, order_number) VALUES(?, ?)";
 
+    private static final String PAY_INVOICE =
+            "UPDATE invoices SET is_paid=? WHERE order_number=?";
+
     private static final String UPDATE_ORDER_STATUS =
             "UPDATE orders SET order_status=? WHERE order_number=?";
 
@@ -74,7 +77,41 @@ public class JDBCInvoiceDao implements InvoiceDao {
         }
     }
 
-        @Override
+    @Override
+    public void payInvoice(int orderId)
+            throws DataBaseSaveException {
+
+        try (Connection connection = ConnectionPoolHolder.getConnection()) {
+
+            connection.setAutoCommit(false);
+            try (PreparedStatement invoiceStatement = connection.prepareStatement(PAY_INVOICE);
+                 PreparedStatement orderStatement = connection.prepareStatement(UPDATE_ORDER_STATUS)) {
+
+                invoiceStatement.setBoolean(1, true);
+                invoiceStatement.setInt(2, orderId);
+
+                orderStatement.setString(1, OrderStatus.READY_FOR_DISPATCH.toString());
+                orderStatement.setInt(2, orderId);
+
+                invoiceStatement.executeUpdate();
+                orderStatement.executeUpdate();
+
+                connection.commit();
+                connection.setAutoCommit(true);
+
+            } catch (SQLException e) {
+                connection.rollback();
+                connection.setAutoCommit(true);
+                throw new DataBaseSaveException();
+            }
+
+        } catch (SQLException e) {
+            throw new DataBaseSaveException();
+        }
+
+    }
+
+    @Override
         public Optional<Invoice> findById ( int id) throws DataBaseFetchException {
             return Optional.empty();
         }

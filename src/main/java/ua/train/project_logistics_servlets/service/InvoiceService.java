@@ -20,12 +20,6 @@ public class InvoiceService {
 
     private static final Logger LOGGER = LogManager.getLogger(InvoiceService.class);
 
-    public List<Invoice> getAllInvoices()
-            throws DataBaseFetchException {
-
-        return invoiceDao.findAll();
-    }
-
     public void issueInvoice(int orderNumber)
             throws DataBaseSaveException {
 
@@ -33,12 +27,8 @@ public class InvoiceService {
     }
 
     public void payInvoice(int orderNumber)
-            throws DataBaseSaveException,
-            DataBaseFetchException,
-            OrderNotFoundException {
+            throws DataBaseSaveException {
 
-
+        invoiceDao.payInvoice(orderNumber);
     }
-
-
 }
