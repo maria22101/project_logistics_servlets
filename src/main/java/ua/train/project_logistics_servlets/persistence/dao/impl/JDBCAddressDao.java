@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class JDBCAddressDao implements AddressDao {
-    private Connection connection;
     private AddressMapper addressMapper = new AddressMapper();
     private static final Logger LOGGER = LogManager.getLogger(JDBCAddressDao.class);
 
@@ -27,10 +26,6 @@ public class JDBCAddressDao implements AddressDao {
 
     private static final String SAVE_ADDRESS = "INSERT INTO addresses " +
             "(city, street, house, apartment)" + " VALUES(?, ?, ?, ?)";
-
-    public JDBCAddressDao(Connection connection) {
-        this.connection = connection;
-    }
 
     @Override
     public Optional<Address> findAddress(String city,
@@ -41,7 +36,8 @@ public class JDBCAddressDao implements AddressDao {
 
         Optional<Address> address = Optional.empty();
 
-        try (PreparedStatement prepStatement = connection.prepareStatement(GET_ADDRESS)) {
+        try (Connection connection = ConnectionPoolHolder.getConnection();
+                PreparedStatement prepStatement = connection.prepareStatement(GET_ADDRESS)) {
 
             prepStatement.setString(1, city);
             prepStatement.setString(2, street);
@@ -59,19 +55,35 @@ public class JDBCAddressDao implements AddressDao {
     }
 
     @Override
+    public Optional<Address> getAddress(Address address)
+            throws DataBaseFetchException {
+
+        Optional<Address> addressFromDb = Optional.empty();
+
+        try (Connection connection = ConnectionPoolHolder.getConnection();
+                PreparedStatement prepStatement = connection.prepareStatement(GET_ADDRESS)) {
+
+            prepStatement.setString(1, address.getCity());
+            prepStatement.setString(2, address.getStreet());
+            prepStatement.setString(3, address.getHouse());
+            prepStatement.setString(4, address.getApartment());
+            ResultSet rs = prepStatement.executeQuery();
+            if (rs.next()){
+                addressFromDb = Optional.of(addressMapper.extractFromResultSet(rs));
+            }
+
+        }catch (Exception e) {
+            throw new DataBaseFetchException();
+        }
+        return addressFromDb;
+    }
+
+    @Override
     public void create(Address entity)
             throws DataBaseSaveException {
 
-        LOGGER.info("Inside JDBCAddressDao...");
-        LOGGER.info("Inside create()...");
-
-            try (PreparedStatement prepStatement = connection.prepareStatement(SAVE_ADDRESS)) {
-
-                LOGGER.info("Entered inside try block...");
-                LOGGER.info("city passing to DB={}", entity.getCity());
-                LOGGER.info("street passing to DB={}", entity.getStreet());
-                LOGGER.info("house passing to DB={}", entity.getHouse());
-                LOGGER.info("apartment passing to DB={}", entity.getApartment());
+            try (Connection connection = ConnectionPoolHolder.getConnection();
+                    PreparedStatement prepStatement = connection.prepareStatement(SAVE_ADDRESS)) {
 
                 prepStatement.setString(1, entity.getCity());
                 prepStatement.setString(2, entity.getStreet());
@@ -79,17 +91,16 @@ public class JDBCAddressDao implements AddressDao {
                 prepStatement.setString(4, entity.getApartment());
                 prepStatement.execute();
 
-                LOGGER.info("after executing prepStatement");
-
             }catch (Exception e) {
                 throw new DataBaseSaveException();
             }
     }
 
     @Override
-    public Address findById(int id) {
-        return null;
+    public Optional<Address> findById(int id) throws DataBaseFetchException {
+        return Optional.empty();
     }
+
 
     @Override
     public List<Address> findAll() {
@@ -104,14 +115,5 @@ public class JDBCAddressDao implements AddressDao {
     @Override
     public void delete(int id) {
 
-    }
-
-    @Override
-    public void close() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

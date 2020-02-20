@@ -10,29 +10,25 @@ import ua.train.project_logistics_servlets.persistence.dao.UserDao;
 import ua.train.project_logistics_servlets.persistence.domain.User;
 
 public class RegistrationService {
-    private static final Logger LOGGER = LogManager.getLogger(RegistrationService.class);
+    UserDao userDao = DaoFactory.getInstance().createUserDao();
 
-    DaoFactory daoFactory = DaoFactory.getInstance();
+    private static final Logger LOGGER = LogManager.getLogger(RegistrationService.class);
 
     public void addUser(User user)
             throws UserExistsException,
-                    DataBaseFetchException,
-                    DataBaseSaveException {
+            DataBaseFetchException,
+            DataBaseSaveException {
 
-        try(UserDao dao = daoFactory.createUserDao()) {
-            checkIfEmailPresent(user);
-            dao.addUser(user);
-        }
+        checkIfEmailPresent(user);
+        userDao.addUser(user);
     }
 
-    private void checkIfEmailPresent (User user)
+    private void checkIfEmailPresent(User user)
             throws DataBaseFetchException,
-                    UserExistsException {
+            UserExistsException {
 
-        try(UserDao dao = daoFactory.createUserDao()) {
-            if(dao.findUserByEmail(user.getEmail()).isPresent()) {
-                throw new UserExistsException();
-            }
+        if (userDao.findUserByEmail(user.getEmail()).isPresent()) {
+            throw new UserExistsException();
         }
     }
 }

@@ -12,6 +12,10 @@ public class Invoice {
         this.order = order;
     }
 
+    public Invoice(Order order) {
+        this.order = order;
+    }
+
     public Invoice() {
     }
 
@@ -37,5 +41,14 @@ public class Invoice {
 
     public void setOrder(Order order) {
         this.order = order;
+    }
+
+    @Override
+    public String toString() {
+        return "Invoice{" +
+                "invoiceNumber=" + invoiceNumber +
+                ", isPaid=" + isPaid +
+                ", order=" + order +
+                '}';
     }
 }

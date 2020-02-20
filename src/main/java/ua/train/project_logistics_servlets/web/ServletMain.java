@@ -42,6 +42,7 @@ public class ServletMain extends HttpServlet {
         commands.put(ADMIN_CABINET_PATH, new AdminMainCommand());
         commands.put(ADMIN_ORDERS_PATH, new AdminOrdersCommand());
         commands.put(ADMIN_OPEN_ORDERS_PATH, new AdminOpenOrdersCommand());
+        commands.put(ADMIN_ISSUE_INVOICE_PATH, new AdminInvoiceCommand());
         commands.put(ADMIN_USERS_PATH, new AdminUsersCommand());
         commands.put(ADMIN_ROUTES_PATH, new AdminRoutesCommand());
         commands.put(DENIED_PATH, new DeniedCommand());

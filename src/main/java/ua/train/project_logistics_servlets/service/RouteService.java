@@ -15,27 +15,21 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class RouteService {
-
-    DaoFactory daoFactory = DaoFactory.getInstance();
+    private RouteDao routeDao = DaoFactory.getInstance().createRouteDao();
 
     private static final Logger LOGGER = LogManager.getLogger(SumCalculationService.class);
 
-    public List<Route> getAllRoutes() {
-        try(RouteDao dao = daoFactory.createRouteDao()) {
-            return dao.findAll();
-        }
+    public List<Route> getAllRoutes()
+            throws DataBaseFetchException {
+
+        return routeDao.findAll();
     }
 
     public Route getRouteFromDb(String dispatchCity, String deliveryCity)
             throws DataBaseFetchException {
 
-        LOGGER.info("Inside RouteService...");
-        LOGGER.info("Inside getRouteFromDb()...");
-
-        try(RouteDao dao = daoFactory.createRouteDao()) {
-            return dao.findRouteByTwoPoints(dispatchCity, deliveryCity)
-                    .orElseThrow(DataBaseFetchException::new);
-        }
+        return routeDao.findRouteByTwoPoints(dispatchCity, deliveryCity)
+                .orElseThrow(DataBaseFetchException::new);
     }
 
     public List<String> getCitiesOptionsEng()

@@ -2,6 +2,7 @@ package ua.train.project_logistics_servlets.web.command;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ua.train.project_logistics_servlets.exception.DataBaseFetchException;
 import ua.train.project_logistics_servlets.persistence.domain.Route;
 import ua.train.project_logistics_servlets.service.RouteService;
 
@@ -16,8 +17,14 @@ public class MainPageCommand implements Command{
 
     @Override
     public String execute(HttpServletRequest request) {
-        List<Route> allRoutes = routeService.getAllRoutes();
-        request.setAttribute("routes", allRoutes);
+
+        try {
+            List<Route> allRoutes = routeService.getAllRoutes();
+            request.setAttribute("routes", allRoutes);
+        } catch (DataBaseFetchException e) {
+            e.printStackTrace();
+        }
+
 
         return MAIN_PAGE;
     }

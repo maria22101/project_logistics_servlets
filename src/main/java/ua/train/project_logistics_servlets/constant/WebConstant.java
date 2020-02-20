@@ -19,6 +19,7 @@ public interface WebConstant {
     String ADMIN_CABINET_PATH = "admin/admin_main";
     String ADMIN_ORDERS_PATH = "admin/orders";
     String ADMIN_OPEN_ORDERS_PATH = "admin/open_orders";
+    String ADMIN_ISSUE_INVOICE_PATH = "admin/open_orders/invoicing";
     String ADMIN_USERS_PATH = "admin/users";
     String ADMIN_ROUTES_PATH = "admin/routes";
 
@@ -54,22 +55,23 @@ public interface WebConstant {
     String INVALID_SURNAME_INPUT_ATTRIBUTE = "invalidSurnameInput";
     String INVALID_EMAIL_INPUT_ATTRIBUTE = "invalidEmailInput";
     String INVALID_PASSWORD_INPUT_ATTRIBUTE = "invalidPasswordInput";
-    String LANGUAGE_ATTRIBUTE = "lang";
+    String ROUTES_ATTRIBUTE = "routes";
+    String ORDERS_ATTRIBUTE = "orders";
+    String INVOICES_ATTRIBUTE = "invoices";
+    String USERS_ATTRIBUTE = "users";
 
-    String INVALID_DISPATCH_CITY_INPUT_ATTRIBUTE = "invalidDispatchCityInput";
     String INVALID_DISPATCH_STREET_INPUT_ATTRIBUTE = "invalidDispatchStreetInput";
     String INVALID_DISPATCH_HOUSE_INPUT_ATTRIBUTE = "invalidDispatchHouseInput";
     String INVALID_DISPATCH_APARTMENT_INPUT_ATTRIBUTE = "invalidDispatchApartmentInput";
 
-    String INVALID_DELIVERY_CITY_INPUT_ATTRIBUTE = "invalidDeliveryCityInput";
     String INVALID_DELIVERY_STREET_INPUT_ATTRIBUTE = "invalidDeliveryStreetInput";
     String INVALID_DELIVERY_HOUSE_INPUT_ATTRIBUTE = "invalidDeliveryHouseInput";
     String INVALID_DELIVERY_APARTMENT_ATTRIBUTE = "invalidDeliveryApartmentInput";
 
     String INVALID_DELIVERY_DATE_INPUT_ATTRIBUTE = "invalidDeliveryDateInput";
     String INVALID_WEIGHT_INPUT_ATTRIBUTE = "invalidWeightInput";
-    String INVALID_CARGO_TYPE_INPUT_ATTRIBUTE = "invalidCargoTypeInput";
 
+    String LANGUAGE_ATTRIBUTE = "lang";
     String UA_LANGUAGE = "ua";
     String EN_LANGUAGE = "en";
 

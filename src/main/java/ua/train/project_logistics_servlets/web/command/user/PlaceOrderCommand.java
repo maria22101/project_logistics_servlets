@@ -27,7 +27,6 @@ import java.util.ResourceBundle;
 
 import static ua.train.project_logistics_servlets.constant.EntityFieldConstant.*;
 import static ua.train.project_logistics_servlets.constant.EntityFieldConstant.ORDER_DISPATCH_APARTMENT;
-import static ua.train.project_logistics_servlets.constant.RegexConstant.REGEX_BUNDLE;
 import static ua.train.project_logistics_servlets.constant.WebConstant.*;
 import static ua.train.project_logistics_servlets.constant.WebConstant.DB_FETCH_ERROR_PAGE;
 
@@ -35,9 +34,10 @@ public class PlaceOrderCommand implements Command {
     private OrderCreationService orderCreationService = new OrderCreationService();
     private OrderFormValidationService orderFormValidationService = new OrderFormValidationService();
     RouteService routeService = new RouteService();
-    private static final String DATE_FORMAT = "dd.MM.yyyy";
 
     private static final Logger LOGGER = LogManager.getLogger(PlaceOrderCommand.class);
+
+    private static final String DATE_FORMAT = "dd.MM.yyyy";
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -47,12 +47,12 @@ public class PlaceOrderCommand implements Command {
                     request.getSession().getAttribute(LANGUAGE_ATTRIBUTE).equals(EN_LANGUAGE)) {
 
                 List<String> allRoutesEn = routeService.getCitiesOptionsEng();
-                request.setAttribute("routes", allRoutesEn);
+                request.setAttribute(ROUTES_ATTRIBUTE, allRoutesEn);
 
             } else {
 
                 List<String> allRoutesUa = routeService.getCitiesOptionsUa();
-                request.setAttribute("routes", allRoutesUa);
+                request.setAttribute(ROUTES_ATTRIBUTE, allRoutesUa);
             }
         } catch (DataBaseFetchException e) {
             return DB_FETCH_ERROR_PAGE;
@@ -62,13 +62,9 @@ public class PlaceOrderCommand implements Command {
 
         Optional<String> pageIfValidationFailed = orderFormValidationService.getPageIfValidationFailed(request);
 
-        LOGGER.info("pageIfValidationFailed={}", pageIfValidationFailed);
-
         if (pageIfValidationFailed.isPresent()) {
             return pageIfValidationFailed.get();
         }
-
-        LOGGER.info("Submitting form...");
 
         String email = (String) request.getSession().getAttribute(EMAIL_ATTRIBUTE);
 
@@ -85,17 +81,11 @@ public class PlaceOrderCommand implements Command {
         LocalDate deliveryDate = LocalDate.parse(
                 request.getParameter(ORDER_DELIVERY_DATE),
                 DateTimeFormatter.ofPattern(DATE_FORMAT));
-        LOGGER.info("deliveryDate={}", deliveryDate);
-        LOGGER.info("dataType={}", deliveryDate.getClass());
 
         BigDecimal weight = new BigDecimal(request.getParameter(ORDER_WEIGHT))
                 .setScale(2, RoundingMode.HALF_UP);
-        LOGGER.info("weight={}", weight);
-        LOGGER.info("dataType={}", weight.getClass());
 
         CargoType cargoType = CargoType.valueOf(request.getParameter(ORDER_CARGO_TYPE));
-        LOGGER.info("cargoType={}", cargoType);
-        LOGGER.info("dataType={}", cargoType.getClass());
 
         try {
             orderCreationService.addOrder(email,

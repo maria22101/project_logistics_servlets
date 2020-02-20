@@ -14,36 +14,23 @@ import java.util.List;
 import java.util.Optional;
 
 public class JDBCRouteDao implements RouteDao {
-    private Connection connection;
     private RouteMapper routeMapper = new RouteMapper();
     private static final Logger LOGGER = LogManager.getLogger(JDBCRouteDao.class);
 
     private static final String GET_ALL_ROUTES = "SELECT * FROM routes";
+
     private static final String GET_ROUTE_BY_TWO_POINTS = "SELECT * FROM routes WHERE " +
             "(point_one=? AND point_two=?) OR (point_one=? AND point_two=?) " +
             "OR (point_one_ua=? AND point_two_ua=?) OR (point_one_ua=? AND point_two_ua=?) ";
-//    private static final String GET_ROUTE_BY_TWO_POINTS_SIMPLIFIED = "SELECT * FROM routes WHERE " +
-//            "point_one=? AND point_two=?";
-
-    public JDBCRouteDao(Connection connection) {
-        this.connection = connection;
-    }
 
     @Override
     public Optional<Route> findRouteByTwoPoints(String pointOne, String pointTwo)
             throws DataBaseFetchException {
 
-        LOGGER.info("Inside JDBCRouteDao...");
-        LOGGER.info("Inside findRouteByTwoPoints()...");
-
         Optional<Route> route = Optional.empty();
 
-        try (PreparedStatement prepStatement = connection.prepareStatement(GET_ROUTE_BY_TWO_POINTS)) {
-
-            LOGGER.info("Entered inside try block...");
-            LOGGER.info("prepStatement={}", prepStatement);
-            LOGGER.info("pointOne passing to DB={}", pointOne);
-            LOGGER.info("pointTwo passing to DB={}", pointTwo);
+        try (Connection connection = ConnectionPoolHolder.getConnection();
+             PreparedStatement prepStatement = connection.prepareStatement(GET_ROUTE_BY_TWO_POINTS)) {
 
             prepStatement.setString(1, pointOne);
             prepStatement.setString(2, pointTwo);
@@ -55,16 +42,11 @@ public class JDBCRouteDao implements RouteDao {
             prepStatement.setString(8, pointOne);
             ResultSet rs = prepStatement.executeQuery();
 
-            LOGGER.info("Before extracting from resultSet...");
-
-            if (rs.next()){
+            if (rs.next()) {
                 route = Optional.of(routeMapper.extractFromResultSet(rs));
             }
 
-            LOGGER.info("Extraction from resultSet succeeded...");
-
-        }catch (Exception e) {
-            LOGGER.info("Extraction from resultSet failed...");
+        } catch (Exception e) {
             throw new DataBaseFetchException();
         }
         return route;
@@ -76,24 +58,27 @@ public class JDBCRouteDao implements RouteDao {
     }
 
     @Override
-    public Route findById(int id) {
-        return null;
+    public Optional<Route> findById(int id) throws DataBaseFetchException {
+        return Optional.empty();
     }
 
     @Override
-    public List<Route> findAll() {
+    public List<Route> findAll()
+            throws DataBaseFetchException {
+
         List<Route> routesList = new ArrayList<>();
-        try (PreparedStatement prepStatement = connection.prepareStatement(GET_ALL_ROUTES)) {
+        try (Connection connection = ConnectionPoolHolder.getConnection();
+                Statement statement = connection.createStatement()) {
 
-            ResultSet rs = prepStatement.executeQuery();
+            ResultSet rs = statement.executeQuery(GET_ALL_ROUTES);
 
-            while (rs.next()){
+            while (rs.next()) {
                 Route result = routeMapper.extractFromResultSet(rs);
                 routesList.add(result);
             }
 
         } catch (SQLException e) {
-            new RuntimeException(e);
+            throw new DataBaseFetchException();
         }
         return routesList;
     }
@@ -106,14 +91,5 @@ public class JDBCRouteDao implements RouteDao {
     @Override
     public void delete(int id) {
 
-    }
-
-    @Override
-    public void close() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

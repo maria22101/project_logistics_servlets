@@ -21,12 +21,12 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 public class OrderCreationService {
+    private OrderDao orderDao = DaoFactory.getInstance().createOrderDao();
+    private AddressDao addressDao = DaoFactory.getInstance().createAddressDao();
+
     private UserService userService = new UserService();
-//    private AddressesDefinitionService addressService = new AddressesDefinitionService();
     private SumCalculationService sumCalculationService = new SumCalculationService();
     private RouteService routeService = new RouteService();
-
-    DaoFactory daoFactory = DaoFactory.getInstance();
 
     private static final Logger LOGGER = LogManager.getLogger(OrderCreationService.class);
 
@@ -37,32 +37,9 @@ public class OrderCreationService {
             throws DataBaseFetchException,
             DataBaseSaveException {
 
-        LOGGER.info("Inside OrderCreationService...");
-
         User user = userService.getUserFromDb(email);
-        LOGGER.info("user={}", user);
-
-//        Address dispatchAddress = addressService.defineDispatchAddress(
-//                        dispatchCity,
-//                        dispatchStreet,
-//                        dispatchHouse,
-//                        dispatchApartment
-//                );
-//        LOGGER.info("dispatchAddress={}", dispatchAddress);
-//
-//        Address deliveryAddress = addressService.defineDeliveryAddress(
-//                        deliveryCity,
-//                        deliveryStreet,
-//                        deliveryHouse,
-//                        deliveryApartment
-//                );
-//        LOGGER.info("deliveryAddress={}", deliveryAddress);
-
         Route route = routeService.getRouteFromDb(dispatchCity, deliveryCity);
-        LOGGER.info("route={}", route);
-
         BigDecimal sum = sumCalculationService.calculateSum(weight, route);
-        LOGGER.info("sum={}", sum);
 
         Order order = new Order();
         order.setUser(user);
@@ -72,58 +49,35 @@ public class OrderCreationService {
         order.setSum(sum);
         order.setOrderStatus(OrderStatus.OPEN);
         order.setRoute(route);
-        LOGGER.info("order={}", order);
 
-        try (AddressDao addressDao = daoFactory.createAddressDao();
-             OrderDao orderDao = daoFactory.createOrderDao()) {
+        Optional<Address> dispatchAddressFromDb = addressDao
+                .findAddress(dispatchCity, dispatchStreet, dispatchHouse, dispatchApartment);
 
-//            addressDao.create(dispatchAddress);
-//            addressDao.create(deliveryAddress);
-//
-//            Address savedDispatchAddress = addressDao.findAddress(dispatchAddress.getCity(),
-//                                    dispatchAddress.getStreet(),
-//                                    dispatchAddress.getHouse(),
-//                                    dispatchAddress.getApartment())
-//                    .orElseThrow(DataBaseFetchException::new);
-//
-//            Address savedDeliveryAddress = addressDao.findAddress(deliveryAddress.getCity(),
-//                    deliveryAddress.getStreet(),
-//                    deliveryAddress.getHouse(),
-//                    deliveryAddress.getApartment())
-//                    .orElseThrow(DataBaseFetchException::new);
-
-            Address dispatchAddress;
-            Optional<Address> dispatchAddr = addressDao
-                    .findAddress(dispatchCity, dispatchStreet, dispatchHouse, dispatchApartment);
-            if (dispatchAddr.isPresent()) {
-                dispatchAddress = addressDao
-                        .findAddress(dispatchCity, dispatchStreet, dispatchHouse, dispatchApartment).get();
-            } else {
-                dispatchAddress = new Address(dispatchCity, dispatchStreet, dispatchHouse, dispatchApartment);
-                addressDao.create(dispatchAddress);
-            }
-
-            Address deliveryAddress;
-            Optional<Address> deliveryAddr = addressDao
-                    .findAddress(deliveryCity, deliveryStreet, deliveryHouse, deliveryApartment);
-            if (deliveryAddr.isPresent()) {
-                deliveryAddress = addressDao
-                        .findAddress(deliveryCity, deliveryStreet, deliveryHouse, deliveryApartment).get();
-            } else {
-                deliveryAddress = new Address(deliveryCity, deliveryStreet, deliveryHouse, deliveryApartment);
-                addressDao.create(deliveryAddress);
-            }
-
-//            order.setDispatchAddress(savedDispatchAddress);
-//            order.setDeliveryAddress(savedDeliveryAddress);
-
+        if (dispatchAddressFromDb.isPresent()) {
+            Address dispatchAddress = dispatchAddressFromDb.get();
             order.setDispatchAddress(dispatchAddress);
-            order.setDeliveryAddress(deliveryAddress);
-
-            orderDao.create(order);
-
-        } catch (Exception e) {
-            throw new DataBaseSaveException();
+        } else {
+            Address newDispatchAddress = new Address(dispatchCity, dispatchStreet, dispatchHouse, dispatchApartment);
+            addressDao.create(newDispatchAddress);
+            Address savedNewDispatchAddress = addressDao.getAddress(newDispatchAddress)
+                    .orElseThrow(DataBaseFetchException::new);
+            order.setDispatchAddress(savedNewDispatchAddress);
         }
+
+        Optional<Address> deliveryAddressFromDB = addressDao
+                .findAddress(deliveryCity, deliveryStreet, deliveryHouse, deliveryApartment);
+
+        if (deliveryAddressFromDB.isPresent()) {
+            Address deliveryAddress = deliveryAddressFromDB.get();
+            order.setDeliveryAddress(deliveryAddress);
+        } else {
+            Address newDeliveryAddress = new Address(deliveryCity, deliveryStreet, deliveryHouse, deliveryApartment);
+            addressDao.create(newDeliveryAddress);
+            Address savedNewDeliveryAddress = addressDao.getAddress(newDeliveryAddress)
+                    .orElseThrow(DataBaseFetchException::new);
+            order.setDeliveryAddress(savedNewDeliveryAddress);
+        }
+
+        orderDao.create(order);
     }
 }

@@ -7,7 +7,7 @@
 
     <c:set var="map" value="${applicationScope['properties']}"/>
 
-    <h2><fmt:message key="usercabinet.order.creation.title"/></h2>
+    <h2 style="color: seagreen"><fmt:message key="usercabinet.order.creation.title"/></h2>
 
     <form method="post" action="${pageContext.request.contextPath}/app/user/place_order">
         <input type="hidden" name="submitted" value="true">

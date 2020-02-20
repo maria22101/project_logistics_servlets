@@ -3,7 +3,7 @@
 <html>
 <body>
 
-    <h2><fmt:message key="admincabinet.title"/></h2>
+    <h2 style="color: #3a60bf"><fmt:message key="admincabinet.title"/></h2>
 
     <a href="${pageContext.request.contextPath}/app/admin/orders">
         <fmt:message key="cabinet.orderlist.link"/>
