@@ -2,20 +2,14 @@ package ua.train.project_logistics_servlets.persistence.dao.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ua.train.project_logistics_servlets.enums.OrderStatus;
 import ua.train.project_logistics_servlets.exception.DataBaseFetchException;
 import ua.train.project_logistics_servlets.exception.DataBaseSaveException;
 import ua.train.project_logistics_servlets.persistence.dao.OrderDao;
 import ua.train.project_logistics_servlets.persistence.dao.mapper.AddressMapper;
 import ua.train.project_logistics_servlets.persistence.dao.mapper.OrderMapper;
-import ua.train.project_logistics_servlets.persistence.dao.mapper.RouteMapper;
 import ua.train.project_logistics_servlets.persistence.dao.mapper.UserMapper;
-import ua.train.project_logistics_servlets.persistence.domain.Address;
 import ua.train.project_logistics_servlets.persistence.domain.Order;
-import ua.train.project_logistics_servlets.persistence.domain.Route;
-import ua.train.project_logistics_servlets.persistence.domain.User;
 
-import javax.xml.crypto.Data;
 import java.sql.*;
 import java.sql.Date;
 import java.util.*;
@@ -32,7 +26,7 @@ public class JDBCOrderDao implements OrderDao {
 
     private static final String GET_ALL_ORDERS = "SELECT * FROM orders";
 
-    private static final String GET_OPEN_ORDERS_WITH_MAIN_USER_AND_ADDRESS_INFO =
+    private static final String GET_OPEN_ORDERS_WITH_USERS_AND_ADDRESSES =
             "SELECT * FROM orders " +
                     "JOIN users " +
                     "ON orders.user_id=users.id " +
@@ -42,7 +36,7 @@ public class JDBCOrderDao implements OrderDao {
                     "ON orders.delivery_address_id=b.id " +
                     "WHERE order_status='OPEN'";
 
-    private static final String GET_ALL_ORDERS_WITH_MAIN_USER_AND_ADDRESS_INFO =
+    private static final String GET_ALL_ORDERS_WITH_USERS_AND_ADDRESSES =
             "SELECT * FROM orders " +
                     "JOIN users " +
                     "ON orders.user_id=users.id " +
@@ -56,6 +50,16 @@ public class JDBCOrderDao implements OrderDao {
                     "JOIN users " +
                     "ON orders.user_id=users.id " +
                     "WHERE orders.order_status='INVOICED' AND users.email=?";
+
+    private static final String GET_ALL_ORDERS_WITH_USERS_AND_ADDRESSES_BY_EMAIL =
+            "SELECT * FROM orders " +
+                    "JOIN users " +
+                    "ON orders.user_id=users.id " +
+                    "JOIN addresses AS a " +
+                    "ON orders.dispatch_address_id=a.id " +
+                    "JOIN addresses AS b " +
+                    "ON orders.delivery_address_id=b.id " +
+                    "WHERE users.email=?";
 
     private static final String GET_ORDER_BY_ORDER_NUMBER = "SELECT * FROM orders WHERE order_number=?";
 
@@ -125,7 +129,7 @@ public class JDBCOrderDao implements OrderDao {
     }
 
     @Override
-    public List<Order> getAllOrdersWithMainUserAndAddressInfo()
+    public List<Order> getAllOrdersWithUserAndAddresses()
             throws DataBaseFetchException {
 
         List<Order> ordersList = new ArrayList<>();
@@ -135,7 +139,7 @@ public class JDBCOrderDao implements OrderDao {
             AddressMapper addressMapper = new AddressMapper();
             UserMapper userMapper = new UserMapper();
 
-            ResultSet rs = statement.executeQuery(GET_ALL_ORDERS_WITH_MAIN_USER_AND_ADDRESS_INFO);
+            ResultSet rs = statement.executeQuery(GET_ALL_ORDERS_WITH_USERS_AND_ADDRESSES);
             while (rs.next()) {
                 Order result = orderMapper.extractFromResultSet(rs);
                 result.setUser(userMapper.extractFromResultSet(rs));
@@ -162,7 +166,7 @@ public class JDBCOrderDao implements OrderDao {
             AddressMapper addressMapper = new AddressMapper();
             UserMapper userMapper = new UserMapper();
 
-            ResultSet rs = statement.executeQuery(GET_OPEN_ORDERS_WITH_MAIN_USER_AND_ADDRESS_INFO);
+            ResultSet rs = statement.executeQuery(GET_OPEN_ORDERS_WITH_USERS_AND_ADDRESSES);
             while (rs.next()) {
                 Order result = orderMapper.extractFromResultSet(rs);
                 result.setUser(userMapper.extractFromResultSet(rs));
@@ -184,6 +188,40 @@ public class JDBCOrderDao implements OrderDao {
         List<Order> ordersList = new ArrayList<>();
         try (Connection connection = ConnectionPoolHolder.getConnection();
              PreparedStatement prepStatement = connection.prepareStatement(GET_INVOICED_ORDERS_BY_EMAIL)) {
+
+//            AddressMapper addressMapper = new AddressMapper();
+            UserMapper userMapper = new UserMapper();
+
+            prepStatement.setString(1, email);
+            ResultSet rs = prepStatement.executeQuery();
+
+            LOGGER.info("Before extracting resultSet");
+
+            while (rs.next()) {
+                Order result = orderMapper.extractFromResultSet(rs);
+                result.setUser(userMapper.extractFromResultSet(rs));
+//                result.setDispatchAddress(addressMapper.extractFromResultSet(rs));
+//                result.setDeliveryAddress(addressMapper.extractFromResultSet(rs));
+                ordersList.add(result);
+            }
+
+            LOGGER.info("ResultSet extracted");
+
+        } catch (SQLException e) {
+            throw new DataBaseFetchException();
+        }
+        return ordersList;
+    }
+
+    @Override
+    public List<Order> getAllOrdersWithUserAndAddressesByEmail(String email)
+            throws DataBaseFetchException {
+
+        List<Order> ordersList = new ArrayList<>();
+
+        try (Connection connection = ConnectionPoolHolder.getConnection();
+             PreparedStatement prepStatement = connection
+                     .prepareStatement(GET_ALL_ORDERS_WITH_USERS_AND_ADDRESSES_BY_EMAIL)) {
 
 //            AddressMapper addressMapper = new AddressMapper();
             UserMapper userMapper = new UserMapper();

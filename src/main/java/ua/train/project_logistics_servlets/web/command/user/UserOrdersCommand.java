@@ -18,9 +18,10 @@ public class UserOrdersCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
+        String email = (String) request.getSession().getAttribute(EMAIL_ATTRIBUTE);
 
         try {
-            List<Order> orders = orderService.getAllOrdersWithMainUserAndAddressInfo();
+            List<Order> orders = orderService.getAllOrdersWithUserAndAddressesByEmail(email);
             request.setAttribute(ORDERS_ATTRIBUTE, orders);
         } catch (DataBaseFetchException e) {
             return DB_FETCH_ERROR_PAGE;

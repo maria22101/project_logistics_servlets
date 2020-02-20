@@ -20,7 +20,7 @@ public class AdminOrdersCommand implements Command {
     public String execute(HttpServletRequest request) {
 
         try {
-            List<Order> orders = orderService.getAllOrdersWithMainUserAndAddressInfo();
+            List<Order> orders = orderService.getAllOrdersWithUserAndAddresses();
             request.setAttribute(ORDERS_ATTRIBUTE, orders);
         } catch (DataBaseFetchException e) {
             return DB_FETCH_ERROR_PAGE;
