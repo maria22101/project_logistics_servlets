@@ -185,19 +185,23 @@ public class JDBCOrderDao implements OrderDao {
         try (Connection connection = ConnectionPoolHolder.getConnection();
              PreparedStatement prepStatement = connection.prepareStatement(GET_INVOICED_ORDERS_BY_EMAIL)) {
 
-            AddressMapper addressMapper = new AddressMapper();
+//            AddressMapper addressMapper = new AddressMapper();
             UserMapper userMapper = new UserMapper();
 
             prepStatement.setString(1, email);
             ResultSet rs = prepStatement.executeQuery();
 
+            LOGGER.info("Before extracting resultSet");
+
             while (rs.next()) {
                 Order result = orderMapper.extractFromResultSet(rs);
                 result.setUser(userMapper.extractFromResultSet(rs));
-                result.setDispatchAddress(addressMapper.extractFromResultSet(rs));
-                result.setDeliveryAddress(addressMapper.extractFromResultSet(rs));
+//                result.setDispatchAddress(addressMapper.extractFromResultSet(rs));
+//                result.setDeliveryAddress(addressMapper.extractFromResultSet(rs));
                 ordersList.add(result);
             }
+
+            LOGGER.info("ResultSet extracted");
 
         } catch (SQLException e) {
             throw new DataBaseFetchException();
