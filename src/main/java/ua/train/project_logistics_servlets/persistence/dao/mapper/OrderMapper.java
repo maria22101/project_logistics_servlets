@@ -17,14 +17,6 @@ public class OrderMapper implements ObjectMapper<Order> {
 
     @Override
     public Order extractFromResultSet(ResultSet rs) throws SQLException {
-//        AddressMapper addressMapper = new AddressMapper();
-//        UserMapper userMapper = new UserMapper();
-//        RouteMapper routeMapper = new RouteMapper();
-
-//        User user = userMapper.extractFromResultSet(rs);
-//        Address addressA = addressMapper.extractFromResultSet(rs);
-//        Address addressB = addressMapper.extractFromResultSet(rs);
-//        Route route = routeMapper.extractFromResultSet(rs);
 
         Order order = new Order();
 
@@ -32,18 +24,13 @@ public class OrderMapper implements ObjectMapper<Order> {
         java.util.Date dbSqlDateConverted = new java.util.Date(dbSqlDate.getTime());
         LocalDate date = new java.sql.Date(dbSqlDateConverted.getTime())
                 .toLocalDate();
-        order.setDeliveryDate(date);
 
+        order.setDeliveryDate(date);
         order.setOrderNumber(rs.getInt("order_number"));
         order.setCargoType(CargoType.valueOf(rs.getString("cargo_type")));
         order.setOrderStatus(OrderStatus.valueOf(rs.getString("order_status")));
         order.setSum(rs.getBigDecimal("sum"));
         order.setWeight(rs.getBigDecimal("weight"));
-
-//        order.setUser(user);
-//        order.setDispatchAddress(addressA);
-//        order.setDeliveryAddress(addressB);
-//        order.setRoute(route);
 
         return order;
     }

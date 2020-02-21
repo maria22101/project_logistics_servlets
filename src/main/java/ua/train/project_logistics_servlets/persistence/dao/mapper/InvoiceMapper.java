@@ -18,16 +18,11 @@ public class InvoiceMapper implements ObjectMapper<Invoice>{
 
     @Override
     public Invoice extractFromResultSet(ResultSet rs) throws SQLException {
-        OrderMapper orderMapper = new OrderMapper();
 
         Invoice invoice = new Invoice();
 
-//        Order order = orderMapper.extractFromResultSet(rs);
-//        LOGGER.info("Order={}", order);
-
         invoice.setInvoiceNumber(rs.getInt(INVOICE_NUMBER_COLUMN));
         invoice.setPaid(rs.getBoolean(IS_PAID));
-//        invoice.setOrder(order);
 
         return invoice;
     }

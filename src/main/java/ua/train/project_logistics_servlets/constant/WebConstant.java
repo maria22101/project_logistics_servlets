@@ -14,6 +14,7 @@ public interface WebConstant {
     String USER_CABINET_PATH = "user/user_main";
     String USER_ORDERS_PATH = "user/orders";
     String USER_INVOICED_ORDERS_PATH = "user/invoiced_orders";
+    String USER_INVOICED_ORDER_DETAILS_PATH = "user/invoiced_orders/order_details";
     String USER_INVOICED_ORDERS_PAYING_PATH = "user/invoiced_orders/paying";
     String USER_PLACE_ORDER_PATH = "user/place_order";
 
@@ -31,6 +32,7 @@ public interface WebConstant {
     String USER_CABINET_PAGE = "/WEB-INF/user/userMain.jsp";
     String USER_ORDERS_PAGE = "/WEB-INF/user/userOrders.jsp";
     String USER_INVOICED_ORDERS_PAGE = "/WEB-INF/user/userInvoicedOrders.jsp";
+    String USER_INVOICED_ORDER_DETAILS_PAGE = "/WEB-INF/user/orderDetails.jsp";
     String USER_PLACE_ORDER_PAGE = "/WEB-INF/user/placeOrder.jsp";
 
     String ADMIN_CABINET_PAGE = "/WEB-INF/admin/adminMain.jsp";
@@ -58,7 +60,9 @@ public interface WebConstant {
     String INVALID_PASSWORD_INPUT_ATTRIBUTE = "invalidPasswordInput";
     String ROUTES_ATTRIBUTE = "routes";
     String ORDERS_ATTRIBUTE = "orders";
+    String ORDER_ATTRIBUTE = "order";
     String INVOICES_ATTRIBUTE = "invoices";
+    String INVOICE_ATTRIBUTE = "invoice";
     String USERS_ATTRIBUTE = "users";
 
     String INVALID_DISPATCH_STREET_INPUT_ATTRIBUTE = "invalidDispatchStreetInput";

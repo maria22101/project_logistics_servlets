@@ -2,12 +2,14 @@ package ua.train.project_logistics_servlets.service.order;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ua.train.project_logistics_servlets.enums.OrderStatus;
 import ua.train.project_logistics_servlets.exception.DataBaseFetchException;
 import ua.train.project_logistics_servlets.persistence.dao.DaoFactory;
 import ua.train.project_logistics_servlets.persistence.dao.OrderDao;
 import ua.train.project_logistics_servlets.persistence.domain.Order;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OrderService {
     private OrderDao orderDao = DaoFactory.getInstance().createOrderDao();
@@ -23,18 +25,35 @@ public class OrderService {
     public List<Order> getAllOrdersWithUserAndAddressesByEmail(String email)
             throws DataBaseFetchException {
 
-        return orderDao.getAllOrdersWithUserAndAddressesByEmail(email);
+        return orderDao.getAllOrdersWithUserAndAddresses()
+                .stream()
+                .filter((o) -> o.getUser().getEmail().equals(email))
+                .collect(Collectors.toList());
     }
 
     public List<Order> getOpenOrders()
             throws DataBaseFetchException {
 
-            return orderDao.getOpenOrders();
+            return orderDao
+                    .getAllOrdersWithUserAndAddresses()
+                    .stream()
+                    .filter((o) -> o.getOrderStatus().equals(OrderStatus.OPEN))
+                    .collect(Collectors.toList());
     }
 
     public List<Order> getIvoicedOrdersByUserEmail(String email)
             throws DataBaseFetchException {
 
-            return orderDao.getIvoicedOrdersByUserEmail(email);
+            return orderDao
+                    .getAllOrdersWithUserAndAddresses()
+                    .stream()
+                    .filter((o) -> o.getUser().getEmail().equals(email) &&
+                                    o.getOrderStatus().equals(OrderStatus.INVOICED))
+                    .collect(Collectors.toList());
+    }
+
+    public Order getOrderById(int id) throws DataBaseFetchException {
+        return orderDao.findById(id)
+                .orElseThrow(DataBaseFetchException::new);
     }
 }
