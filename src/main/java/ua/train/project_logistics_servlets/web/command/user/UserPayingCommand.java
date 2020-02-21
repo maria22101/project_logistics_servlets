@@ -8,8 +8,7 @@ import ua.train.project_logistics_servlets.web.command.Command;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static ua.train.project_logistics_servlets.constant.WebConstant.ADMIN_CABINET_PAGE;
-import static ua.train.project_logistics_servlets.constant.WebConstant.DB_SAVE_ERROR_PAGE;
+import static ua.train.project_logistics_servlets.constant.WebConstant.*;
 
 public class UserPayingCommand implements Command {
     private InvoiceService invoiceService = new InvoiceService();
@@ -27,6 +26,6 @@ public class UserPayingCommand implements Command {
             return DB_SAVE_ERROR_PAGE;
         }
 
-        return ADMIN_CABINET_PAGE;
+        return USER_CABINET_PAGE;
     }
 }

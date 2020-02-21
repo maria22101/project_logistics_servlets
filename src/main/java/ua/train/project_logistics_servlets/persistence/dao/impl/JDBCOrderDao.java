@@ -39,22 +39,6 @@ public class JDBCOrderDao implements OrderDao {
 
     private static final String GET_ADDRESS_BY_ID = "SELECT * FROM addresses WHERE id=?";
 
-    private static final String GET_INVOICED_ORDERS_BY_EMAIL =
-            "SELECT * FROM orders " +
-                    "JOIN users " +
-                    "ON orders.user_id=users.id " +
-                    "WHERE orders.order_status='INVOICED' AND users.email=?";
-
-    private static final String GET_ALL_ORDERS_WITH_USERS_AND_ADDRESSES_BY_EMAIL =
-            "SELECT * FROM orders " +
-                    "JOIN users " +
-                    "ON orders.user_id=users.id " +
-                    "JOIN addresses AS a " +
-                    "ON orders.dispatch_address_id=a.id " +
-                    "JOIN addresses AS b " +
-                    "ON orders.delivery_address_id=b.id " +
-                    "WHERE users.email=?";
-
     private static final String GET_ORDER_BY_ORDER_NUMBER = "SELECT * FROM orders WHERE order_number=?";
 
     private static final String DISPATCH_ADDRESS_ID_IN_ORDERS = "dispatch_address_id";
@@ -168,72 +152,6 @@ public class JDBCOrderDao implements OrderDao {
         }
         return ordersList;
     }
-
-//    @Override
-//    public List<Order> getIvoicedOrdersByUserEmail(String email)
-//            throws DataBaseFetchException {
-//
-//        List<Order> ordersList = new ArrayList<>();
-//        try (Connection connection = ConnectionPoolHolder.getConnection();
-//             PreparedStatement prepStatement = connection.prepareStatement(GET_INVOICED_ORDERS_BY_EMAIL)) {
-//
-////            AddressMapper addressMapper = new AddressMapper();
-//            UserMapper userMapper = new UserMapper();
-//
-//            prepStatement.setString(1, email);
-//            ResultSet rs = prepStatement.executeQuery();
-//
-//            LOGGER.info("Before extracting resultSet");
-//
-//            while (rs.next()) {
-//                Order result = orderMapper.extractFromResultSet(rs);
-//                result.setUser(userMapper.extractFromResultSet(rs));
-////                result.setDispatchAddress(addressMapper.extractFromResultSet(rs));
-////                result.setDeliveryAddress(addressMapper.extractFromResultSet(rs));
-//                ordersList.add(result);
-//            }
-//
-//            LOGGER.info("ResultSet extracted");
-//
-//        } catch (SQLException e) {
-//            throw new DataBaseFetchException();
-//        }
-//        return ordersList;
-//    }
-
-//    @Override
-//    public List<Order> getAllOrdersWithUserAndAddressesByEmail(String email)
-//            throws DataBaseFetchException {
-//
-//        List<Order> ordersList = new ArrayList<>();
-//
-//        try (Connection connection = ConnectionPoolHolder.getConnection();
-//             PreparedStatement prepStatement = connection
-//                     .prepareStatement(GET_ALL_ORDERS_WITH_USERS_AND_ADDRESSES_BY_EMAIL)) {
-//
-////            AddressMapper addressMapper = new AddressMapper();
-//            UserMapper userMapper = new UserMapper();
-//
-//            prepStatement.setString(1, email);
-//            ResultSet rs = prepStatement.executeQuery();
-//
-//            LOGGER.info("Before extracting resultSet");
-//
-//            while (rs.next()) {
-//                Order result = orderMapper.extractFromResultSet(rs);
-//                result.setUser(userMapper.extractFromResultSet(rs));
-////                result.setDispatchAddress(addressMapper.extractFromResultSet(rs));
-////                result.setDeliveryAddress(addressMapper.extractFromResultSet(rs));
-//                ordersList.add(result);
-//            }
-//
-//            LOGGER.info("ResultSet extracted");
-//
-//        } catch (SQLException e) {
-//            throw new DataBaseFetchException();
-//        }
-//        return ordersList;
-//    }
 
     @Override
     public void update(Order entity) {

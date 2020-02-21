@@ -36,6 +36,10 @@ public class InvoiceService {
 
     public Invoice getInvoiceByOrderNumber(int orderNumber)
             throws DataBaseFetchException {
-        return null;
+        return invoiceDao.getAllInvoicesWithOrdersAndUserAndAddresses()
+                .stream()
+                .filter(i -> i.getOrder().getOrderNumber() == orderNumber)
+                .findFirst()
+                .orElseThrow(DataBaseFetchException::new);
     }
 }

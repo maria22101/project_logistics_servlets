@@ -12,7 +12,11 @@
         <tr>
             <th><fmt:message key="order.number"/></th>
             <th><fmt:message key="order.dispatch.city"/></th>
+            <th><fmt:message key="order.dispatch.street"/></th>
+            <th><fmt:message key="order.dispatch.apartment"/></th>
             <th><fmt:message key="order.delivery.city"/></th>
+            <th><fmt:message key="order.delivery.street"/></th>
+            <th><fmt:message key="order.delivery.apartment"/></th>
             <th><fmt:message key="order.delivery.date"/></th>
             <th><fmt:message key="order.weight"/></th>
             <th><fmt:message key="order.cargo"/></th>
@@ -26,7 +30,11 @@
             <tr>
                 <td>${order.orderNumber}</td>
                 <td>${order.dispatchAddress.city}</td>
+                <td>${order.dispatchAddress.street}</td>
+                <td>${order.dispatchAddress.apartment}</td>
                 <td>${order.deliveryAddress.city}</td>
+                <td>${order.deliveryAddress.street}</td>
+                <td>${order.deliveryAddress.apartment}</td>
                 <td>${order.deliveryDate}</td>
                 <td>${order.weight}</td>
                 <td>${order.cargoType}</td>

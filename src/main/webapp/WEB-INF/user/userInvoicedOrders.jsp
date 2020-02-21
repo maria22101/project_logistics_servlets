@@ -37,16 +37,9 @@
                 <td>${order.orderStatus}</td>
 
                 <td>
-<%--                    <a href="${pageContext.request.contextPath}/app/user/invoiced_orders/order_details">--%>
-<%--                        <fmt:message key="usercabinet.review.and.pay"/>--%>
-<%--                    </a>--%>
-
-                    <form action="${pageContext.request.contextPath}/app/user/invoiced_orders/order_details" method="get">
-                        <div>
-                            <input type="hidden" value="${order.orderNumber}" name="orderNumber">
-                            <input type="submit" value="<fmt:message key="usercabinet.invoice.payment.button"/>">
-                        </div>
-                    </form>
+                <a href="${pageContext.request.contextPath}/app/user/invoiced_orders/order_details?orderNumber=${order.orderNumber}">
+                    <fmt:message key="usercabinet.review.and.pay"/>
+                </a>
                 </td>
 
             </tr>

@@ -81,9 +81,9 @@
 
     <p></p>
 
-    <form action="${pageContext.request.contextPath}/app/user/invoiced_orders/paying">
+    <form action="${pageContext.request.contextPath}/app/user/invoiced_orders/paying" method="post">
         <div>
-            <input type="hidden" value="${order.orderNumber}" name="orderNumber">
+            <input type="hidden" value="${invoice.order.orderNumber}" name="orderNumber">
             <input type="submit" value="<fmt:message key="usercabinet.invoice.payment.button"/>">
         </div>
     </form>
