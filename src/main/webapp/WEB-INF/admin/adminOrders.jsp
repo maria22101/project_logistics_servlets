@@ -14,68 +14,38 @@
             <th><fmt:message key="name.indication"/></th>
             <th><fmt:message key="surname.indication"/></th>
             <th><fmt:message key="email.indication"/></th>
-<%--            <th><fmt:message key="order.dispatch.city"/></th>--%>
-<%--            <th><fmt:message key="order.delivery.city"/></th>--%>
+            <th><fmt:message key="order.dispatch.city"/></th>
+            <th><fmt:message key="order.delivery.city"/></th>
             <th><fmt:message key="order.weight"/></th>
             <th><fmt:message key="order.cargo"/></th>
             <th><fmt:message key="order.sum"/></th>
-<%--            <th><fmt:message key="order.invoice.number"/></th>--%>
             <th><fmt:message key="order.status"/></th>
+            <th style="color: seagreen"><fmt:message key="order.invoice.number"/></th>
 
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="order" items="${orders}">
+        <c:forEach var="invoice" items="${invoices}">
             <tr>
-                <td>${order.orderNumber}</td>
-                <td>${order.user.name}</td>
-                <td>${order.user.surname}</td>
-                <td>${order.user.email}</td>
-<%--                <td>${order.dispatchAddress.city}</td>--%>
-<%--                <td>${order.deliveryAddress.city}</td>--%>
-                <td>${order.weight}</td>
-                <td>${order.cargoType}</td>
-                <td>${order.sum}</td>
-<%--                <td>${order.invoice.invoiceNumber}</td>--%>
-                <td>${order.orderStatus}</td>
-
+                <td>${invoice.order.orderNumber}</td>
+                <td>${invoice.order.user.name}</td>
+                <td>${invoice.order.user.surname}</td>
+                <td>${invoice.order.user.email}</td>
+                <td>${invoice.order.dispatchAddress.city}</td>
+                <td>${invoice.order.deliveryAddress.city}</td>
+                <td>${invoice.order.weight}</td>
+                <td>${invoice.order.cargoType}</td>
+                <td>${invoice.order.sum}</td>
+                <td>${invoice.order.orderStatus}</td>
+                <td>
+                    <c:if test="${invoice.invoiceNumber != 0}">
+                        ${invoice.invoiceNumber}
+                    </c:if>
+                </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
-
-<%--    <table border="0.5">--%>
-<%--        <thead>--%>
-<%--        <tr>--%>
-<%--&lt;%&ndash;            <th><fmt:message key="order.number"/></th>&ndash;%&gt;--%>
-<%--&lt;%&ndash;            <th><fmt:message key="name.indication"/></th>&ndash;%&gt;--%>
-<%--&lt;%&ndash;            <th><fmt:message key="surname.indication"/></th>&ndash;%&gt;--%>
-<%--&lt;%&ndash;            <th><fmt:message key="email.indication"/></th>&ndash;%&gt;--%>
-<%--&lt;%&ndash;            <th><fmt:message key="order.weight"/></th>&ndash;%&gt;--%>
-<%--&lt;%&ndash;            <th><fmt:message key="order.cargo"/></th>&ndash;%&gt;--%>
-<%--&lt;%&ndash;            <th><fmt:message key="order.sum"/></th>&ndash;%&gt;--%>
-<%--            <th><fmt:message key="order.invoice.number"/></th>--%>
-<%--&lt;%&ndash;            <th><fmt:message key="order.status"/></th>&ndash;%&gt;--%>
-
-<%--        </tr>--%>
-<%--        </thead>--%>
-<%--        <tbody>--%>
-<%--        <c:forEach var="invoice" items="${invoices}">--%>
-<%--            <tr>--%>
-<%--&lt;%&ndash;                <td>${invoice.order.orderNumber}</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                <td>${invoice.order.user.name}</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                <td>${invoice.order.user.surname}</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                <td>${invoice.order.user.email}</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                <td>${invoice.order.weight}</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                <td>${invoice.order.cargoType}</td>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                <td>${invoice.order.sum}</td>&ndash;%&gt;--%>
-<%--                <td>${invoice.invoiceNumber}</td>--%>
-<%--&lt;%&ndash;                <td>${invoice.order.orderStatus}</td>&ndash;%&gt;--%>
-
-<%--            </tr>--%>
-<%--        </c:forEach>--%>
-<%--        </tbody>--%>
-<%--    </table>--%>
 
 </body>
 </html>

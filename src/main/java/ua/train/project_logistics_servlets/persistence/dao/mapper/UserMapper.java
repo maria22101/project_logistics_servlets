@@ -13,7 +13,9 @@ import static ua.train.project_logistics_servlets.constant.EntityFieldConstant.*
 public class UserMapper implements ObjectMapper<User> {
     @Override
     public User extractFromResultSet(ResultSet rs) throws SQLException {
+
         User user = new User();
+
         user.setId(rs.getInt(ID));
         user.setName(rs.getString(NAME));
         user.setSurname(rs.getString(SURNAME));
@@ -24,10 +26,10 @@ public class UserMapper implements ObjectMapper<User> {
         return user;
     }
 
-    public User makeUnique(Map<Integer, User> cache, User user) {
-        cache.putIfAbsent(user.getId(), user);
-        return cache.get(user.getId());
-    }
+//    public User makeUnique(Map<Integer, User> cache, User user) {
+//        cache.putIfAbsent(user.getId(), user);
+//        return cache.get(user.getId());
+//    }
 
 //    public void makeUniqueUser(Map<Integer, User> users, Order result, User user) {
 //        users.putIfAbsent(user.getId(), user);

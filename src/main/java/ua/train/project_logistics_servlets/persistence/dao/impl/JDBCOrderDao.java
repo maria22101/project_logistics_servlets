@@ -2,20 +2,14 @@ package ua.train.project_logistics_servlets.persistence.dao.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ua.train.project_logistics_servlets.enums.OrderStatus;
 import ua.train.project_logistics_servlets.exception.DataBaseFetchException;
 import ua.train.project_logistics_servlets.exception.DataBaseSaveException;
 import ua.train.project_logistics_servlets.persistence.dao.OrderDao;
-import ua.train.project_logistics_servlets.persistence.dao.mapper.AddressMapper;
-import ua.train.project_logistics_servlets.persistence.dao.mapper.OrderMapper;
-import ua.train.project_logistics_servlets.persistence.dao.mapper.RouteMapper;
-import ua.train.project_logistics_servlets.persistence.dao.mapper.UserMapper;
+import ua.train.project_logistics_servlets.persistence.dao.mapper.*;
 import ua.train.project_logistics_servlets.persistence.domain.Address;
 import ua.train.project_logistics_servlets.persistence.domain.Order;
-import ua.train.project_logistics_servlets.persistence.domain.Route;
 import ua.train.project_logistics_servlets.persistence.domain.User;
 
-import javax.xml.crypto.Data;
 import java.sql.*;
 import java.sql.Date;
 import java.util.*;
@@ -32,7 +26,7 @@ public class JDBCOrderDao implements OrderDao {
 
     private static final String GET_ALL_ORDERS = "SELECT * FROM orders";
 
-    private static final String GET_OPEN_ORDERS_WITH_MAIN_USER_AND_ADDRESS_INFO =
+    private static final String GET_ALL_ORDERS_WITH_USERS_AND_ADDRESSES =
             "SELECT * FROM orders " +
                     "JOIN users " +
                     "ON orders.user_id=users.id " +
@@ -40,22 +34,15 @@ public class JDBCOrderDao implements OrderDao {
                     "ON orders.dispatch_address_id=a.id " +
                     "JOIN addresses AS b " +
                     "ON orders.delivery_address_id=b.id " +
-                    "WHERE order_status='OPEN'";
+                    "LEFT JOIN invoices " +
+                    "ON invoices.order_number=orders.order_number";
 
-    private static final String GET_ALL_ORDERS_WITH_MAIN_USER_AND_ADDRESS_INFO =
-            "SELECT * FROM orders " +
-                    "JOIN users " +
-                    "ON orders.user_id=users.id " +
-                    "JOIN addresses AS a " +
-                    "ON orders.dispatch_address_id=a.id " +
-                    "JOIN addresses AS b " +
-                    "ON orders.delivery_address_id=b.id";
-
-    private static final String GET_ALL_ORDERS_WITH_MAIN_USER_INFO_AND_INVOICE = "SELECT * FROM orders " +
-            "JOIN users ON orders.user_id=users.id" +
-            "LEFT JOIN invoices ON invoices.order_number=orders.order_number";
+    private static final String GET_ADDRESS_BY_ID = "SELECT * FROM addresses WHERE id=?";
 
     private static final String GET_ORDER_BY_ORDER_NUMBER = "SELECT * FROM orders WHERE order_number=?";
+
+    private static final String DISPATCH_ADDRESS_ID_IN_ORDERS = "dispatch_address_id";
+    private static final String DELIVERY_ADDRESS_ID_IN_ORDERS = "delivery_address_id";
 
     @Override
     public void create(Order entity)
@@ -101,7 +88,6 @@ public class JDBCOrderDao implements OrderDao {
         return order;
     }
 
-    //TODO: correct query!
     @Override
     public List<Order> findAll()
             throws DataBaseFetchException {
@@ -124,49 +110,40 @@ public class JDBCOrderDao implements OrderDao {
     }
 
     @Override
-    public List<Order> getAllOrdersWithMainUserAndAddressInfo()
+    public List<Order> getAllOrdersWithUserAndAddresses()
             throws DataBaseFetchException {
 
         List<Order> ordersList = new ArrayList<>();
         try (Connection connection = ConnectionPoolHolder.getConnection();
-                Statement statement = connection.createStatement()) {
+                Statement statement = connection.createStatement();
+                PreparedStatement prepAddressStatement = connection.prepareStatement(GET_ADDRESS_BY_ID)) {
 
             AddressMapper addressMapper = new AddressMapper();
             UserMapper userMapper = new UserMapper();
+            AddressMapperByIntId dispatchAddressMapper =
+                    new AddressMapperByIntId(prepAddressStatement, DISPATCH_ADDRESS_ID_IN_ORDERS);
+            AddressMapperByIntId deliveryAddressMapper =
+                    new AddressMapperByIntId(prepAddressStatement, DELIVERY_ADDRESS_ID_IN_ORDERS);
 
-            ResultSet rs = statement.executeQuery(GET_ALL_ORDERS_WITH_MAIN_USER_AND_ADDRESS_INFO);
+            ResultSet rs = statement.executeQuery(GET_ALL_ORDERS_WITH_USERS_AND_ADDRESSES);
+
             while (rs.next()) {
                 Order result = orderMapper.extractFromResultSet(rs);
-                result.setUser(userMapper.extractFromResultSet(rs));
-                result.setDispatchAddress(addressMapper.extractFromResultSet(rs));
-                result.setDeliveryAddress(addressMapper.extractFromResultSet(rs));
-                ordersList.add(result);
-                LOGGER.info("result={}", result);
-            }
 
-        } catch (SQLException e) {
-            throw new DataBaseFetchException();
-        }
-        return ordersList;
-    }
+                User user = userMapper.extractFromResultSet(rs);
 
-    @Override
-    public List<Order> getOpenOrders()
-            throws DataBaseFetchException {
+                Address dispatchAddress = dispatchAddressMapper
+                        .extractFromResultSet(rs, addressMapper)
+                        .orElseThrow(DataBaseFetchException::new);
 
-        List<Order> ordersList = new ArrayList<>();
-        try (Connection connection = ConnectionPoolHolder.getConnection();
-                Statement statement = connection.createStatement()) {
+                Address deliveryAddress = deliveryAddressMapper
+                        .extractFromResultSet(rs, addressMapper)
+                        .orElseThrow(DataBaseFetchException::new);
 
-            AddressMapper addressMapper = new AddressMapper();
-            UserMapper userMapper = new UserMapper();
+                result.setUser(user);
+                result.setDispatchAddress(dispatchAddress);
+                result.setDeliveryAddress(deliveryAddress);
 
-            ResultSet rs = statement.executeQuery(GET_OPEN_ORDERS_WITH_MAIN_USER_AND_ADDRESS_INFO);
-            while (rs.next()) {
-                Order result = orderMapper.extractFromResultSet(rs);
-                result.setUser(userMapper.extractFromResultSet(rs));
-                result.setDispatchAddress(addressMapper.extractFromResultSet(rs));
-                result.setDeliveryAddress(addressMapper.extractFromResultSet(rs));
                 ordersList.add(result);
             }
 

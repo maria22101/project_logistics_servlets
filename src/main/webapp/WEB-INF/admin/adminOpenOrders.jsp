@@ -14,8 +14,8 @@
                 <th><fmt:message key="name.indication"/></th>
                 <th><fmt:message key="surname.indication"/></th>
                 <th><fmt:message key="email.indication"/></th>
-<%--                <th><fmt:message key="order.dispatch.city"/></th>--%>
-<%--                <th><fmt:message key="order.delivery.city"/></th>--%>
+                <th><fmt:message key="order.dispatch.city"/></th>
+                <th><fmt:message key="order.delivery.city"/></th>
                 <th><fmt:message key="order.weight"/></th>
                 <th><fmt:message key="order.cargo"/></th>
                 <th><fmt:message key="order.sum"/></th>
@@ -31,8 +31,8 @@
                     <td>${order.user.name}</td>
                     <td>${order.user.surname}</td>
                     <td>${order.user.email}</td>
-<%--                    <td>${openOrder.dispatchAddress.city}</td>--%>
-<%--                    <td>${openOrder.deliveryAddress.city}</td>--%>
+                    <td>${order.dispatchAddress.city}</td>
+                    <td>${order.deliveryAddress.city}</td>
                     <td>${order.weight}</td>
                     <td>${order.cargoType}</td>
                     <td>${order.sum}</td>
