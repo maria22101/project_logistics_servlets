@@ -2,6 +2,8 @@ package ua.train.project_logistics_servlets.persistence.dao.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ua.train.project_logistics_servlets.enums.CargoType;
+import ua.train.project_logistics_servlets.enums.OrderStatus;
 import ua.train.project_logistics_servlets.exception.DataBaseFetchException;
 import ua.train.project_logistics_servlets.exception.DataBaseSaveException;
 import ua.train.project_logistics_servlets.persistence.dao.OrderDao;
@@ -10,19 +12,24 @@ import ua.train.project_logistics_servlets.persistence.domain.Address;
 import ua.train.project_logistics_servlets.persistence.domain.Order;
 import ua.train.project_logistics_servlets.persistence.domain.User;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.*;
 
 public class JDBCOrderDao implements OrderDao {
     private OrderMapper orderMapper = new OrderMapper();
-    private UserMapper userMapper = new UserMapper();
+
     private static final Logger LOGGER = LogManager.getLogger(JDBCOrderDao.class);
 
-    private static final String SAVE_ORDER = "INSERT INTO orders " +
+    private static final String CREATE_ORDER = "INSERT INTO orders " +
             "(user_id, dispatch_address_id, delivery_address_id, delivery_date, " +
             "weight, cargo_type, sum, order_status, route_id) " +
             "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    private static final String CREATE_ADDRESS = "INSERT INTO addresses " +
+            "(city, street, house, apartment)" + " VALUES(?, ?, ?, ?)";
 
     private static final String GET_ALL_ORDERS = "SELECT * FROM orders";
 
@@ -45,24 +52,67 @@ public class JDBCOrderDao implements OrderDao {
     private static final String DELIVERY_ADDRESS_ID_IN_ORDERS = "delivery_address_id";
 
     @Override
-    public void create(Order entity)
-            throws DataBaseSaveException {
+    public void createOrder(int userId,
+                            String dispatchCity, String dispatchStreet, String dispatchHouse, String dispatchApartment,
+                            String deliveryCity, String deliveryStreet, String deliveryHouse, String deliveryApartment,
+                            LocalDate deliveryDate, BigDecimal weight, CargoType cargoType,
+                            BigDecimal sum, int routeId)
+            throws DataBaseFetchException, DataBaseSaveException {
 
-        try (Connection connection = ConnectionPoolHolder.getConnection();
-             PreparedStatement prepStatement = connection.prepareStatement(SAVE_ORDER)) {
+        try (Connection connection = ConnectionPoolHolder.getConnection()) {
 
-            prepStatement.setInt(1, entity.getUser().getId());
-            prepStatement.setInt(2, entity.getDispatchAddress().getId());
-            prepStatement.setInt(3, entity.getDeliveryAddress().getId());
-            prepStatement.setDate(4, Date.valueOf(entity.getDeliveryDate()));
-            prepStatement.setBigDecimal(5, entity.getWeight());
-            prepStatement.setString(6, entity.getCargoType().toString());
-            prepStatement.setBigDecimal(7, entity.getSum());
-            prepStatement.setString(8, entity.getOrderStatus().toString());
-            prepStatement.setInt(9, entity.getRoute().getId());
-            prepStatement.execute();
+            connection.setAutoCommit(false);
+            try (PreparedStatement orderStatement = connection.prepareStatement(CREATE_ORDER);
+                 PreparedStatement dispatchAddrStmt = connection
+                         .prepareStatement(CREATE_ADDRESS, PreparedStatement.RETURN_GENERATED_KEYS);
+                 PreparedStatement deliveryAddrStmt = connection
+                         .prepareStatement(CREATE_ADDRESS, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
-        } catch (Exception e) {
+                int dispatchAddressId = 0;
+                int deliveryAddressId = 0;
+
+                dispatchAddrStmt.setString(1, dispatchCity);
+                dispatchAddrStmt.setString(2, dispatchStreet);
+                dispatchAddrStmt.setString(3, dispatchHouse);
+                dispatchAddrStmt.setString(4, dispatchApartment);
+                dispatchAddrStmt.executeUpdate();
+                ResultSet rsDispatch = dispatchAddrStmt.getGeneratedKeys();
+                if (rsDispatch.next()) {
+                    dispatchAddressId = rsDispatch.getInt(1);
+                }
+
+                deliveryAddrStmt.setString(1, deliveryCity);
+                deliveryAddrStmt.setString(2, deliveryStreet);
+                deliveryAddrStmt.setString(3, deliveryHouse);
+                deliveryAddrStmt.setString(4, deliveryApartment);
+                deliveryAddrStmt.executeUpdate();
+                ResultSet rsDelivery = deliveryAddrStmt.getGeneratedKeys();
+                if (rsDelivery.next()) {
+                    deliveryAddressId = rsDelivery.getInt(1);
+                }
+
+                orderStatement.setInt(1, userId);
+                orderStatement.setInt(2, dispatchAddressId);
+                orderStatement.setInt(3, deliveryAddressId);
+                orderStatement.setDate(4, Date.valueOf(deliveryDate));
+                orderStatement.setBigDecimal(5, weight);
+                orderStatement.setString(6, cargoType.toString());
+                orderStatement.setBigDecimal(7, sum);
+                orderStatement.setString(8, OrderStatus.OPEN.toString());
+                orderStatement.setInt(9, routeId);
+
+                orderStatement.executeUpdate();
+
+                connection.commit();
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                connection.rollback();
+                connection.setAutoCommit(true);
+                throw new DataBaseSaveException();
+            }
+
+        } catch (
+                SQLException e) {
             throw new DataBaseSaveException();
         }
     }
@@ -95,7 +145,7 @@ public class JDBCOrderDao implements OrderDao {
         List<Order> ordersList = new ArrayList<>();
 
         try (Connection connection = ConnectionPoolHolder.getConnection();
-                PreparedStatement prepStatement = connection.prepareStatement(GET_ALL_ORDERS)) {
+             PreparedStatement prepStatement = connection.prepareStatement(GET_ALL_ORDERS)) {
 
             ResultSet rs = prepStatement.executeQuery();
             while (rs.next()) {
@@ -115,8 +165,8 @@ public class JDBCOrderDao implements OrderDao {
 
         List<Order> ordersList = new ArrayList<>();
         try (Connection connection = ConnectionPoolHolder.getConnection();
-                Statement statement = connection.createStatement();
-                PreparedStatement prepAddressStatement = connection.prepareStatement(GET_ADDRESS_BY_ID)) {
+             Statement statement = connection.createStatement();
+             PreparedStatement prepAddressStatement = connection.prepareStatement(GET_ADDRESS_BY_ID)) {
 
             AddressMapper addressMapper = new AddressMapper();
             UserMapper userMapper = new UserMapper();
@@ -154,12 +204,18 @@ public class JDBCOrderDao implements OrderDao {
     }
 
     @Override
-    public void update(Order entity) {
+    public void create(Order entity)
+            throws DataBaseSaveException {
+        throw new UnsupportedOperationException("not implemented yet");
+    }
 
+    @Override
+    public void update(Order entity) {
+        throw new UnsupportedOperationException("not implemented yet");
     }
 
     @Override
     public void delete(int id) {
-
+        throw new UnsupportedOperationException("not implemented yet");
     }
 }

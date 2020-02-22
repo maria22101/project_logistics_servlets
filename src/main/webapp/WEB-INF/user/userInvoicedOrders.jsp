@@ -19,7 +19,7 @@
             <th><fmt:message key="order.cargo"/></th>
             <th><fmt:message key="order.sum"/></th>
             <th><fmt:message key="order.status"/></th>
-            <th><fmt:message key="order.action"/></th>
+            <th style="background-color: darkslateblue"><fmt:message key="order.action"/></th>
 
         </tr>
         </thead>
@@ -37,7 +37,7 @@
                 <td>${order.orderStatus}</td>
 
                 <td>
-                <a href="${pageContext.request.contextPath}/app/user/invoiced_orders/order_details?orderNumber=${order.orderNumber}">
+                <a href="${pageContext.request.contextPath}/app/user/invoiced_orders/order_details?orderNumber=${order.orderNumber}" class="btn">
                     <fmt:message key="usercabinet.review.and.pay"/>
                 </a>
                 </td>

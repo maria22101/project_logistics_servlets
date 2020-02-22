@@ -27,6 +27,6 @@ public class AdminInvoiceCommand implements Command {
             return DB_SAVE_ERROR_PAGE;
         }
 
-        return ADMIN_CABINET_PAGE;
+        return REDIRECT + SERVLET_MAIN_PATH + ADMIN_OPEN_ORDERS_PATH;
     }
 }

@@ -101,19 +101,18 @@ public class JDBCAddressDao implements AddressDao {
         return Optional.empty();
     }
 
-
     @Override
     public List<Address> findAll() {
-        return null;
+        throw new UnsupportedOperationException("not implemented yet");
     }
 
     @Override
     public void update(Address entity) {
-
+        throw new UnsupportedOperationException("not implemented yet");
     }
 
     @Override
     public void delete(int id) {
-
+        throw new UnsupportedOperationException("not implemented yet");
     }
 }

@@ -12,4 +12,3 @@
 <a href="${pageContext.request.contextPath}/app/registration">
     <fmt:message key="main.registration.link"/>
 </a><br>
-

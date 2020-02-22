@@ -5,25 +5,19 @@ import org.apache.logging.log4j.Logger;
 import ua.train.project_logistics_servlets.enums.CargoType;
 import ua.train.project_logistics_servlets.exception.DataBaseFetchException;
 import ua.train.project_logistics_servlets.exception.DataBaseSaveException;
-import ua.train.project_logistics_servlets.exception.UserExistsException;
-import ua.train.project_logistics_servlets.persistence.domain.Route;
 import ua.train.project_logistics_servlets.service.RouteService;
 import ua.train.project_logistics_servlets.service.order.OrderCreationService;
 import ua.train.project_logistics_servlets.service.order.OrderFormValidationService;
 import ua.train.project_logistics_servlets.web.command.Command;
-import ua.train.project_logistics_servlets.web.command.RegistrationCommand;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
 import static ua.train.project_logistics_servlets.constant.EntityFieldConstant.*;
 import static ua.train.project_logistics_servlets.constant.EntityFieldConstant.ORDER_DISPATCH_APARTMENT;
@@ -67,28 +61,23 @@ public class PlaceOrderCommand implements Command {
         }
 
         String email = (String) request.getSession().getAttribute(EMAIL_ATTRIBUTE);
-
         String dispatchCity = request.getParameter(ORDER_DISPATCH_CITY);
         String dispatchStreet = request.getParameter(ORDER_DISPATCH_STREET);
         String dispatchHouse = request.getParameter(ORDER_DISPATCH_HOUSE);
         String dispatchApartment = request.getParameter(ORDER_DISPATCH_APARTMENT);
-
         String deliveryCity = request.getParameter(ORDER_DELIVERY_CITY);
         String deliveryStreet = request.getParameter(ORDER_DELIVERY_STREET);
         String deliveryHouse = request.getParameter(ORDER_DELIVERY_HOUSE);
         String deliveryApartment = request.getParameter(ORDER_DELIVERY_APARTMENT);
-
         LocalDate deliveryDate = LocalDate.parse(
                 request.getParameter(ORDER_DELIVERY_DATE),
                 DateTimeFormatter.ofPattern(DATE_FORMAT));
-
         BigDecimal weight = new BigDecimal(request.getParameter(ORDER_WEIGHT))
                 .setScale(2, RoundingMode.HALF_UP);
-
         CargoType cargoType = CargoType.valueOf(request.getParameter(ORDER_CARGO_TYPE));
 
         try {
-            orderCreationService.addOrder(email,
+            orderCreationService.createOrder(email,
                     dispatchCity, dispatchStreet, dispatchHouse, dispatchApartment,
                     deliveryCity, deliveryStreet, deliveryHouse, deliveryApartment,
                     deliveryDate, weight, cargoType);
@@ -98,6 +87,6 @@ public class PlaceOrderCommand implements Command {
             return DB_FETCH_ERROR_PAGE;
         }
 
-        return USER_CABINET_PAGE;
+        return REDIRECT + SERVLET_MAIN_PATH + USER_CABINET_PATH;
     }
 }

@@ -20,7 +20,7 @@
             <th><fmt:message key="order.cargo"/></th>
             <th><fmt:message key="order.sum"/></th>
             <th><fmt:message key="order.status"/></th>
-            <th style="color: seagreen"><fmt:message key="order.invoice.number"/></th>
+            <th style="background-color: seagreen"><fmt:message key="order.invoice.number"/></th>
 
         </tr>
         </thead>

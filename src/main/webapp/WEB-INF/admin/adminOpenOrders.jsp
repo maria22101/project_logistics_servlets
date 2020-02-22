@@ -42,7 +42,7 @@
                         <form action="${pageContext.request.contextPath}/app/admin/open_orders/invoicing">
                           <div>
                                 <input type="hidden" value="${order.orderNumber}" name="orderNumber">
-                                <input type="submit" value="<fmt:message key="admincabinet.issue.invoice.button"/>">
+                                <input type="submit" value="<fmt:message key="admincabinet.issue.invoice.button"/>" class="btn">
                           </div>
                         </form>
                     </td>

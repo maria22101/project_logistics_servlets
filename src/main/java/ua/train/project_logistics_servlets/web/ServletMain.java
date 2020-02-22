@@ -63,13 +63,13 @@ public class ServletMain extends HttpServlet {
             throws ServletException, IOException {
 
         String path = request.getRequestURI();
-        path = path.replaceAll(SERVLET_MAIN_PATH, "");
+        path = path.replaceAll(SERVLET_MAIN_PATH, EMPTY_STRING);
         Command command = commands.getOrDefault(path, (r) -> CONTEXT_PATH);
 
         String page = command.execute(request);
 
        if(page.contains(REDIRECT)){
-            response.sendRedirect(page.replace(REDIRECT, ""));
+            response.sendRedirect(page.replace(REDIRECT, EMPTY_STRING));
         }else {
             request.getRequestDispatcher(page).forward(request, response);
         }
