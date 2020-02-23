@@ -40,13 +40,13 @@ public class PlaceOrderCommand implements Command {
             if (request.getSession().getAttribute(LANGUAGE_ATTRIBUTE) == null ||
                     request.getSession().getAttribute(LANGUAGE_ATTRIBUTE).equals(EN_LANGUAGE)) {
 
-                List<String> allRoutesEn = routeService.getCitiesOptionsEng();
-                request.setAttribute(ROUTES_ATTRIBUTE, allRoutesEn);
+                List<String> allCitiesEn = routeService.getCitiesOptionsEng();
+                request.setAttribute(ROUTES_ATTRIBUTE, allCitiesEn);
 
             } else {
 
-                List<String> allRoutesUa = routeService.getCitiesOptionsUa();
-                request.setAttribute(ROUTES_ATTRIBUTE, allRoutesUa);
+                List<String> allCitiesUa = routeService.getCitiesOptionsUa();
+                request.setAttribute(ROUTES_ATTRIBUTE, allCitiesUa);
             }
         } catch (DataBaseFetchException e) {
             return DB_FETCH_ERROR_PAGE;

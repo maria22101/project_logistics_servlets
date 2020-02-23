@@ -22,8 +22,8 @@
                 <c:when test="${sessionScope.lang == ua}">
                     <c:forEach var="route" items="${routes}">
                         <tr>
-                            <td>${route.pointOne}</td>
-                            <td>${route.pointTwo}</td>
+                            <td>${route.pointOneUa}</td>
+                            <td>${route.pointTwoUa}</td>
                             <td>${route.basicRate}</td>
                         </tr>
                     </c:forEach>
@@ -32,8 +32,8 @@
                 <c:otherwise>
                     <c:forEach var="route" items="${routes}">
                         <tr>
-                            <td>${route.pointOneUA}</td>
-                            <td>${route.pointTwoUA}</td>
+                            <td>${route.pointOne}</td>
+                            <td>${route.pointTwo}</td>
                             <td>${route.basicRate}</td>
                         </tr>
                     </c:forEach>

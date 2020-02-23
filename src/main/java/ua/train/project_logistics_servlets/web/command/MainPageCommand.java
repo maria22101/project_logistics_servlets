@@ -9,7 +9,7 @@ import ua.train.project_logistics_servlets.service.RouteService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-import static ua.train.project_logistics_servlets.constant.WebConstant.MAIN_PAGE;
+import static ua.train.project_logistics_servlets.constant.WebConstant.*;
 
 public class MainPageCommand implements Command{
     private RouteService routeService = new RouteService();
@@ -20,11 +20,23 @@ public class MainPageCommand implements Command{
 
         try {
             List<Route> allRoutes = routeService.getAllRoutes();
-            request.setAttribute("routes", allRoutes);
+            request.setAttribute(ROUTES_ATTRIBUTE, allRoutes);
+
+            if (request.getSession().getAttribute(LANGUAGE_ATTRIBUTE) == null ||
+                    request.getSession().getAttribute(LANGUAGE_ATTRIBUTE).equals(EN_LANGUAGE)) {
+
+                List<String> allCitiesEn = routeService.getCitiesOptionsEng();
+                request.setAttribute(CITIES_OPTION_ATTRIBUTE, allCitiesEn);
+
+            } else {
+
+                List<String> allCitiesUa = routeService.getCitiesOptionsUa();
+                request.setAttribute(CITIES_OPTION_ATTRIBUTE, allCitiesUa);
+            }
+
         } catch (DataBaseFetchException e) {
             e.printStackTrace();
         }
-
 
         return MAIN_PAGE;
     }

@@ -20,7 +20,7 @@
                 <th><fmt:message key="order.cargo"/></th>
                 <th><fmt:message key="order.sum"/></th>
                 <th><fmt:message key="order.status"/></th>
-                <th><fmt:message key="order.action"/></th>
+                <th style="background-color: darkslateblue"><fmt:message key="order.action"/></th>
 
             </tr>
             </thead>
