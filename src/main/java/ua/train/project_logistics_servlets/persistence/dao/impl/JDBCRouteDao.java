@@ -81,8 +81,6 @@ public class JDBCRouteDao implements RouteDao {
             prepStatement.setString(8, pointOne);
             ResultSet rs = prepStatement.executeQuery();
 
-            LOGGER.info("before iterating rs, rs={}", rs);
-
             if (rs.next()) {
                 route = Optional.of(routeMapper.extractFromResultSet(rs));
             }

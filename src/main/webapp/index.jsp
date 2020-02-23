@@ -10,7 +10,7 @@
         <div style="float: left;">
             <div>
 
-                <h2 style="color: #3a60bf"><fmt:message key="main.services.routes.table.title"/></h2>
+                <h2 style="color: midnightblue"><fmt:message key="main.services.routes.table.title"/></h2>
 
                 <table border="0.5">
                     <thead>
@@ -99,9 +99,52 @@
 
         <div style="clear: both;"></div>
 
-        <br/><br/>
+    <br/><br/>
 
-        <strong style="color: #3a60bf"><fmt:message key="main.services.weight.coeff.explanation"/></strong>
+    <form method="get" action="${pageContext.request.contextPath}/app/calculate">
+        <input type="hidden" name="submitted" value="true">
+
+        <div>
+        <strong><label style="color: darkgreen; font-size: medium"> <fmt:message key="main.route.point.one"/>
+            <select name="dispatchCity">
+                <c:forEach items="${citiesOptions}" var="city">
+                            <option value="${city}">
+                                    ${city}
+                            </option>
+                </c:forEach>
+            </select>
+        </label></strong>
+
+        <strong><label style="color: darkgreen; font-size: medium"> <fmt:message key="main.route.point.two"/>
+            <select name="deliveryCity">
+                <c:forEach items="${citiesOptions}" var="city">
+                    <option value="${city}">
+                            ${city}
+                    </option>
+                </c:forEach>
+            </select>
+        </label></strong>
+
+        <strong><label style="color: darkgreen; font-size: medium"> <fmt:message key="order.weight"/>
+            <input type="text" name="weight" value="<c:out value="${param.weight}" />">
+                <c:choose>
+                    <c:when test="${param.submitted && empty param.weight}">
+                        <span class="error"><fmt:message key="input.error.blank.field"/>
+                    </c:when>
+                    <c:otherwise>
+                        <c:if test="${invalidWeightInput==true}">
+                            <span class="error"><fmt:message key="input.error.weight"/>
+                               ${map['weight.light.lower.bound.value']}-${map['weight.heavy.upper.bound.value']}
+                               <fmt:message key="input.error.kg"/>
+                            </span>
+                        </c:if>
+                    </c:otherwise>
+                </c:choose>
+        </label></strong>
+        </div>
+        <p></p>
+        <input class="button" type="submit" value="<fmt:message key="main.calculate.button"/>">
+    </form>
 
 </body>
 </html>

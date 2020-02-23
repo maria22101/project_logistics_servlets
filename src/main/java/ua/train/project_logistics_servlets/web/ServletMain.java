@@ -31,6 +31,7 @@ public class ServletMain extends HttpServlet {
         commands.put(LOGIN_PATH, new LoginCommand());
         commands.put(LOGOUT_PATH, new LogOutCommand());
         commands.put(REGISTRATION_PATH, new RegistrationCommand());
+        commands.put(CALCULATOR_RESULT_PATH, new CalculatorCommand());
         commands.put(EXCEPTION_PATH, new ExceptionCommand());
         commands.put(USER_CABINET_PATH, new UserMainCommand());
         commands.put(USER_ORDERS_PATH, new UserOrdersCommand());

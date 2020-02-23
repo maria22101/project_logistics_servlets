@@ -7,6 +7,7 @@ public interface WebConstant {
     String LOGIN_PATH = "login";
     String LOGOUT_PATH = "logout";
     String REGISTRATION_PATH = "registration";
+    String CALCULATOR_RESULT_PATH = "calculate";
     String EXCEPTION_PATH = "exception";
     String DENIED_PATH = "denied";
     String AUTH_ERROR_PATH = "login/auth_error";
@@ -30,6 +31,7 @@ public interface WebConstant {
     String MAIN_PAGE = "/index.jsp";
     String LOGIN_PAGE = "/login.jsp";
     String REGISTRATION_PAGE = "/registration.jsp";
+    String CALCULATOR_RESULT_PAGE = "/calculatorResult.jsp";
 
     String USER_CABINET_PAGE = "/WEB-INF/user/userMain.jsp";
     String USER_ORDERS_PAGE = "/WEB-INF/user/userOrders.jsp";
@@ -61,11 +63,15 @@ public interface WebConstant {
     String INVALID_EMAIL_INPUT_ATTRIBUTE = "invalidEmailInput";
     String INVALID_PASSWORD_INPUT_ATTRIBUTE = "invalidPasswordInput";
     String ROUTES_ATTRIBUTE = "routes";
+    String CITIES_OPTION_ATTRIBUTE = "citiesOptions";
     String ORDERS_ATTRIBUTE = "orders";
     String ORDER_ATTRIBUTE = "order";
     String INVOICES_ATTRIBUTE = "invoices";
     String INVOICE_ATTRIBUTE = "invoice";
     String USERS_ATTRIBUTE = "users";
+    String WEIGHT_ATTRIBUTE = "weight";
+    String SUM_ATTRIBUTE = "sum";
+    String ROUTE_ATTRIBUTE = "route";
 
     String INVALID_DISPATCH_STREET_INPUT_ATTRIBUTE = "invalidDispatchStreetInput";
     String INVALID_DISPATCH_HOUSE_INPUT_ATTRIBUTE = "invalidDispatchHouseInput";

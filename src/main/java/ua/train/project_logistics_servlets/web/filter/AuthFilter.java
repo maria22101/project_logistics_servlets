@@ -36,7 +36,6 @@ public class AuthFilter implements Filter {
         LOGGER.info("Path: " + path);
 
         final Role role = (Role) session.getAttribute(ROLE_ATTRIBUTE);
-        final String email = (String) context.getAttribute(EMAIL_ATTRIBUTE);
 
         if (isUserLogged(session)) {
             LOGGER.info("User is logged");
@@ -73,6 +72,7 @@ public class AuthFilter implements Filter {
         return path.contains(SERVLET_MAIN_PATH + LOGIN_PATH) ||
                 path.contains(SERVLET_MAIN_PATH + LOGOUT_PATH) ||
                 path.contains(SERVLET_MAIN_PATH + REGISTRATION_PATH) ||
+                path.contains(CALCULATOR_RESULT_PATH) ||
                 path.equals(CONTEXT_PATH);
     }
 
