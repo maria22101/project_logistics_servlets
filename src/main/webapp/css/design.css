@@ -16,6 +16,16 @@ table, th, td {
     border-collapse: collapse;
 }
 
+.btn {
+    border: 1px solid #333;
+    display: inline-block;
+    padding: 5px 15px;
+    text-decoration: none;
+    font-size: medium;
+    background-color: palegreen;
+    color: darkblue;
+}
+
 th{
     background-color: #176c9a;
     color : #FFFFFF;

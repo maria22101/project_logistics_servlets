@@ -10,6 +10,8 @@ public interface WebConstant {
     String EXCEPTION_PATH = "exception";
     String DENIED_PATH = "denied";
     String AUTH_ERROR_PATH = "login/auth_error";
+    String REDIRECT = "redirect:";
+    String EMPTY_STRING = "";
 
     String USER_CABINET_PATH = "user/user_main";
     String USER_ORDERS_PATH = "user/orders";
@@ -79,6 +81,4 @@ public interface WebConstant {
     String LANGUAGE_ATTRIBUTE = "lang";
     String UA_LANGUAGE = "ua";
     String EN_LANGUAGE = "en";
-
-    String REDIRECT = "redirect:";
 }

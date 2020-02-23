@@ -26,6 +26,6 @@ public class UserPayingCommand implements Command {
             return DB_SAVE_ERROR_PAGE;
         }
 
-        return USER_CABINET_PAGE;
+        return REDIRECT + SERVLET_MAIN_PATH + USER_INVOICED_ORDERS_PATH;
     }
 }

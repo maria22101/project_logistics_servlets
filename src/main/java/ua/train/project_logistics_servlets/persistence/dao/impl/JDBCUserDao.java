@@ -28,16 +28,6 @@ public class JDBCUserDao implements UserDao {
     private static final String GET_ALL_USERS = "SELECT * FROM users";
 
     @Override
-    public void create(User entity) {
-
-    }
-
-    @Override
-    public Optional<User> findById(int id) throws DataBaseFetchException {
-        return Optional.empty();
-    }
-
-    @Override
     public List<User> findAll()
             throws DataBaseFetchException {
 
@@ -56,16 +46,6 @@ public class JDBCUserDao implements UserDao {
             throw new DataBaseFetchException();
         }
         return usersList;
-    }
-
-    @Override
-    public void update(User entity) {
-
-    }
-
-    @Override
-    public void delete(int id) {
-
     }
 
     @Override
@@ -105,5 +85,25 @@ public class JDBCUserDao implements UserDao {
             throw new DataBaseFetchException();
         }
         return user;
+    }
+
+    @Override
+    public void create(User entity) {
+        throw new UnsupportedOperationException("not implemented yet");
+    }
+
+    @Override
+    public Optional<User> findById(int id) {
+        throw new UnsupportedOperationException("not implemented yet");
+    }
+
+    @Override
+    public void update(User entity) {
+        throw new UnsupportedOperationException("not implemented yet");
+    }
+
+    @Override
+    public void delete(int id) {
+        throw new UnsupportedOperationException("not implemented yet");
     }
 }

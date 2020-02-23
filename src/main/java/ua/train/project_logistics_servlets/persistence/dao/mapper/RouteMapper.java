@@ -24,8 +24,6 @@ public class RouteMapper implements ObjectMapper<Route> {
         route.setPointTwo(rs.getString("point_two"));
         route.setPointTwoUA(rs.getString("point_two_ua"));
 
-        LOGGER.info("Route order={}", route);
-
         return route;
     }
 }

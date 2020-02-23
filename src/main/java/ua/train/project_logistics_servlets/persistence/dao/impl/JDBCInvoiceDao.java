@@ -49,21 +49,6 @@ public class JDBCInvoiceDao implements InvoiceDao {
     private static final String DELIVERY_ADDRESS_ID_IN_ORDERS = "delivery_address_id";
 
     @Override
-    public void create(Invoice entity)
-            throws DataBaseSaveException {
-
-//        try (Connection connection = ConnectionPoolHolder.getConnection();
-//                PreparedStatement prepStatement = connection.prepareStatement(CREATE_INVOICE)) {
-//
-//            prepStatement.setInt(1, entity.getOrder().getOrderNumber());
-//            prepStatement.execute();
-//
-//        } catch (Exception e) {
-//            throw new DataBaseSaveException();
-//        }
-    }
-
-    @Override
     public void issueInvoice(int orderId)
             throws DataBaseSaveException {
 
@@ -180,36 +165,27 @@ public class JDBCInvoiceDao implements InvoiceDao {
     }
 
     @Override
-    public Optional<Invoice> getInvoiceByOrderNumber(int orderNumber)
-            throws DataBaseFetchException {
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<Invoice> findById(int id) throws DataBaseFetchException {
-        return Optional.empty();
-    }
-
-    @Override
     public List<Invoice> findAll()
             throws DataBaseFetchException {
 
-        List<Invoice> invoicesList = new ArrayList<>();
+//        List<Invoice> invoicesList = new ArrayList<>();
+//
+//        try (Connection connection = ConnectionPoolHolder.getConnection();
+//             Statement statement = connection.createStatement()) {
+//
+//            ResultSet rs = statement.executeQuery(GET_ALL_INVOICES);
+//
+//            while (rs.next()) {
+//                Invoice result = invoiceMapper.extractFromResultSet(rs);
+//                invoicesList.add(result);
+//            }
+//
+//        } catch (SQLException e) {
+//            throw new DataBaseFetchException();
+//        }
+//        return invoicesList;
 
-        try (Connection connection = ConnectionPoolHolder.getConnection();
-             Statement statement = connection.createStatement()) {
-
-            ResultSet rs = statement.executeQuery(GET_ALL_INVOICES);
-
-            while (rs.next()) {
-                Invoice result = invoiceMapper.extractFromResultSet(rs);
-                invoicesList.add(result);
-            }
-
-        } catch (SQLException e) {
-            throw new DataBaseFetchException();
-        }
-        return invoicesList;
+        throw new UnsupportedOperationException("not implemented yet");
     }
 
     @Override
@@ -222,4 +198,20 @@ public class JDBCInvoiceDao implements InvoiceDao {
 
     }
 
+    @Override
+    public void create(Invoice entity)
+            throws DataBaseSaveException {
+        throw new UnsupportedOperationException("not implemented yet");
+    }
+
+    @Override
+    public Optional<Invoice> getInvoiceByOrderNumber(int orderNumber)
+            throws DataBaseFetchException {
+        throw new UnsupportedOperationException("not implemented yet");
+    }
+
+    @Override
+    public Optional<Invoice> findById(int id) throws DataBaseFetchException {
+        throw new UnsupportedOperationException("not implemented yet");
+    }
 }

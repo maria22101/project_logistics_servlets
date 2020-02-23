@@ -11,13 +11,13 @@
         <thead>
         <tr>
             <th><fmt:message key="order.number"/></th>
-            <th><fmt:message key="order.dispatch.city"/></th>
-            <th><fmt:message key="order.dispatch.street"/></th>
-            <th><fmt:message key="order.dispatch.apartment"/></th>
-            <th><fmt:message key="order.delivery.city"/></th>
-            <th><fmt:message key="order.delivery.street"/></th>
-            <th><fmt:message key="order.delivery.apartment"/></th>
-            <th><fmt:message key="order.delivery.date"/></th>
+            <th style="background-color: mediumseagreen"><fmt:message key="order.dispatch.city"/></th>
+            <th style="background-color: mediumseagreen"><fmt:message key="order.dispatch.street"/></th>
+            <th style="background-color: mediumseagreen"><fmt:message key="order.dispatch.apartment"/></th>
+            <th style="background-color: seagreen"><fmt:message key="order.delivery.city"/></th>
+            <th style="background-color: seagreen"><fmt:message key="order.delivery.street"/></th>
+            <th style="background-color: seagreen"><fmt:message key="order.delivery.apartment"/></th>
+            <th ><fmt:message key="order.delivery.date"/></th>
             <th><fmt:message key="order.weight"/></th>
             <th><fmt:message key="order.cargo"/></th>
             <th><fmt:message key="order.sum"/></th>

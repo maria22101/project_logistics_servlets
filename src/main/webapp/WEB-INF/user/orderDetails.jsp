@@ -10,8 +10,8 @@
     <table border="0.5">
         <thead>
         <tr>
-            <th><fmt:message key="usercabinet.orderdetails.data"/></th>
-            <th><fmt:message key="usercabinet.orderdetails.information"/></th>
+            <th style="background-color: #3a60bf"><fmt:message key="usercabinet.orderdetails.data"/></th>
+            <th style="background-color: #3a60bf"><fmt:message key="usercabinet.orderdetails.information"/></th>
         </tr>
         </thead>
 
@@ -46,11 +46,11 @@
         </tr>
         <tr>
             <td><fmt:message key="order.delivery.house"/></td>
-            <td>${order.deliveryAddress.house}</td>
+            <td>${invoice.order.deliveryAddress.house}</td>
         </tr>
         <tr>
             <td><fmt:message key="order.delivery.apartment"/></td>
-            <td>${order.deliveryAddress.apartment}</td>
+            <td>${invoice.order.deliveryAddress.apartment}</td>
         </tr>
         <tr>
             <td><fmt:message key="order.delivery.date"/></td>

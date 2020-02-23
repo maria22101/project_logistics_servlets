@@ -21,11 +21,50 @@ public class JDBCRouteDao implements RouteDao {
 
     private static final String GET_ROUTE_BY_TWO_POINTS = "SELECT * FROM routes WHERE " +
             "(point_one=? AND point_two=?) OR (point_one=? AND point_two=?) " +
+            "OR (point_one_ua=? AND point_two_ua=?) OR (point_one_ua=? AND point_two_ua=?)";
+
+    private static final String GET_ROUTE_ID_BY_TWO_POINTS = "SELECT id FROM routes WHERE " +
+            "(point_one=? AND point_two=?) OR (point_one=? AND point_two=?) " +
             "OR (point_one_ua=? AND point_two_ua=?) OR (point_one_ua=? AND point_two_ua=?) ";
+
+    public int getRouteIdByTwoPoints(String pointOne, String pointTwo)
+            throws DataBaseFetchException {
+//
+//        int routeId = 0;
+//
+//        try (Connection connection = ConnectionPoolHolder.getConnection();
+//             PreparedStatement prepStatement = connection.prepareStatement(GET_ROUTE_ID_BY_TWO_POINTS)) {
+//
+//            prepStatement.setString(1, pointOne);
+//            prepStatement.setString(2, pointTwo);
+//            prepStatement.setString(3, pointTwo);
+//            prepStatement.setString(4, pointOne);
+//            prepStatement.setString(5, pointOne);
+//            prepStatement.setString(6, pointTwo);
+//            prepStatement.setString(7, pointTwo);
+//            prepStatement.setString(8, pointOne);
+//            ResultSet rs = prepStatement.executeQuery();
+//
+//            LOGGER.info(("inside getRouteByIdByTwoPoints"));
+//
+//            if (rs.next()) {
+//                routeId = rs.getInt(1);
+//            }
+//
+//            LOGGER.info("routeId={}", routeId);
+//
+//        } catch (Exception e) {
+//            throw new DataBaseFetchException();
+//        }
+
+        return 0;
+    }
 
     @Override
     public Optional<Route> findRouteByTwoPoints(String pointOne, String pointTwo)
             throws DataBaseFetchException {
+
+        LOGGER.info("inside RouteDao, came into findRouteByTwoPoints...");
 
         Optional<Route> route = Optional.empty();
 
@@ -42,24 +81,18 @@ public class JDBCRouteDao implements RouteDao {
             prepStatement.setString(8, pointOne);
             ResultSet rs = prepStatement.executeQuery();
 
+            LOGGER.info("before iterating rs, rs={}", rs);
+
             if (rs.next()) {
                 route = Optional.of(routeMapper.extractFromResultSet(rs));
             }
+
+            LOGGER.info("after iterating rs, route={}", route);
 
         } catch (Exception e) {
             throw new DataBaseFetchException();
         }
         return route;
-    }
-
-    @Override
-    public void create(Route entity) {
-
-    }
-
-    @Override
-    public Optional<Route> findById(int id) throws DataBaseFetchException {
-        return Optional.empty();
     }
 
     @Override
@@ -84,12 +117,22 @@ public class JDBCRouteDao implements RouteDao {
     }
 
     @Override
-    public void update(Route entity) {
+    public void create(Route entity) {
+        throw new UnsupportedOperationException("not implemented yet");
+    }
 
+    @Override
+    public Optional<Route> findById(int id) throws DataBaseFetchException {
+        throw new UnsupportedOperationException("not implemented yet");
+    }
+
+    @Override
+    public void update(Route entity) {
+        throw new UnsupportedOperationException("not implemented yet");
     }
 
     @Override
     public void delete(int id) {
-
+        throw new UnsupportedOperationException("not implemented yet");
     }
 }

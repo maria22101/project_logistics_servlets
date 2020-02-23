@@ -9,4 +9,7 @@ import java.util.Optional;
 public interface RouteDao extends GenericDao<Route> {
     Optional<Route> findRouteByTwoPoints(String pointOne, String pointTwo)
             throws DataBaseFetchException;
+//
+//    int getRouteIdByTwoPoints(String pointOne, String pointTwo)
+//            throws DataBaseFetchException;
 }

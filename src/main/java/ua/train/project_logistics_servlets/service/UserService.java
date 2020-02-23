@@ -23,4 +23,15 @@ public class UserService {
         return userDao.findUserByEmail(email)
                 .orElseThrow(DataBaseFetchException::new);
     }
+
+    public int getUserIdByEmail(String email)
+            throws DataBaseFetchException {
+
+        if (userDao.findUserByEmail(email).isPresent()) {
+            return userDao.findUserByEmail(email).get().getId();
+
+        } else {
+            throw new DataBaseFetchException();
+        }
+    }
 }
