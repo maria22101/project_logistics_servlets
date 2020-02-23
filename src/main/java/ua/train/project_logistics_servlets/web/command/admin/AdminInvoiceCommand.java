@@ -19,7 +19,6 @@ public class AdminInvoiceCommand implements Command {
     public String execute(HttpServletRequest request) {
 
         int invoicingOrderNumber = Integer.parseInt(request.getParameter("orderNumber"));
-        LOGGER.info("orderNumber from param:{}", invoicingOrderNumber);
 
         try {
             invoiceService.issueInvoice(invoicingOrderNumber);

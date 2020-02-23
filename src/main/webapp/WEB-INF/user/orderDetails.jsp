@@ -10,8 +10,8 @@
     <table border="0.5">
         <thead>
         <tr>
-            <th style="background-color: #3a60bf"><fmt:message key="usercabinet.orderdetails.data"/></th>
-            <th style="background-color: #3a60bf"><fmt:message key="usercabinet.orderdetails.information"/></th>
+            <th style="background-color: mediumseagreen"><fmt:message key="usercabinet.orderdetails.data"/></th>
+            <th style="background-color: mediumseagreen"><fmt:message key="usercabinet.orderdetails.information"/></th>
         </tr>
         </thead>
 

@@ -16,30 +16,25 @@ public class InvoiceService {
 
     private static final Logger LOGGER = LogManager.getLogger(InvoiceService.class);
 
-    public List<Invoice> getAllInvoicesWithOrdersAndUserAndAddresses()
+    public List<Invoice> getAllInvoices()
             throws DataBaseFetchException {
-
-        return invoiceDao.getAllInvoicesWithOrdersAndUserAndAddresses();
+        return invoiceDao.findAll();
     }
 
     public void issueInvoice(int orderNumber)
             throws DataBaseSaveException {
-
         invoiceDao.issueInvoice(orderNumber);
     }
 
     public void payInvoice(int orderNumber)
             throws DataBaseSaveException {
-
         invoiceDao.payInvoice(orderNumber);
     }
 
     public Invoice getInvoiceByOrderNumber(int orderNumber)
             throws DataBaseFetchException {
-        return invoiceDao.getAllInvoicesWithOrdersAndUserAndAddresses()
-                .stream()
-                .filter(i -> i.getOrder().getOrderNumber() == orderNumber)
-                .findFirst()
+        return invoiceDao
+                .getInvoiceByOrderNumber(orderNumber)
                 .orElseThrow(DataBaseFetchException::new);
     }
 }

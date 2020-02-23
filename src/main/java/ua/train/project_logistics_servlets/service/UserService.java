@@ -17,13 +17,6 @@ public class UserService {
         return userDao.findAll();
     }
 
-    public User getUserFromDb(String email)
-            throws DataBaseFetchException {
-
-        return userDao.findUserByEmail(email)
-                .orElseThrow(DataBaseFetchException::new);
-    }
-
     public int getUserIdByEmail(String email)
             throws DataBaseFetchException {
 

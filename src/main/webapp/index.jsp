@@ -24,7 +24,7 @@
 
                     <c:choose>
 
-                        <c:when test="${sessionScope.lang == ua}">
+                        <c:when test="${sessionScope.lang == en || empty sessionScope.lang}">
                             <c:forEach var="route" items="${routes}">
                                 <tr>
                                     <td>${route.pointOne}</td>

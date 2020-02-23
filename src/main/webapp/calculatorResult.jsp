@@ -15,32 +15,12 @@
 
         <tr>
             <td><fmt:message key="main.route.point.one"/></td>
-            <td>
-                <c:choose>
-                    <c:when test="${sessionScope.lang == ua}">
-                        ${route.pointOne}
-                    </c:when>
-
-                    <c:otherwise>
-                        ${route.pointOneUA}
-                    </c:otherwise>
-                </c:choose>
-            </td>
+            <td>${dispatchCity}</td>
         </tr>
 
         <tr>
             <td><fmt:message key="main.route.point.two"/></td>
-            <td>
-                <c:choose>
-                    <c:when test="${sessionScope.lang == ua}">
-                        ${route.pointTwo}
-                    </c:when>
-
-                    <c:otherwise>
-                        ${route.pointTwoUA}
-                    </c:otherwise>
-                </c:choose>
-            </td>
+            <td>${deliveryCity}</td>
         </tr>
 
         <tr>

@@ -12,11 +12,8 @@ public interface InvoiceDao extends GenericDao<Invoice> {
     void issueInvoice(int orderId)
             throws DataBaseSaveException;
 
-    void payInvoice(int orderId)
+    void payInvoice(int orderNumber)
             throws DataBaseSaveException;
-
-    List<Invoice> getAllInvoicesWithOrdersAndUserAndAddresses()
-            throws DataBaseFetchException;
 
     Optional<Invoice> getInvoiceByOrderNumber(int orderNumber)
             throws DataBaseFetchException;

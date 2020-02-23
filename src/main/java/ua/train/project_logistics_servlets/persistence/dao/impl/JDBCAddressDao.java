@@ -98,7 +98,7 @@ public class JDBCAddressDao implements AddressDao {
 
     @Override
     public Optional<Address> findById(int id) throws DataBaseFetchException {
-        return Optional.empty();
+        throw new UnsupportedOperationException("not implemented yet");
     }
 
     @Override

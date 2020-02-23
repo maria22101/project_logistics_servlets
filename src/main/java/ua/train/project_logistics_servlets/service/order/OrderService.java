@@ -16,44 +16,18 @@ public class OrderService {
 
     private static final Logger LOGGER = LogManager.getLogger(OrderService.class);
 
-    public List<Order> getAllOrdersWithUserAndAddresses()
-            throws DataBaseFetchException {
-
-            return orderDao.getAllOrdersWithUserAndAddresses();
-    }
-
-    public List<Order> getAllOrdersWithUserAndAddressesByEmail(String email)
-            throws DataBaseFetchException {
-
-        return orderDao.getAllOrdersWithUserAndAddresses()
-                .stream()
-                .filter((o) -> o.getUser().getEmail().equals(email))
-                .collect(Collectors.toList());
-    }
-
     public List<Order> getOpenOrders()
             throws DataBaseFetchException {
-
-            return orderDao
-                    .getAllOrdersWithUserAndAddresses()
-                    .stream()
-                    .filter((o) -> o.getOrderStatus().equals(OrderStatus.OPEN))
-                    .collect(Collectors.toList());
+        return orderDao.getOpenOrders();
     }
 
-    public List<Order> getIvoicedOrdersByUserEmail(String email)
+    public List<Order> getAllOrdersByEmail(String email)
             throws DataBaseFetchException {
-
-            return orderDao
-                    .getAllOrdersWithUserAndAddresses()
-                    .stream()
-                    .filter((o) -> o.getUser().getEmail().equals(email) &&
-                                    o.getOrderStatus().equals(OrderStatus.INVOICED))
-                    .collect(Collectors.toList());
+        return orderDao.getAllOrdersByEmail(email);
     }
 
-    public Order getOrderById(int id) throws DataBaseFetchException {
-        return orderDao.findById(id)
-                .orElseThrow(DataBaseFetchException::new);
+    public List<Order> getInvoicedOrdersByEmail(String email)
+            throws DataBaseFetchException {
+        return orderDao.getInvoicedOrdersByEmail(email);
     }
 }

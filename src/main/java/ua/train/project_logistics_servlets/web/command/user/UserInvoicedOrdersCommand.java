@@ -17,16 +17,13 @@ import static ua.train.project_logistics_servlets.constant.WebConstant.*;
 public class UserInvoicedOrdersCommand implements Command {
     private OrderService orderService = new OrderService();
 
-    private static final Logger LOGGER = LogManager.getLogger(UserInvoicedOrdersCommand.class);
-
     @Override
     public String execute(HttpServletRequest request) {
 
         String email = (String) request.getSession().getAttribute(EMAIL_ATTRIBUTE);
-        LOGGER.info("User's attribute from session:{}", email);
 
         try {
-            List<Order> invoicedOrders = orderService.getIvoicedOrdersByUserEmail(email);
+            List<Order> invoicedOrders = orderService.getInvoicedOrdersByEmail(email);
             request.setAttribute(ORDERS_ATTRIBUTE, invoicedOrders);
         } catch (DataBaseFetchException e) {
             return DB_FETCH_ERROR_PAGE;
