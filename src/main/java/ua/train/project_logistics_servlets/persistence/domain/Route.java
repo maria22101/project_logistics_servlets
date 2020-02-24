@@ -3,6 +3,7 @@ package ua.train.project_logistics_servlets.persistence.domain;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Route {
     private int id;
@@ -97,5 +98,22 @@ public class Route {
                 ", pointTwoUA='" + pointTwoUA + '\'' +
                 ", basicRate=" + basicRate +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Route route = (Route) o;
+        return pointOne.equals(route.pointOne) &&
+                pointOneUA.equals(route.pointOneUA) &&
+                pointTwo.equals(route.pointTwo) &&
+                pointTwoUA.equals(route.pointTwoUA) &&
+                Objects.equals(basicRate, route.basicRate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pointOne, pointOneUA, pointTwo, pointTwoUA, basicRate);
     }
 }

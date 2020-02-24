@@ -39,40 +39,4 @@ public class RouteService {
         LOGGER.info("all cities ua={}", routeDao.getCitiesOptionsUa());
         return routeDao.getCitiesOptionsUa();
     }
-
-//    public List<String> getCitiesOptionsEng()
-//            throws DataBaseFetchException {
-//
-//        try {
-//            return Stream.concat(
-//                    getAllRoutes()
-//                            .stream()
-//                            .map(Route::getPointOne),
-//                    getAllRoutes()
-//                            .stream()
-//                            .map(Route::getPointTwo))
-//                    .distinct()
-//                    .collect(Collectors.toList());
-//        } catch (Exception e) {
-//            throw new DataBaseFetchException();
-//        }
-//    }
-//
-//    public List<String> getCitiesOptionsUa()
-//            throws DataBaseFetchException {
-//
-//        try {
-//            return Stream.concat(
-//                    getAllRoutes()
-//                            .stream()
-//                            .map(Route::getPointOneUA),
-//                    getAllRoutes()
-//                            .stream()
-//                            .map(Route::getPointTwoUA))
-//                    .distinct()
-//                    .collect(Collectors.toList());
-//        } catch (Exception e) {
-//            throw new DataBaseFetchException();
-//        }
-//    }
 }
