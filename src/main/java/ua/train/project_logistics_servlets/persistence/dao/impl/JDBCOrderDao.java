@@ -69,6 +69,25 @@ public class JDBCOrderDao implements OrderDao {
 
     private static final String GET_ADDRESS_BY_ID = "SELECT * FROM addresses WHERE id=?";
 
+    private static final String COUNT_ALL_ORDERS = "SELECT COUNT(*) AS total FROM orders";
+
+    private static final String FIND_ALL_ORDERS_FOR_PAGE_SIMPLE =
+            "SELECT * FROM orders " +
+                    "ORDER BY date DESC " +
+                    "LIMIT ?, ?";
+
+    private static final String FIND_ORDERS_FOR_PAGE_BY_EMAIL =
+            "SELECT * FROM orders " +
+                    "JOIN users " +
+                    "ON orders.user_id=users.id " +
+                    "JOIN addresses AS a " +
+                    "ON orders.dispatch_address_id=a.id " +
+                    "JOIN addresses AS b " +
+                    "ON orders.delivery_address_id=b.id " +
+                    "LEFT JOIN invoices " +
+                    "ON invoices.order_number=orders.order_number " +
+                    "WHERE users.email=? LIMIT ?, ?";
+
     private static final String DISPATCH_ADDRESS_ID_IN_ORDERS = "dispatch_address_id";
     private static final String DELIVERY_ADDRESS_ID_IN_ORDERS = "delivery_address_id";
 
@@ -245,6 +264,74 @@ public class JDBCOrderDao implements OrderDao {
 
             prepOrderStatement.setString(1, email);
             ResultSet rs = prepOrderStatement.executeQuery();
+
+            while (rs.next()) {
+                Order result = orderMapper.extractFromResultSet(rs);
+
+                User user = userMapper.extractFromResultSet(rs);
+
+                Address dispatchAddress = dispatchAddressMapper
+                        .extractFromResultSet(rs, addressMapper)
+                        .orElseThrow(DataBaseFetchException::new);
+
+                Address deliveryAddress = deliveryAddressMapper
+                        .extractFromResultSet(rs, addressMapper)
+                        .orElseThrow(DataBaseFetchException::new);
+
+                result.setUser(user);
+                result.setDispatchAddress(dispatchAddress);
+                result.setDeliveryAddress(deliveryAddress);
+
+                ordersList.add(result);
+            }
+
+        } catch (SQLException e) {
+            throw new DataBaseFetchException();
+        }
+        return ordersList;
+    }
+
+    @Override
+    public int countOrders()
+            throws DataBaseFetchException {
+
+        int ordersCount = 0;
+        try (Connection connection = ConnectionPoolHolder.getConnection();
+             Statement statement = connection.createStatement()) {
+
+            ResultSet rs = statement.executeQuery(COUNT_ALL_ORDERS);
+            if (rs.next()) {
+                ordersCount = rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            throw new DataBaseFetchException();
+        }
+        return ordersCount;
+    }
+
+    @Override
+    public List<Order> findOrdersForPageByEmail(String email, int offset, int pageSize)
+            throws DataBaseFetchException {
+
+        List<Order> ordersList = new ArrayList<>();
+        try (Connection connection = ConnectionPoolHolder.getConnection();
+             Statement statement = connection.createStatement();
+             PreparedStatement prepAddressStatement = connection.prepareStatement(GET_ADDRESS_BY_ID);
+             PreparedStatement prepOrdersStatement = connection
+                     .prepareStatement(FIND_ORDERS_FOR_PAGE_BY_EMAIL)) {
+
+            AddressMapper addressMapper = new AddressMapper();
+            UserMapper userMapper = new UserMapper();
+            AddressMapperByIntId dispatchAddressMapper =
+                    new AddressMapperByIntId(prepAddressStatement, DISPATCH_ADDRESS_ID_IN_ORDERS);
+            AddressMapperByIntId deliveryAddressMapper =
+                    new AddressMapperByIntId(prepAddressStatement, DELIVERY_ADDRESS_ID_IN_ORDERS);
+
+            prepOrdersStatement.setString(1, email);
+            prepOrdersStatement.setInt(2, offset);
+            prepOrdersStatement.setInt(3, pageSize);
+            ResultSet rs = prepOrdersStatement.executeQuery();
 
             while (rs.next()) {
                 Order result = orderMapper.extractFromResultSet(rs);

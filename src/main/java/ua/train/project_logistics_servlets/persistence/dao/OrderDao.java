@@ -25,4 +25,9 @@ public interface OrderDao extends GenericDao<Order> {
                       LocalDate deliveryDate, BigDecimal weight, CargoType cargoType,
                       BigDecimal sum, int routeId)
             throws DataBaseSaveException;
+
+    int countOrders() throws DataBaseFetchException;
+
+    List<Order> findOrdersForPageByEmail(String email, int offset, int pageSize)
+            throws DataBaseFetchException;
 }

@@ -22,29 +22,29 @@
                     </thead>
                     <tbody>
 
-                    <c:choose>
+                        <c:choose>
 
-                        <c:when test="${sessionScope.lang == en || empty sessionScope.lang}">
-                            <c:forEach var="route" items="${routes}">
-                                <tr>
-                                    <td>${route.pointOne}</td>
-                                    <td>${route.pointTwo}</td>
-                                    <td>${route.basicRate}</td>
-                                </tr>
-                            </c:forEach>
-                        </c:when>
+                            <c:when test="${sessionScope.lang == en || empty sessionScope.lang}">
+                                <c:forEach var="route" items="${routes}">
+                                    <tr>
+                                        <td>${route.pointOne}</td>
+                                        <td>${route.pointTwo}</td>
+                                        <td>${route.basicRate}</td>
+                                    </tr>
+                                </c:forEach>
+                            </c:when>
 
-                        <c:otherwise>
-                            <c:forEach var="route" items="${routes}">
-                                <tr>
-                                    <td>${route.pointOneUA}</td>
-                                    <td>${route.pointTwoUA}</td>
-                                    <td>${route.basicRate}</td>
-                                </tr>
-                            </c:forEach>
-                        </c:otherwise>
+                            <c:otherwise>
+                                <c:forEach var="route" items="${routes}">
+                                    <tr>
+                                        <td>${route.pointOneUA}</td>
+                                        <td>${route.pointTwoUA}</td>
+                                        <td>${route.basicRate}</td>
+                                    </tr>
+                                </c:forEach>
+                            </c:otherwise>
 
-                    </c:choose>
+                        </c:choose>
 
                     </tbody>
                 </table>
