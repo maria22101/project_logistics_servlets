@@ -1,12 +1,6 @@
 package ua.train.project_logistics_servlets.persistence.dao.impl;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import ua.train.project_logistics_servlets.persistence.dao.*;
-
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
 
 public class JDBCDaoFactory extends DaoFactory {
 

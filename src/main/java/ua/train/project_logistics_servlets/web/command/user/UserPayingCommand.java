@@ -1,7 +1,5 @@
 package ua.train.project_logistics_servlets.web.command.user;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import ua.train.project_logistics_servlets.exception.DataBaseSaveException;
 import ua.train.project_logistics_servlets.service.InvoiceService;
 import ua.train.project_logistics_servlets.web.command.Command;

@@ -7,16 +7,20 @@ import ua.train.project_logistics_servlets.enums.OrderStatus;
 import ua.train.project_logistics_servlets.exception.DataBaseFetchException;
 import ua.train.project_logistics_servlets.exception.DataBaseSaveException;
 import ua.train.project_logistics_servlets.persistence.dao.OrderDao;
-import ua.train.project_logistics_servlets.persistence.dao.mapper.*;
+import ua.train.project_logistics_servlets.persistence.dao.mapper.AddressMapper;
+import ua.train.project_logistics_servlets.persistence.dao.mapper.AddressMapperByIntId;
+import ua.train.project_logistics_servlets.persistence.dao.mapper.OrderMapper;
+import ua.train.project_logistics_servlets.persistence.dao.mapper.UserMapper;
 import ua.train.project_logistics_servlets.persistence.domain.Address;
 import ua.train.project_logistics_servlets.persistence.domain.Order;
 import ua.train.project_logistics_servlets.persistence.domain.User;
 
 import java.math.BigDecimal;
 import java.sql.*;
-import java.sql.Date;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class JDBCOrderDao implements OrderDao {
     private OrderMapper orderMapper = new OrderMapper();

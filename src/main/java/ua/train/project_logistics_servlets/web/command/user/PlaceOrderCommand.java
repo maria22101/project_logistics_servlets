@@ -11,7 +11,6 @@ import ua.train.project_logistics_servlets.service.order.OrderFormValidationServ
 import ua.train.project_logistics_servlets.web.command.Command;
 
 import javax.servlet.http.HttpServletRequest;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
@@ -20,9 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static ua.train.project_logistics_servlets.constant.EntityFieldConstant.*;
-import static ua.train.project_logistics_servlets.constant.EntityFieldConstant.ORDER_DISPATCH_APARTMENT;
 import static ua.train.project_logistics_servlets.constant.WebConstant.*;
-import static ua.train.project_logistics_servlets.constant.WebConstant.DB_FETCH_ERROR_PAGE;
 
 public class PlaceOrderCommand implements Command {
     private OrderCreationService orderCreationService = new OrderCreationService();

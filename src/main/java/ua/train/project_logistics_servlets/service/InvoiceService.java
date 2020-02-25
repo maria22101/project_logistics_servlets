@@ -7,7 +7,6 @@ import ua.train.project_logistics_servlets.exception.DataBaseSaveException;
 import ua.train.project_logistics_servlets.persistence.dao.DaoFactory;
 import ua.train.project_logistics_servlets.persistence.dao.InvoiceDao;
 import ua.train.project_logistics_servlets.persistence.domain.Invoice;
-import ua.train.project_logistics_servlets.persistence.domain.Order;
 
 import java.util.List;
 
