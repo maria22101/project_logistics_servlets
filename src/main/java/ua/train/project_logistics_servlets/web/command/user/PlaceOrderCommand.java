@@ -52,7 +52,7 @@ public class PlaceOrderCommand implements Command {
             return DB_FETCH_ERROR_PAGE;
         }
 
-        request.setAttribute("cargoTypes", CargoType.values());
+        request.setAttribute(CARGO_TYPES_ATTRIBUTE, CargoType.values());
 
         Optional<String> pageIfValidationFailed = orderFormValidationService.getPageIfValidationFailed(request);
 

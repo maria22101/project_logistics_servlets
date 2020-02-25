@@ -5,5 +5,4 @@ public interface ErrorConstant {
     String EXCEPTION_USER_EXISTS = "registration.emailexist.error.message";
     String DATABASE_FETCH_ISSUE = "database.fetch.issue";
     String DATABASE_SAVING_ISSUE = "database.saving.issue";
-    String ORDER_NOT_FOUND = "exception.order.not.found";
 }

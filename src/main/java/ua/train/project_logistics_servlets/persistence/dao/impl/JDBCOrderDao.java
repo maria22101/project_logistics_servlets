@@ -31,9 +31,7 @@ public class JDBCOrderDao implements OrderDao {
     private static final String CREATE_ADDRESS = "INSERT INTO addresses " +
             "(city, street, house, apartment)" + " VALUES(?, ?, ?, ?)";
 
-    private static final String GET_ALL_ORDERS = "SELECT * FROM orders";
-
-    private static final String GET_ALL_ORDERS_WITH_USERS_AND_ADDRESSES =
+    private static final String GET_ORDERS_BY_EMAIL =
             "SELECT * FROM orders " +
                     "JOIN users " +
                     "ON orders.user_id=users.id " +
@@ -42,11 +40,48 @@ public class JDBCOrderDao implements OrderDao {
                     "JOIN addresses AS b " +
                     "ON orders.delivery_address_id=b.id " +
                     "LEFT JOIN invoices " +
-                    "ON invoices.order_number=orders.order_number";
+                    "ON invoices.order_number=orders.order_number " +
+                    "WHERE users.email=?";
+
+    private static final String GET_INVOICED_ORDERS_BY_EMAIL =
+            "SELECT * FROM orders " +
+                    "JOIN users " +
+                    "ON orders.user_id=users.id " +
+                    "JOIN addresses AS a " +
+                    "ON orders.dispatch_address_id=a.id " +
+                    "JOIN addresses AS b " +
+                    "ON orders.delivery_address_id=b.id " +
+                    "LEFT JOIN invoices " +
+                    "ON invoices.order_number=orders.order_number " +
+                    "WHERE users.email=? AND orders.order_status='INVOICED'";
+
+    private static final String GET_OPEN_ORDERS =
+            "SELECT * FROM orders " +
+                    "JOIN users " +
+                    "ON orders.user_id=users.id " +
+                    "JOIN addresses AS a " +
+                    "ON orders.dispatch_address_id=a.id " +
+                    "JOIN addresses AS b " +
+                    "ON orders.delivery_address_id=b.id " +
+                    "LEFT JOIN invoices " +
+                    "ON invoices.order_number=orders.order_number " +
+                    "WHERE orders.order_status='OPEN'";
 
     private static final String GET_ADDRESS_BY_ID = "SELECT * FROM addresses WHERE id=?";
 
-    private static final String GET_ORDER_BY_ORDER_NUMBER = "SELECT * FROM orders WHERE order_number=?";
+    private static final String COUNT_ALL_ORDERS = "SELECT COUNT(*) AS total FROM orders";
+
+    private static final String FIND_ORDERS_FOR_PAGE_BY_EMAIL =
+            "SELECT * FROM orders " +
+                    "JOIN users " +
+                    "ON orders.user_id=users.id " +
+                    "JOIN addresses AS a " +
+                    "ON orders.dispatch_address_id=a.id " +
+                    "JOIN addresses AS b " +
+                    "ON orders.delivery_address_id=b.id " +
+                    "LEFT JOIN invoices " +
+                    "ON invoices.order_number=orders.order_number " +
+                    "WHERE users.email=? LIMIT ?, ?";
 
     private static final String DISPATCH_ADDRESS_ID_IN_ORDERS = "dispatch_address_id";
     private static final String DELIVERY_ADDRESS_ID_IN_ORDERS = "delivery_address_id";
@@ -57,7 +92,7 @@ public class JDBCOrderDao implements OrderDao {
                             String deliveryCity, String deliveryStreet, String deliveryHouse, String deliveryApartment,
                             LocalDate deliveryDate, BigDecimal weight, CargoType cargoType,
                             BigDecimal sum, int routeId)
-            throws DataBaseFetchException, DataBaseSaveException {
+            throws DataBaseSaveException {
 
         try (Connection connection = ConnectionPoolHolder.getConnection()) {
 
@@ -118,51 +153,7 @@ public class JDBCOrderDao implements OrderDao {
     }
 
     @Override
-    public Optional<Order> findById(int id)
-            throws DataBaseFetchException {
-
-        Optional<Order> order = Optional.empty();
-
-        try (Connection connection = ConnectionPoolHolder.getConnection();
-             PreparedStatement prepStatement = connection.prepareStatement(GET_ORDER_BY_ORDER_NUMBER)) {
-
-            prepStatement.setInt(1, id);
-            ResultSet rs = prepStatement.executeQuery();
-            if (rs.next()) {
-                order = Optional.of(orderMapper.extractFromResultSet(rs));
-            }
-
-        } catch (Exception e) {
-            throw new DataBaseFetchException();
-        }
-        return order;
-    }
-
-    @Override
-    public List<Order> findAll()
-            throws DataBaseFetchException {
-
-        List<Order> ordersList = new ArrayList<>();
-
-        try (Connection connection = ConnectionPoolHolder.getConnection();
-             PreparedStatement prepStatement = connection.prepareStatement(GET_ALL_ORDERS)) {
-
-            ResultSet rs = prepStatement.executeQuery();
-            while (rs.next()) {
-                Order result = orderMapper.extractFromResultSet(rs);
-                ordersList.add(result);
-            }
-
-        } catch (SQLException e) {
-            throw new DataBaseFetchException();
-        }
-        return ordersList;
-    }
-
-    @Override
-    public List<Order> getAllOrdersWithUserAndAddresses()
-            throws DataBaseFetchException {
-
+    public List<Order> getOpenOrders() throws DataBaseFetchException {
         List<Order> ordersList = new ArrayList<>();
         try (Connection connection = ConnectionPoolHolder.getConnection();
              Statement statement = connection.createStatement();
@@ -175,7 +166,7 @@ public class JDBCOrderDao implements OrderDao {
             AddressMapperByIntId deliveryAddressMapper =
                     new AddressMapperByIntId(prepAddressStatement, DELIVERY_ADDRESS_ID_IN_ORDERS);
 
-            ResultSet rs = statement.executeQuery(GET_ALL_ORDERS_WITH_USERS_AND_ADDRESSES);
+            ResultSet rs = statement.executeQuery(GET_OPEN_ORDERS);
 
             while (rs.next()) {
                 Order result = orderMapper.extractFromResultSet(rs);
@@ -204,8 +195,121 @@ public class JDBCOrderDao implements OrderDao {
     }
 
     @Override
-    public void create(Order entity)
-            throws DataBaseSaveException {
+    public List<Order> getInvoicedOrdersByEmail(String email)
+            throws DataBaseFetchException {
+
+        List<Order> ordersList = new ArrayList<>();
+        try (Connection connection = ConnectionPoolHolder.getConnection();
+             PreparedStatement prepAddressStatement = connection.prepareStatement(GET_ADDRESS_BY_ID);
+             PreparedStatement prepOrderStatement = connection
+                     .prepareStatement(GET_INVOICED_ORDERS_BY_EMAIL)) {
+
+            AddressMapper addressMapper = new AddressMapper();
+            UserMapper userMapper = new UserMapper();
+            AddressMapperByIntId dispatchAddressMapper =
+                    new AddressMapperByIntId(prepAddressStatement, DISPATCH_ADDRESS_ID_IN_ORDERS);
+            AddressMapperByIntId deliveryAddressMapper =
+                    new AddressMapperByIntId(prepAddressStatement, DELIVERY_ADDRESS_ID_IN_ORDERS);
+
+            prepOrderStatement.setString(1, email);
+            ResultSet rs = prepOrderStatement.executeQuery();
+
+            while (rs.next()) {
+                Order result = orderMapper.extractFromResultSet(rs);
+
+                User user = userMapper.extractFromResultSet(rs);
+
+                Address dispatchAddress = dispatchAddressMapper
+                        .extractFromResultSet(rs, addressMapper)
+                        .orElseThrow(DataBaseFetchException::new);
+
+                Address deliveryAddress = deliveryAddressMapper
+                        .extractFromResultSet(rs, addressMapper)
+                        .orElseThrow(DataBaseFetchException::new);
+
+                result.setUser(user);
+                result.setDispatchAddress(dispatchAddress);
+                result.setDeliveryAddress(deliveryAddress);
+
+                ordersList.add(result);
+            }
+
+        } catch (SQLException e) {
+            throw new DataBaseFetchException();
+        }
+        return ordersList;
+    }
+
+    @Override
+    public int countOrders()
+            throws DataBaseFetchException {
+
+        int ordersCount = 0;
+        try (Connection connection = ConnectionPoolHolder.getConnection();
+             Statement statement = connection.createStatement()) {
+
+            ResultSet rs = statement.executeQuery(COUNT_ALL_ORDERS);
+            if (rs.next()) {
+                ordersCount = rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            throw new DataBaseFetchException();
+        }
+        return ordersCount;
+    }
+
+    @Override
+    public List<Order> findOrdersForPageByEmail(String email, int offset, int pageSize)
+            throws DataBaseFetchException {
+
+        List<Order> ordersList = new ArrayList<>();
+        try (Connection connection = ConnectionPoolHolder.getConnection();
+             Statement statement = connection.createStatement();
+             PreparedStatement prepAddressStatement = connection.prepareStatement(GET_ADDRESS_BY_ID);
+             PreparedStatement prepOrdersStatement = connection
+                     .prepareStatement(FIND_ORDERS_FOR_PAGE_BY_EMAIL)) {
+
+            AddressMapper addressMapper = new AddressMapper();
+            UserMapper userMapper = new UserMapper();
+            AddressMapperByIntId dispatchAddressMapper =
+                    new AddressMapperByIntId(prepAddressStatement, DISPATCH_ADDRESS_ID_IN_ORDERS);
+            AddressMapperByIntId deliveryAddressMapper =
+                    new AddressMapperByIntId(prepAddressStatement, DELIVERY_ADDRESS_ID_IN_ORDERS);
+
+            prepOrdersStatement.setString(1, email);
+            prepOrdersStatement.setInt(2, offset);
+            prepOrdersStatement.setInt(3, pageSize);
+            ResultSet rs = prepOrdersStatement.executeQuery();
+
+            while (rs.next()) {
+                Order result = orderMapper.extractFromResultSet(rs);
+
+                User user = userMapper.extractFromResultSet(rs);
+
+                Address dispatchAddress = dispatchAddressMapper
+                        .extractFromResultSet(rs, addressMapper)
+                        .orElseThrow(DataBaseFetchException::new);
+
+                Address deliveryAddress = deliveryAddressMapper
+                        .extractFromResultSet(rs, addressMapper)
+                        .orElseThrow(DataBaseFetchException::new);
+
+                result.setUser(user);
+                result.setDispatchAddress(dispatchAddress);
+                result.setDeliveryAddress(deliveryAddress);
+
+                ordersList.add(result);
+            }
+
+        } catch (SQLException e) {
+            throw new DataBaseFetchException();
+        }
+        return ordersList;
+    }
+
+    @Override
+    public void create(Order entity) {
         throw new UnsupportedOperationException("not implemented yet");
     }
 
@@ -216,6 +320,16 @@ public class JDBCOrderDao implements OrderDao {
 
     @Override
     public void delete(int id) {
+        throw new UnsupportedOperationException("not implemented yet");
+    }
+
+    @Override
+    public List<Order> findAll() {
+        throw new UnsupportedOperationException("not implemented yet");
+    }
+
+    @Override
+    public Optional<Order> findById(int id) {
         throw new UnsupportedOperationException("not implemented yet");
     }
 }

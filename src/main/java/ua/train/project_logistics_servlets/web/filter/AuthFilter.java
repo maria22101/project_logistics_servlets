@@ -26,44 +26,28 @@ public class AuthFilter implements Filter {
                          ServletResponse response,
                          FilterChain filterChain) throws IOException, ServletException {
 
-        LOGGER.info("Inside AuthFilter");
-
         final HttpServletRequest req = (HttpServletRequest) request;
         final HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession();
-        ServletContext context = request.getServletContext();
         String path = req.getRequestURI();
-        LOGGER.info("Path: " + path);
-
         final Role role = (Role) session.getAttribute(ROLE_ATTRIBUTE);
 
         if (isUserLogged(session)) {
-            LOGGER.info("User is logged");
 
             if (isPathAllowedForAll(path)) {
-                LOGGER.info("Path allowed for all, logged user to be logged out");
                 req.getRequestDispatcher(SERVLET_MAIN_PATH + LOGOUT_PATH).forward(req, res);
                 return;
-
             } else if (isPathAllowedForRole(role, path)) {
-                LOGGER.info("Path is allowed for the logged user role");
                 filterChain.doFilter(req, res);
                 return;
-
             } else {
-                LOGGER.info("Logged user is on wrong path");
                 throw new SecurityException();
             }
         }
 
-        LOGGER.info("Unknown user entering...");
-
-        if(isPathAllowedForAll(path)) {
-            LOGGER.info("Unknown user is on path allowed for all");
+        if (isPathAllowedForAll(path)) {
             filterChain.doFilter(req, res);
-
-        }else {
-            LOGGER.info("Unknown user is on path that requires authorization");
+        } else {
             res.sendRedirect(SERVLET_MAIN_PATH + LOGIN_PATH);
         }
     }

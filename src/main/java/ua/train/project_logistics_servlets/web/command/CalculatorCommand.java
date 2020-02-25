@@ -40,7 +40,9 @@ public class CalculatorCommand implements Command {
             Route route = routeService.getRouteByTwoPoints(dispatchCity, deliveryCity);
             BigDecimal sum = sumCalculationService.calculateSum(weight, route);
             request.setAttribute(SUM_ATTRIBUTE, sum);
-            request.setAttribute(ROUTE_ATTRIBUTE, route);
+            request.setAttribute(ORDER_DISPATCH_CITY, dispatchCity);
+            request.setAttribute(ORDER_DELIVERY_CITY, deliveryCity);
+
         } catch (DataBaseFetchException e) {
             return DB_FETCH_ERROR_PAGE;
         }

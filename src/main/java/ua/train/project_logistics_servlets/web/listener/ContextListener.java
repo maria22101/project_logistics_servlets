@@ -3,43 +3,37 @@ package ua.train.project_logistics_servlets.web.listener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashSet;
 import java.util.Properties;
 
-import static ua.train.project_logistics_servlets.constant.WebConstant.*;
-
 public class ContextListener implements ServletContextListener {
+    private static final String PROPERTIES_FILE="business_input.properties";
+    private static final String APPLICATION_SCOPE_PROPERTIES="properties";
+
     private static final Logger LOGGER = LogManager.getLogger(ContextListener.class);
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        LOGGER.info("Inside ContextListener, contextInitialized()...");
 
         Properties properties = new Properties();
         try {
             InputStream inStream = Thread.currentThread()
                     .getContextClassLoader()
-                    .getResourceAsStream("business_input.properties");
+                    .getResourceAsStream(PROPERTIES_FILE);
             properties.load(inStream);
             if (inStream != null) {
                 inStream.close();
             }
         } catch (IOException ex) {
-            LOGGER.info("properties file loading failed");
-            ex.printStackTrace();
+            LOGGER.info("properties loading exception");
         }
-        sce.getServletContext().setAttribute("properties", properties);
+        sce.getServletContext().setAttribute(APPLICATION_SCOPE_PROPERTIES, properties);
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        ServletContext context = sce.getServletContext();
-        HashSet<String> loggedUsers = (HashSet<String>) context.getAttribute(LOGGED_USERS_ATTRIBUTE);
-        LOGGER.info("Context destroyed. LoggedUsers: " + loggedUsers);
     }
 }

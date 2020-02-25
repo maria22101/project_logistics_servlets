@@ -45,11 +45,11 @@ public interface WebConstant {
     String ADMIN_USERS_PAGE = "/WEB-INF/admin/adminUsers.jsp";
     String ADMIN_ROUTES_PAGE = "/WEB-INF/admin/adminRoutes.jsp";
 
-    String ERROR_PAGE = "/WEB-INF/errors/error.jsp";
     String AUTH_ERROR_PAGE = "/WEB-INF/errors/authError.jsp";
-    String ACCESS_DENIED_PAGE = "/WEB-INF/errors/denied.jsp";
     String DB_FETCH_ERROR_PAGE = "/WEB-INF/errors/dbFetchError.jsp";
     String DB_SAVE_ERROR_PAGE = "/WEB-INF/errors/dbSaveError.jsp";
+    String ACCESS_DENIED_PAGE = "/WEB-INF/errors/denied.jsp";
+    String GENERAL_ERROR_PAGE = "/WEB-INF/errors/error.jsp";
     String USER_EXISTS_ERROR_PAGE = "/WEB-INF/errors/userExists.jsp";
 
     String USER_RELATED_PATH_PATTERN = "user/";
@@ -65,13 +65,14 @@ public interface WebConstant {
     String ROUTES_ATTRIBUTE = "routes";
     String CITIES_OPTION_ATTRIBUTE = "citiesOptions";
     String ORDERS_ATTRIBUTE = "orders";
-    String ORDER_ATTRIBUTE = "order";
     String INVOICES_ATTRIBUTE = "invoices";
     String INVOICE_ATTRIBUTE = "invoice";
     String USERS_ATTRIBUTE = "users";
     String WEIGHT_ATTRIBUTE = "weight";
     String SUM_ATTRIBUTE = "sum";
-    String ROUTE_ATTRIBUTE = "route";
+    String CARGO_TYPES_ATTRIBUTE = "cargoTypes";
+
+    String ORDER_NUMBER_PARAMETER = "orderNumber";
 
     String INVALID_DISPATCH_STREET_INPUT_ATTRIBUTE = "invalidDispatchStreetInput";
     String INVALID_DISPATCH_HOUSE_INPUT_ATTRIBUTE = "invalidDispatchHouseInput";

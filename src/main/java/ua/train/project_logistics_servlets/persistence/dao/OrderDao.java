@@ -10,7 +10,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface OrderDao extends GenericDao<Order> {
-    List<Order> getAllOrdersWithUserAndAddresses()
+    List<Order> getOpenOrders()
+            throws DataBaseFetchException;
+
+    List<Order> getInvoicedOrdersByEmail(String email)
             throws DataBaseFetchException;
 
     void createOrder (int userId,
@@ -18,6 +21,10 @@ public interface OrderDao extends GenericDao<Order> {
                       String deliveryCity, String deliveryStreet, String deliveryHouse, String deliveryApartment,
                       LocalDate deliveryDate, BigDecimal weight, CargoType cargoType,
                       BigDecimal sum, int routeId)
-            throws DataBaseFetchException,
-            DataBaseSaveException;
+            throws DataBaseSaveException;
+
+    int countOrders() throws DataBaseFetchException;
+
+    List<Order> findOrdersForPageByEmail(String email, int offset, int pageSize)
+            throws DataBaseFetchException;
 }

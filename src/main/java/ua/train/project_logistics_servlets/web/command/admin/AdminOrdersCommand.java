@@ -25,7 +25,7 @@ public class AdminOrdersCommand implements Command {
     public String execute(HttpServletRequest request) {
 
         try {
-            List<Invoice> invoices = invoiceService.getAllInvoicesWithOrdersAndUserAndAddresses();
+            List<Invoice> invoices = invoiceService.getAllInvoices();
             request.setAttribute(INVOICES_ATTRIBUTE, invoices);
         } catch (DataBaseFetchException e) {
             return DB_FETCH_ERROR_PAGE;

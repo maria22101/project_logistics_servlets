@@ -5,11 +5,7 @@
 <html>
 <body>
 
-
-    <h2>Error Page<br/>
-        <i>Error <%= exception %></i>
-    </h2>
-
+    <h3 class="error"><fmt:message key="error.page.title"/></h3><br/>
 
         <br>
         <a href="${pageContext.request.contextPath}/"><fmt:message key="main.return.link"/></a><br/>

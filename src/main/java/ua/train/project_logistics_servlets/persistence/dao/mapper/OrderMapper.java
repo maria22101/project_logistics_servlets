@@ -12,6 +12,12 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class OrderMapper implements ObjectMapper<Order> {
+    private static final String DELIVERY_DATE = "delivery_date";
+    private static final String ORDER_NUMBER = "order_number";
+    private static final String CARGO_TYPE = "cargo_type";
+    private static final String ORDER_STATUS = "order_status";
+    private static final String SUM = "sum";
+    private static final String WEIGHT = "weight";
 
     private static final Logger LOGGER = LogManager.getLogger(JDBCOrderDao.class);
 
@@ -20,17 +26,17 @@ public class OrderMapper implements ObjectMapper<Order> {
 
         Order order = new Order();
 
-        java.sql.Date dbSqlDate = rs.getDate("delivery_date");
+        java.sql.Date dbSqlDate = rs.getDate(DELIVERY_DATE);
         java.util.Date dbSqlDateConverted = new java.util.Date(dbSqlDate.getTime());
         LocalDate date = new java.sql.Date(dbSqlDateConverted.getTime())
                 .toLocalDate();
 
         order.setDeliveryDate(date);
-        order.setOrderNumber(rs.getInt("order_number"));
-        order.setCargoType(CargoType.valueOf(rs.getString("cargo_type")));
-        order.setOrderStatus(OrderStatus.valueOf(rs.getString("order_status")));
-        order.setSum(rs.getBigDecimal("sum"));
-        order.setWeight(rs.getBigDecimal("weight"));
+        order.setOrderNumber(rs.getInt(ORDER_NUMBER));
+        order.setCargoType(CargoType.valueOf(rs.getString(CARGO_TYPE)));
+        order.setOrderStatus(OrderStatus.valueOf(rs.getString(ORDER_STATUS)));
+        order.setSum(rs.getBigDecimal(SUM));
+        order.setWeight(rs.getBigDecimal(WEIGHT));
 
         return order;
     }

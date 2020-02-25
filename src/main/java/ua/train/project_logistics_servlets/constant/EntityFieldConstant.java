@@ -39,17 +39,9 @@ public interface EntityFieldConstant {
     String ORDER_WEIGHT = "weight";
     String ORDER_CARGO_TYPE = "cargoType";
 
-    //Order
-    String ORDER_SUM = "";
-    String ORDER_STATUS = "";
-
     //Address
     String ADDRESS_CITY = "city";
     String ADDRESS_STREET = "street";
     String ADDRESS_HOUSE = "house";
     String ADDRESS_APARTMENT = "apartment";
-
-    //Invoice
-    String INVOICE_NUMBER = "invoiceNumber";
-    String INVOICE_IS_PAID = "isPaid";
 }

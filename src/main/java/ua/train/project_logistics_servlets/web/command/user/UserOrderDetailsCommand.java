@@ -1,5 +1,7 @@
 package ua.train.project_logistics_servlets.web.command.user;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.train.project_logistics_servlets.exception.DataBaseFetchException;
 import ua.train.project_logistics_servlets.persistence.domain.Invoice;
 import ua.train.project_logistics_servlets.persistence.domain.Order;
@@ -18,7 +20,7 @@ public class UserOrderDetailsCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        int orderNumber = Integer.parseInt(request.getParameter("orderNumber"));
+        int orderNumber = Integer.parseInt(request.getParameter(ORDER_NUMBER_PARAMETER));
 
         try {
             Invoice invoice = invoiceService.getInvoiceByOrderNumber(orderNumber);

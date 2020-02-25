@@ -4,6 +4,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.train.project_logistics_servlets.web.command.*;
 import ua.train.project_logistics_servlets.web.command.admin.*;
+import ua.train.project_logistics_servlets.web.command.error.AuthErrorCommand;
+import ua.train.project_logistics_servlets.web.command.error.DeniedCommand;
+import ua.train.project_logistics_servlets.web.command.error.ExceptionCommand;
 import ua.train.project_logistics_servlets.web.command.user.*;
 
 import javax.servlet.ServletConfig;

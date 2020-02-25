@@ -13,12 +13,9 @@ import static ua.train.project_logistics_servlets.constant.WebConstant.*;
 public class UserPayingCommand implements Command {
     private InvoiceService invoiceService = new InvoiceService();
 
-    private static final Logger LOGGER = LogManager.getLogger(UserPayingCommand.class);
-
     @Override
     public String execute(HttpServletRequest request) {
-        int payingOrder = Integer.parseInt(request.getParameter("orderNumber"));
-        LOGGER.info("orderNumber from param:{}", payingOrder);
+        int payingOrder = Integer.parseInt(request.getParameter(ORDER_NUMBER_PARAMETER));
 
         try {
             invoiceService.payInvoice(payingOrder);

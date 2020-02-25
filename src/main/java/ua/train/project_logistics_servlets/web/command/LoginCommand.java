@@ -20,47 +20,23 @@ public class LoginCommand implements Command {
 
         String email = request.getParameter(EMAIL);
         String password = request.getParameter(PASSWORD);
-
-        LOGGER.info("Checking if user is logged...");
-        LOGGER.info("Parameter email: " + email);
-
         if (email == null || email.equals("") || password == null || password.equals("")) {
             return LOGIN_PAGE;
         }
 
         try {
-
             if (!loginService.isUserAuthorized(email, password)) {
-                LOGGER.info("Guest " + email + " is not recognized");
-
                 return REDIRECT + AUTH_ERROR_PATH;
 
             } else {
-
                 if (loginService.getRoleByEmail(email).equals(Role.USER)) {
-
                     CommandUtility.setUserInSession(request, Role.USER, email);
                     CommandUtility.setUserInContext(request, email);
-
-                    LOGGER.info("User " + email + " logged successfully.");
-                    LOGGER.info("Servlet_Context: " + request.getServletContext().getAttribute(LOGGED_USERS_ATTRIBUTE));
-                    LOGGER.info("Role in Session: " + request.getSession().getAttribute(ROLE_ATTRIBUTE));
-                    LOGGER.info("Email in Session: " + request.getSession().getAttribute(EMAIL_ATTRIBUTE));
-                    LOGGER.info("Redirecting: " + REDIRECT + USER_CABINET_PATH);
-                    LOGGER.info("Redirecting path: " + USER_CABINET_PATH);
-
                     return REDIRECT + USER_CABINET_PATH;
 
                 } else if (loginService.getRoleByEmail(email).equals(Role.ADMIN)) {
-
                     CommandUtility.setUserInSession(request, Role.ADMIN, email);
                     CommandUtility.setUserInContext(request, email);
-
-                    LOGGER.info("Admin " + email + " logged successfully.");
-                    LOGGER.info("Servlet_Context: " + request.getServletContext().getAttribute(LOGGED_USERS_ATTRIBUTE));
-                    LOGGER.info("Role in Session: " + request.getSession().getAttribute(ROLE_ATTRIBUTE));
-                    LOGGER.info("Email in Session: " + request.getSession().getAttribute(EMAIL_ATTRIBUTE));
-
                     return REDIRECT + ADMIN_CABINET_PATH;
 
                 } else {
