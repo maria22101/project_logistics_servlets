@@ -3,11 +3,9 @@ package ua.train.project_logistics_servlets.service.registration;
 import ua.train.project_logistics_servlets.service.utility.RegistrationValidationUtility;
 
 import javax.servlet.http.HttpServletRequest;
-
 import java.util.Optional;
 
 import static ua.train.project_logistics_servlets.constant.WebConstant.*;
-import static ua.train.project_logistics_servlets.constant.WebConstant.REGISTRATION_PAGE;
 
 public class RegFormValidationService {
     private RegistrationValidationUtility utility = new RegistrationValidationUtility();

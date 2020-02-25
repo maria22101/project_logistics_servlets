@@ -7,7 +7,6 @@ import ua.train.project_logistics_servlets.service.calculator.CalculatorFormVali
 import ua.train.project_logistics_servlets.service.order.SumCalculationService;
 
 import javax.servlet.http.HttpServletRequest;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Optional;

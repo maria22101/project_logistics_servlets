@@ -7,7 +7,8 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-import static ua.train.project_logistics_servlets.constant.WebConstant.*;
+import static ua.train.project_logistics_servlets.constant.WebConstant.EMAIL_ATTRIBUTE;
+import static ua.train.project_logistics_servlets.constant.WebConstant.ROLE_ATTRIBUTE;
 
 public class SessionListener implements HttpSessionListener {
     private static final Logger LOGGER = LogManager.getLogger(SessionListener.class);

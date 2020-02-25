@@ -4,11 +4,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.mindrot.jbcrypt.BCrypt;
 import ua.train.project_logistics_servlets.enums.Role;
-import ua.train.project_logistics_servlets.exception.DataBaseFetchException;
 import ua.train.project_logistics_servlets.exception.UserNotFoundException;
 import ua.train.project_logistics_servlets.persistence.dao.DaoFactory;
 import ua.train.project_logistics_servlets.persistence.dao.UserDao;
-import ua.train.project_logistics_servlets.persistence.dao.impl.JDBCUserDao;
 import ua.train.project_logistics_servlets.persistence.domain.User;
 
 import java.util.Optional;

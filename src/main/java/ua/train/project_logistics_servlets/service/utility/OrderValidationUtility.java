@@ -1,16 +1,13 @@
 package ua.train.project_logistics_servlets.service.utility;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import static ua.train.project_logistics_servlets.constant.BusinessInputConstant.*;
+import static ua.train.project_logistics_servlets.constant.BusinessInputConstant.WEIGHT_HEAVY_UPPER_BOUND;
+import static ua.train.project_logistics_servlets.constant.BusinessInputConstant.WEIGHT_LIGHT_LOWER_BOUND;
 import static ua.train.project_logistics_servlets.constant.EntityFieldConstant.*;
 import static ua.train.project_logistics_servlets.constant.RegexConstant.*;
 

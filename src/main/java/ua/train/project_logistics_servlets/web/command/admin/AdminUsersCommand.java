@@ -1,14 +1,11 @@
 package ua.train.project_logistics_servlets.web.command.admin;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import ua.train.project_logistics_servlets.exception.DataBaseFetchException;
 import ua.train.project_logistics_servlets.persistence.domain.User;
 import ua.train.project_logistics_servlets.service.UserService;
 import ua.train.project_logistics_servlets.web.command.Command;
 
 import javax.servlet.http.HttpServletRequest;
-
 import java.util.List;
 
 import static ua.train.project_logistics_servlets.constant.WebConstant.*;

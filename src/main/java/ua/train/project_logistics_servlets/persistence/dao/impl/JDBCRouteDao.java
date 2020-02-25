@@ -5,7 +5,6 @@ import org.apache.logging.log4j.Logger;
 import ua.train.project_logistics_servlets.exception.DataBaseFetchException;
 import ua.train.project_logistics_servlets.persistence.dao.RouteDao;
 import ua.train.project_logistics_servlets.persistence.dao.mapper.RouteMapper;
-import ua.train.project_logistics_servlets.persistence.domain.Address;
 import ua.train.project_logistics_servlets.persistence.domain.Route;
 
 import java.sql.*;

@@ -5,7 +5,8 @@ import ua.train.project_logistics_servlets.service.utility.CalculatorValidationU
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
-import static ua.train.project_logistics_servlets.constant.WebConstant.*;
+import static ua.train.project_logistics_servlets.constant.WebConstant.CONTEXT_PATH;
+import static ua.train.project_logistics_servlets.constant.WebConstant.INVALID_WEIGHT_INPUT_ATTRIBUTE;
 
 public class CalculatorFormValidationService {
     CalculatorValidationUtility utility = new CalculatorValidationUtility();

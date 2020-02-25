@@ -6,16 +6,16 @@ import ua.train.project_logistics_servlets.exception.DataBaseFetchException;
 import ua.train.project_logistics_servlets.exception.DataBaseSaveException;
 import ua.train.project_logistics_servlets.exception.UserExistsException;
 import ua.train.project_logistics_servlets.persistence.domain.User;
-import ua.train.project_logistics_servlets.service.registration.RegistrationService;
 import ua.train.project_logistics_servlets.service.registration.RegFormValidationService;
+import ua.train.project_logistics_servlets.service.registration.RegistrationService;
 import ua.train.project_logistics_servlets.service.registration.UserConstructionService;
-//import ua.train.project_logistics_servlets.service.validation.RegFormValidator;
 
 import javax.servlet.http.HttpServletRequest;
-
 import java.util.Optional;
 
 import static ua.train.project_logistics_servlets.constant.WebConstant.*;
+
+//import ua.train.project_logistics_servlets.service.validation.RegFormValidator;
 
 public class RegistrationCommand implements Command {
     private RegistrationService registrationService = new RegistrationService();

@@ -4,11 +4,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.train.project_logistics_servlets.exception.DataBaseFetchException;
 import ua.train.project_logistics_servlets.exception.DataBaseSaveException;
-import ua.train.project_logistics_servlets.exception.UserExistsException;
 import ua.train.project_logistics_servlets.persistence.dao.UserDao;
-import ua.train.project_logistics_servlets.persistence.dao.mapper.RouteMapper;
 import ua.train.project_logistics_servlets.persistence.dao.mapper.UserMapper;
-import ua.train.project_logistics_servlets.persistence.domain.Route;
 import ua.train.project_logistics_servlets.persistence.domain.User;
 
 import java.sql.*;

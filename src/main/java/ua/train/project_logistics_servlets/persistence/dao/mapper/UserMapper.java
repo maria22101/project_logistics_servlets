@@ -1,12 +1,10 @@
 package ua.train.project_logistics_servlets.persistence.dao.mapper;
 
-import ua.train.project_logistics_servlets.persistence.domain.Order;
-import ua.train.project_logistics_servlets.persistence.domain.User;
 import ua.train.project_logistics_servlets.enums.Role;
+import ua.train.project_logistics_servlets.persistence.domain.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Map;
 
 import static ua.train.project_logistics_servlets.constant.EntityFieldConstant.*;
 

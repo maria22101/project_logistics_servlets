@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.train.project_logistics_servlets.persistence.dao.impl.JDBCOrderDao;
 import ua.train.project_logistics_servlets.persistence.domain.Invoice;
-import ua.train.project_logistics_servlets.persistence.domain.Order;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -2,18 +2,13 @@ package ua.train.project_logistics_servlets.persistence.dao.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ua.train.project_logistics_servlets.exception.DataBaseFetchException;
 import ua.train.project_logistics_servlets.exception.DataBaseSaveException;
 import ua.train.project_logistics_servlets.persistence.dao.AddressDao;
 import ua.train.project_logistics_servlets.persistence.dao.mapper.AddressMapper;
-import ua.train.project_logistics_servlets.persistence.dao.mapper.RouteMapper;
 import ua.train.project_logistics_servlets.persistence.domain.Address;
-import ua.train.project_logistics_servlets.persistence.domain.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 

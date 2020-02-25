@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static ua.train.project_logistics_servlets.constant.WebConstant.*;
+import static ua.train.project_logistics_servlets.constant.WebConstant.LANGUAGE_ATTRIBUTE;
 
 public class LocaleFilter implements Filter {
     @Override

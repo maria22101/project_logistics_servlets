@@ -9,8 +9,6 @@ import ua.train.project_logistics_servlets.persistence.domain.Route;
 import ua.train.project_logistics_servlets.service.order.SumCalculationService;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class RouteService {
     private RouteDao routeDao = DaoFactory.getInstance().createRouteDao();

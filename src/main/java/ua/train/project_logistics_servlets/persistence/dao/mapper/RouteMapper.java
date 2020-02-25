@@ -7,7 +7,6 @@ import ua.train.project_logistics_servlets.persistence.domain.Route;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Map;
 
 import static ua.train.project_logistics_servlets.constant.EntityFieldConstant.ID;
 

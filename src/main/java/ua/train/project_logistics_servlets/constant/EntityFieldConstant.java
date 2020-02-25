@@ -1,20 +1,5 @@
 package ua.train.project_logistics_servlets.constant;
 
-import ua.train.project_logistics_servlets.enums.CargoType;
-import ua.train.project_logistics_servlets.enums.OrderStatus;
-import ua.train.project_logistics_servlets.enums.Role;
-import ua.train.project_logistics_servlets.persistence.domain.Address;
-import ua.train.project_logistics_servlets.persistence.domain.Invoice;
-import ua.train.project_logistics_servlets.persistence.domain.Route;
-import ua.train.project_logistics_servlets.persistence.domain.User;
-
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Future;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-
 public interface EntityFieldConstant {
     //General
     String ID = "id";

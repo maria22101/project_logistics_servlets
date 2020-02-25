@@ -8,7 +8,8 @@ import ua.train.project_logistics_servlets.service.LoginService;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static ua.train.project_logistics_servlets.constant.EntityFieldConstant.*;
+import static ua.train.project_logistics_servlets.constant.EntityFieldConstant.EMAIL;
+import static ua.train.project_logistics_servlets.constant.EntityFieldConstant.PASSWORD;
 import static ua.train.project_logistics_servlets.constant.WebConstant.*;
 
 public class LoginCommand implements Command {

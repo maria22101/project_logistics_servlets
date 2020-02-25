@@ -1,15 +1,9 @@
 package ua.train.project_logistics_servlets.service.utility;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 
 import static ua.train.project_logistics_servlets.constant.EntityFieldConstant.*;
-import static ua.train.project_logistics_servlets.constant.EntityFieldConstant.PASSWORD;
 import static ua.train.project_logistics_servlets.constant.RegexConstant.*;
-import static ua.train.project_logistics_servlets.constant.RegexConstant.REGEX_PASSWORD;
-import static ua.train.project_logistics_servlets.constant.WebConstant.LANGUAGE_ATTRIBUTE;
 
 public class RegistrationValidationUtility {
 

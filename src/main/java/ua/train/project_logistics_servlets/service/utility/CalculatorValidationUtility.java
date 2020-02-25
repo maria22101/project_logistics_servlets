@@ -6,7 +6,7 @@ import java.math.RoundingMode;
 
 import static ua.train.project_logistics_servlets.constant.BusinessInputConstant.WEIGHT_HEAVY_UPPER_BOUND;
 import static ua.train.project_logistics_servlets.constant.BusinessInputConstant.WEIGHT_LIGHT_LOWER_BOUND;
-import static ua.train.project_logistics_servlets.constant.EntityFieldConstant.*;
+import static ua.train.project_logistics_servlets.constant.EntityFieldConstant.ORDER_WEIGHT;
 import static ua.train.project_logistics_servlets.constant.RegexConstant.REGEX_WEIGHT;
 
 public class CalculatorValidationUtility {
