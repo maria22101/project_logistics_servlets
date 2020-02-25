@@ -12,16 +12,7 @@ public class LogOutCommand implements Command{
 
     @Override
     public String execute(HttpServletRequest request) {
-
         CommandUtility.discardUserFromSessionAndContext(request);
-
-        LOGGER.info("User logged out.");
-        LOGGER.info("Servlet_Context: " + request.getServletContext().getAttribute(LOGGED_USERS_ATTRIBUTE));
-        LOGGER.info("Role in Session: " + request.getSession().getAttribute(ROLE_ATTRIBUTE));
-        LOGGER.info("Email in Session: " + request.getSession().getAttribute(EMAIL_ATTRIBUTE));
-
-        LOGGER.info("Redirect path: " + REDIRECT + CONTEXT_PATH);
-
         return REDIRECT + CONTEXT_PATH;
     }
 }

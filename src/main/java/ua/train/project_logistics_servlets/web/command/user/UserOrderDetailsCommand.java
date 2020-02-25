@@ -20,7 +20,7 @@ public class UserOrderDetailsCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        int orderNumber = Integer.parseInt(request.getParameter("orderNumber"));
+        int orderNumber = Integer.parseInt(request.getParameter(ORDER_NUMBER_PARAMETER));
 
         try {
             Invoice invoice = invoiceService.getInvoiceByOrderNumber(orderNumber);

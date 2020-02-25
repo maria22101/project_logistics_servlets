@@ -21,11 +21,6 @@ public class OrderService {
         return orderDao.getOpenOrders();
     }
 
-    public List<Order> getAllOrdersByEmail(String email)
-            throws DataBaseFetchException {
-        return orderDao.getAllOrdersByEmail(email);
-    }
-
     public List<Order> getInvoicedOrdersByEmail(String email)
             throws DataBaseFetchException {
         return orderDao.getInvoicedOrdersByEmail(email);

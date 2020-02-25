@@ -15,7 +15,7 @@ public class UserPayingCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        int payingOrder = Integer.parseInt(request.getParameter("orderNumber"));
+        int payingOrder = Integer.parseInt(request.getParameter(ORDER_NUMBER_PARAMETER));
 
         try {
             invoiceService.payInvoice(payingOrder);

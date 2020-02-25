@@ -21,62 +21,8 @@ public class JDBCAddressDao implements AddressDao {
     private AddressMapper addressMapper = new AddressMapper();
     private static final Logger LOGGER = LogManager.getLogger(JDBCAddressDao.class);
 
-    private static final String GET_ADDRESS = "SELECT * FROM addresses WHERE " +
-            "city=? AND street=? AND house=? AND apartment=?";
-
     private static final String SAVE_ADDRESS = "INSERT INTO addresses " +
             "(city, street, house, apartment)" + " VALUES(?, ?, ?, ?)";
-
-    @Override
-    public Optional<Address> findAddress(String city,
-                                         String street,
-                                         String house,
-                                         String apartment)
-            throws DataBaseFetchException {
-
-        Optional<Address> address = Optional.empty();
-
-        try (Connection connection = ConnectionPoolHolder.getConnection();
-                PreparedStatement prepStatement = connection.prepareStatement(GET_ADDRESS)) {
-
-            prepStatement.setString(1, city);
-            prepStatement.setString(2, street);
-            prepStatement.setString(3, house);
-            prepStatement.setString(4, apartment);
-            ResultSet rs = prepStatement.executeQuery();
-            if (rs.next()){
-                address = Optional.of(addressMapper.extractFromResultSet(rs));
-            }
-
-        }catch (Exception e) {
-            throw new DataBaseFetchException();
-        }
-        return address;
-    }
-
-    @Override
-    public Optional<Address> getAddress(Address address)
-            throws DataBaseFetchException {
-
-        Optional<Address> addressFromDb = Optional.empty();
-
-        try (Connection connection = ConnectionPoolHolder.getConnection();
-                PreparedStatement prepStatement = connection.prepareStatement(GET_ADDRESS)) {
-
-            prepStatement.setString(1, address.getCity());
-            prepStatement.setString(2, address.getStreet());
-            prepStatement.setString(3, address.getHouse());
-            prepStatement.setString(4, address.getApartment());
-            ResultSet rs = prepStatement.executeQuery();
-            if (rs.next()){
-                addressFromDb = Optional.of(addressMapper.extractFromResultSet(rs));
-            }
-
-        }catch (Exception e) {
-            throw new DataBaseFetchException();
-        }
-        return addressFromDb;
-    }
 
     @Override
     public void create(Address entity)
@@ -97,7 +43,7 @@ public class JDBCAddressDao implements AddressDao {
     }
 
     @Override
-    public Optional<Address> findById(int id) throws DataBaseFetchException {
+    public Optional<Address> findById(int id) {
         throw new UnsupportedOperationException("not implemented yet");
     }
 

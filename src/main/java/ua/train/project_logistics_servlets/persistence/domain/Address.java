@@ -2,6 +2,7 @@ package ua.train.project_logistics_servlets.persistence.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Address {
     private int id;
@@ -86,6 +87,22 @@ public class Address {
 
     public void setDeliveringOrders(List<Order> deliveringOrders) {
         this.deliveringOrders = deliveringOrders;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return city.equals(address.city) &&
+                street.equals(address.street) &&
+                house.equals(address.house) &&
+                Objects.equals(apartment, address.apartment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(city, street, house, apartment);
     }
 
     @Override

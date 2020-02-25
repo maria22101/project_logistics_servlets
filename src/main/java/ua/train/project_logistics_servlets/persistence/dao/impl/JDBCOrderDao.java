@@ -71,11 +71,6 @@ public class JDBCOrderDao implements OrderDao {
 
     private static final String COUNT_ALL_ORDERS = "SELECT COUNT(*) AS total FROM orders";
 
-    private static final String FIND_ALL_ORDERS_FOR_PAGE_SIMPLE =
-            "SELECT * FROM orders " +
-                    "ORDER BY date DESC " +
-                    "LIMIT ?, ?";
-
     private static final String FIND_ORDERS_FOR_PAGE_BY_EMAIL =
             "SELECT * FROM orders " +
                     "JOIN users " +
@@ -172,52 +167,6 @@ public class JDBCOrderDao implements OrderDao {
                     new AddressMapperByIntId(prepAddressStatement, DELIVERY_ADDRESS_ID_IN_ORDERS);
 
             ResultSet rs = statement.executeQuery(GET_OPEN_ORDERS);
-
-            while (rs.next()) {
-                Order result = orderMapper.extractFromResultSet(rs);
-
-                User user = userMapper.extractFromResultSet(rs);
-
-                Address dispatchAddress = dispatchAddressMapper
-                        .extractFromResultSet(rs, addressMapper)
-                        .orElseThrow(DataBaseFetchException::new);
-
-                Address deliveryAddress = deliveryAddressMapper
-                        .extractFromResultSet(rs, addressMapper)
-                        .orElseThrow(DataBaseFetchException::new);
-
-                result.setUser(user);
-                result.setDispatchAddress(dispatchAddress);
-                result.setDeliveryAddress(deliveryAddress);
-
-                ordersList.add(result);
-            }
-
-        } catch (SQLException e) {
-            throw new DataBaseFetchException();
-        }
-        return ordersList;
-    }
-
-    @Override
-    public List<Order> getAllOrdersByEmail(String email)
-            throws DataBaseFetchException {
-
-        List<Order> ordersList = new ArrayList<>();
-        try (Connection connection = ConnectionPoolHolder.getConnection();
-             PreparedStatement prepAddressStatement = connection.prepareStatement(GET_ADDRESS_BY_ID);
-             PreparedStatement prepOrderStatement = connection
-                     .prepareStatement(GET_ORDERS_BY_EMAIL)) {
-
-            AddressMapper addressMapper = new AddressMapper();
-            UserMapper userMapper = new UserMapper();
-            AddressMapperByIntId dispatchAddressMapper =
-                    new AddressMapperByIntId(prepAddressStatement, DISPATCH_ADDRESS_ID_IN_ORDERS);
-            AddressMapperByIntId deliveryAddressMapper =
-                    new AddressMapperByIntId(prepAddressStatement, DELIVERY_ADDRESS_ID_IN_ORDERS);
-
-            prepOrderStatement.setString(1, email);
-            ResultSet rs = prepOrderStatement.executeQuery();
 
             while (rs.next()) {
                 Order result = orderMapper.extractFromResultSet(rs);

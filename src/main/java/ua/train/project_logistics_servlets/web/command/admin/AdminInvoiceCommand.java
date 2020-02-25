@@ -18,7 +18,7 @@ public class AdminInvoiceCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
 
-        int invoicingOrderNumber = Integer.parseInt(request.getParameter("orderNumber"));
+        int invoicingOrderNumber = Integer.parseInt(request.getParameter(ORDER_NUMBER_PARAMETER));
 
         try {
             invoiceService.issueInvoice(invoicingOrderNumber);

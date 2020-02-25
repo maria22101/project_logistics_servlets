@@ -40,3 +40,6 @@
 
 <a href="${pageContext.request.contextPath}/"><fmt:message key="main.return.link"/></a><br/>
 
+</body>
+</html>
+

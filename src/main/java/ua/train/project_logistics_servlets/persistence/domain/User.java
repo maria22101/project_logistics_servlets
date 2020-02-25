@@ -4,6 +4,7 @@ import ua.train.project_logistics_servlets.enums.Role;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class User {
     private int id;
@@ -86,6 +87,23 @@ public class User {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return name.equals(user.name) &&
+                surname.equals(user.surname) &&
+                password.equals(user.password) &&
+                email.equals(user.email) &&
+                role == user.role;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, surname, password, email, role);
     }
 
     @Override

@@ -13,9 +13,6 @@ public interface OrderDao extends GenericDao<Order> {
     List<Order> getOpenOrders()
             throws DataBaseFetchException;
 
-    List<Order> getAllOrdersByEmail(String email)
-            throws DataBaseFetchException;
-
     List<Order> getInvoicedOrdersByEmail(String email)
             throws DataBaseFetchException;
 

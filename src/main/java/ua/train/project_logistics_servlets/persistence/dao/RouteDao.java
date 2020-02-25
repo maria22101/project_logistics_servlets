@@ -16,5 +16,4 @@ public interface RouteDao extends GenericDao<Route> {
 
     List<String> getCitiesOptionsUa()
             throws DataBaseFetchException;
-
 }

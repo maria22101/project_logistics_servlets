@@ -30,13 +30,11 @@ public class RouteService {
 
     public List<String> getCitiesOptionsEng()
             throws DataBaseFetchException {
-        LOGGER.info("all cities eng={}", routeDao.getCitiesOptionsEng());
         return routeDao.getCitiesOptionsEng();
     }
 
     public List<String> getCitiesOptionsUa()
             throws DataBaseFetchException {
-        LOGGER.info("all cities ua={}", routeDao.getCitiesOptionsUa());
         return routeDao.getCitiesOptionsUa();
     }
 }

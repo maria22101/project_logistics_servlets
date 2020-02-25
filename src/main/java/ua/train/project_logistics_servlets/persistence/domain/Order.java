@@ -5,6 +5,7 @@ import ua.train.project_logistics_servlets.enums.OrderStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 // TODO - is Invoice needed here?
 public class Order {
@@ -134,6 +135,27 @@ public class Order {
 
     public void setInvoice(Invoice invoice) {
         this.invoice = invoice;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return deliveryDate.equals(order.deliveryDate) &&
+                weight.equals(order.weight) &&
+                cargoType == order.cargoType &&
+                sum.equals(order.sum) &&
+                orderStatus == order.orderStatus &&
+                user.equals(order.user) &&
+                dispatchAddress.equals(order.dispatchAddress) &&
+                deliveryAddress.equals(order.deliveryAddress) &&
+                route.equals(order.route);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(deliveryDate, weight, cargoType, sum, orderStatus, user, dispatchAddress, deliveryAddress, route);
     }
 
     @Override
